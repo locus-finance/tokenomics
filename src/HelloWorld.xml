@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dapp name="HelloWorld">
+    <!-- markup could be type of "markdown" -->
+    <markup type="html">
+        <div class="slick">
+            <p>Hello, {%= name %}!</p>
+            <functionForm name="performAction"/>
+        </div>
+    </markup>
+    <!-- only considered if <markup>'s type is "html" -->
+    <styles>
+        #slick {
+            color: "black";
+        }
+    </styles>
+    <lib>
+        struct UserInfo {
+            address user;
+        }
+    </lib>
+    <primitives>
+        uint256 oldParam;
+    </primitives>
+    <reference>
+        UserInfo userInfo;
+        mapping(address --- uint256) balanceOf;
+    </reference>
+    <contract>
+        function performAction(uint256 param) external delegatedOnly returns (uint256) {
+            p().oldParam = param;
+        }
+    </contract>
+</dapp>
