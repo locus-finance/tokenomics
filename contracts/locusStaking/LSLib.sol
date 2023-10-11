@@ -38,11 +38,12 @@ library LSLib {
         address votingEscrow;
         uint256 periodFinish;
         uint256 rewardRate;
-        uint256 rewardsDuration; // = 4 weeks;
+        uint256 rewardsDuration;
         uint256 lastUpdateTime;
         uint256 rewardPerTokenStored;
         uint256 totalSupply;
         uint256 totalReward;
+        uint256 autoLockDuration;
     }
 
     struct Storage {
