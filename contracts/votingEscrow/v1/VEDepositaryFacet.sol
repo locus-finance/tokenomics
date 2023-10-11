@@ -5,15 +5,19 @@ pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeCast.sol";
-import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
 
 import "./interfaces/IVEDepositaryFacet.sol";
 import "./interfaces/IVECheckpointFacet.sol";
 import "../VELib.sol";
 import "../../diamondBase/facets/BaseFacet.sol";
 
-contract VEDepositaryFacet is BaseFacet, ReentrancyGuard, IVEDepositaryFacet {
+contract VEDepositaryFacet is BaseFacet, ReentrancyGuardUpgradeable, IVEDepositaryFacet {
     using SafeERC20 for IERC20;
+
+    function _initialize_VEDepositaryFacet() external override internalOnly {
+        __ReentrancyGuard_init();
+    }
 
     /// @notice Withdraw all tokens for `msg.sender`
     /// @dev Only possible if the lock has expired

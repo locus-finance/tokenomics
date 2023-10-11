@@ -3,6 +3,7 @@
 pragma solidity ^0.8.20;
 
 import "./interfaces/IVEInitializerFacet.sol";
+import "./interfaces/IVEDepositaryFacet.sol";
 import "../VELib.sol";
 import "../../diamondBase/facets/BaseFacet.sol";
 
@@ -13,6 +14,7 @@ contract VEInitializerFacet is BaseFacet, IVEInitializerFacet {
         address locusToken
     ) external override delegatedOnly {
         InitializerLib.initialize();
+        IVEDepositaryFacet(address(this))._initialize_VEDepositaryFacet();
         RolesManagementLib.grantRole(owner, RolesManagementLib.OWNER_ROLE);
         VELib.Primitives storage p = VELib.get().p;
         VELib.ReferenceTypes storage rt = VELib.get().rt;

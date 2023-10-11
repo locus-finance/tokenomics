@@ -18,4 +18,6 @@ interface IVEDepositaryFacet {
     function increaseAmount(uint256 _value) external;
 
     function increaseUnlockTime(uint256 _unlockTime) external;
+
+    function _initialize_VEDepositaryFacet() external;
 }
