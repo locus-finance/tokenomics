@@ -409,14 +409,6 @@ contract VotingEscrow is ReentrancyGuard, Ownable2Step {
         _depositFor(_for, _value, unlockTime, _locked, CREATE_LOCK_TYPE);
     }
 
-    function createLockFor(
-        address _for,
-        uint256 _value,
-        uint256 _unlockTime
-    ) external nonReentrant {
-        _createLockFor(_for, _value, _unlockTime);
-    }
-
     // """
     // @notice Deposit `_value` additional tokens for `msg.sender`
     //         without modifying the unlock time

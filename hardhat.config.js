@@ -7,6 +7,7 @@ require("hardhat-docgen");
 require('hardhat-abi-exporter');
 require("hardhat-tracer");
 require("@nomicfoundation/hardhat-chai-matchers");
+require("hardhat-contract-sizer");
 
 require("./tasks/accounts")(task);
 require("./tasks/getAllArtifacts")(task);
@@ -86,5 +87,10 @@ module.exports = {
     path: './abis',
     flat: false,
     format: "json"
+  },
+  contractSizer: {
+    alphaSort: true,
+    disambiguatePaths: false,
+    runOnCompile: true
   }
 };
