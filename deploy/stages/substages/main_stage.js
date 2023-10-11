@@ -1,5 +1,5 @@
 const hre = require('hardhat');
-const { skipIfAlreadyDeployed, POOL_DEPLOY_COST } = require('../../helpers');
+const { skipIfAlreadyDeployed } = require('../../helpers');
 
 module.exports = async ({
   getNamedAccounts,
