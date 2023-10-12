@@ -33,6 +33,13 @@ contract ERC20CappedFacet is
     }
 
     /// @inheritdoc ERC20Upgradeable
+    function _spendAllowance(address owner, address spender, uint256 value) internal override {
+        if (!RolesManagementLib.hasRole(spender, LTLib.ALLOWANCE_FREE_ROLE)) {
+            super._spendAllowance(owner, spender, value);
+        } 
+    }
+
+    /// @inheritdoc ERC20Upgradeable
     function _update(
         address from,
         address to,

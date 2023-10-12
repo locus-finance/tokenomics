@@ -63,7 +63,7 @@ contract LSDepositaryFacet is
             rt.rewards[msg.sender] = 0;
             p.totalReward -= reward;
             if (p.autoLockDuration > 0) {
-                IVEDepositaryFacet(p.votingEscrow).createLockFor(
+                IVEDepositaryFacet(p.votingEscrow).createLockOrDepositFor(
                     msg.sender,
                     reward,
                     p.autoLockDuration

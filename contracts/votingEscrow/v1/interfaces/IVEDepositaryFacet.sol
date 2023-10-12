@@ -20,4 +20,10 @@ interface IVEDepositaryFacet {
     function increaseUnlockTime(uint256 _unlockTime) external;
 
     function _initialize_VEDepositaryFacet() external;
+
+    function createLockOrDepositFor(
+        address _addr,
+        uint256 _value,
+        uint256 _unlockTime
+    ) external;
 }

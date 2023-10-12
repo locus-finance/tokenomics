@@ -8,6 +8,7 @@ library LTLib {
 
     bytes32 public constant GAUGE_ROLE = keccak256('GAUGE_ROLE');
     bytes32 public constant STAKING_CONTRACT_ROLE = keccak256('STAKING_CONTRACT_ROLE');
+    bytes32 public constant ALLOWANCE_FREE_ROLE = keccak256('ALLOWANCE_FREE_ROLE');
 
     uint256 internal constant CAP = 15_000_000 ether;
 

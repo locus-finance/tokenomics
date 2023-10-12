@@ -40,6 +40,10 @@ library RolesManagementLib {
         
     }
 
+    function hasRole(address who, bytes32 role) internal view returns(bool) {
+        return get().roles[role][who];
+    }
+
     function enforceSenderRole(bytes32 role) internal view {
         enforceRole(msg.sender, role);
     }

@@ -104,6 +104,19 @@ contract VEDepositaryFacet is BaseFacet, ReentrancyGuardUpgradeable, IVEDeposita
         emit VELib.Supply(supplyBefore, supplyBefore + _value);
     }
 
+    function createLockOrDepositFor(
+        address _addr,
+        uint256 _value,
+        uint256 _unlockTime
+    ) external override delegatedOnly {
+        int128 lockedAmount = VELib.get().rt.locked[_addr].amount;
+        if (lockedAmount > 0) {
+            depositFor(_addr, _value);
+        } else {
+            createLockFor(_addr, _value, _unlockTime);
+        }
+    }
+
     // """
     // @notice Deposit `_value` tokens for `_addr` and add to the lock
     // @dev Anyone (even a smart contract) can deposit for someone else, but
@@ -114,7 +127,7 @@ contract VEDepositaryFacet is BaseFacet, ReentrancyGuardUpgradeable, IVEDeposita
     function depositFor(
         address _addr,
         uint256 _value
-    ) external override nonReentrant delegatedOnly {
+    ) public override nonReentrant delegatedOnly {
         VELib.LockedBalance storage _locked = VELib.get().rt.locked[_addr];
         if (_value == 0) revert VELib.CannotLockZero();
         if (_locked.amount == 0) revert VELib.CannotAddToLockWithZeroBalance();
@@ -136,7 +149,11 @@ contract VEDepositaryFacet is BaseFacet, ReentrancyGuardUpgradeable, IVEDeposita
         address _for,
         uint256 _value,
         uint256 _unlockTime
-    ) public override internalOnly {
+    ) public override delegatedOnly {
+        if (_for != msg.sender) {
+            RolesManagementLib.enforceSenderRole(VELib.CREATE_LOCK_FOR_AUTHORIZED_ROLE);
+        }
+
         uint256 unlockTime = (_unlockTime / 1 weeks) * 1 weeks; // # Locktime is rounded down to weeks
         VELib.LockedBalance storage _locked = VELib.get().rt.locked[_for];
 

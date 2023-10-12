@@ -61,6 +61,8 @@ library VELib {
 
     bytes32 constant VOTING_ESCROW_STORAGE_POSITION = keccak256("diamond.standard.diamond.storage.voting_escrow");
 
+    bytes32 public constant CREATE_LOCK_FOR_AUTHORIZED_ROLE = keccak256('CREATE_LOCK_FOR_AUTHORIZED_ROLE');
+
     int128 public constant DEPOSIT_FOR_TYPE = 0;
     int128 public constant CREATE_LOCK_TYPE = 1;
     int128 public constant INCREASE_LOCK_AMOUNT = 2;
