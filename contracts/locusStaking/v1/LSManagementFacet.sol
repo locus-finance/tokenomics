@@ -57,11 +57,6 @@ contract LSManagementFacet is BaseFacet, ILSManagementFacet {
         emit LSLib.Recovered(tokenAddress, tokenAmount);
     }
     
-    function setAutoLockDuration(uint256 _autoLockDuration) external override delegatedOnly {
-        RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);
-        LSLib.get().p.autoLockDuration = _autoLockDuration;
-    }
-
     function setRewardsDuration(
         uint256 _rewardsDuration
     ) external override delegatedOnly {

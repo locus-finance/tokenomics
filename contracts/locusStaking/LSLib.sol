@@ -43,7 +43,6 @@ library LSLib {
         uint256 rewardPerTokenStored;
         uint256 totalSupply;
         uint256 totalReward;
-        uint256 autoLockDuration;
     }
 
     struct Storage {

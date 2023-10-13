@@ -8,6 +8,4 @@ interface ILSManagementFacet {
     function recoverTokens(address tokenAddress, uint256 tokenAmount) external;
 
     function setRewardsDuration(uint256 _rewardsDuration) external;
-
-    function setAutoLockDuration(uint256 _autoLockDuration) external;
 }

@@ -8,12 +8,12 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
 
+import "./feesManagement/interfaces/ILSProcessFeesFacet.sol";
+import "./feesManagement/libraries/LSFeesLib.sol";
 import "../LSLib.sol";
 import "../../diamondBase/facets/BaseFacet.sol";
 import "./interfaces/ILSDepositaryFacet.sol";
 import "./interfaces/ILSLoupeFacet.sol";
-
-import "../../votingEscrow/v1/interfaces/IVEDepositaryFacet.sol";
 
 contract LSDepositaryFacet is
     BaseFacet,
@@ -33,6 +33,7 @@ contract LSDepositaryFacet is
     ) external override nonReentrant delegatedOnly whenNotPaused {
         updateReward(msg.sender);
         if (amount == 0) revert LSLib.CannotStakeZero();
+        LSFeesLib.get().stakerToStartStakingTimestamp[msg.sender] = uint32(block.timestamp);
         LSLib.get().p.totalSupply += amount;
         LSLib.get().rt.balanceOf[msg.sender] += amount;
         LSLib.get().p.stakingToken.safeTransferFrom(
@@ -58,19 +59,12 @@ contract LSDepositaryFacet is
         updateReward(msg.sender);
         LSLib.Primitives storage p = LSLib.get().p;
         LSLib.ReferenceTypes storage rt = LSLib.get().rt;
-        uint256 reward = rt.rewards[msg.sender];
+        uint256 reward = ILSProcessFeesFacet(address(this))
+            .getFeesAccountedRewardAndDistributeFees(rt.rewards[msg.sender], p.rewardsToken);
         if (reward > 0) {
             rt.rewards[msg.sender] = 0;
             p.totalReward -= reward;
-            if (p.autoLockDuration > 0) {
-                IVEDepositaryFacet(p.votingEscrow).createLockOrDepositFor(
-                    msg.sender,
-                    reward,
-                    p.autoLockDuration
-                );
-            } else {
-                p.rewardsToken.safeTransfer(msg.sender, reward);
-            }
+            p.rewardsToken.safeTransfer(msg.sender, reward);
             emit LSLib.RewardPaid(msg.sender, reward);
         }
     }

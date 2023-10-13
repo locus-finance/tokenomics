@@ -8,6 +8,8 @@ interface ILSInitializerFacet {
         address votingEscrow,
         address rewardDistributor,
         address rewardsToken,
-        address stakingToken
+        address stakingToken,
+        uint32[] memory feePoints,
+        uint16[] memory feeBpsPerFeePointIdx
     ) external;
 }
