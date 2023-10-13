@@ -10,29 +10,29 @@ contract LTEmissionControlFacet is BaseFacet, ILTEmissionControlFacet {
     /// @dev Update mining rate and supply at the start of the epoch.
     /// Any modifying mining call must also call this.
     function updateMiningParameters() public override internalOnly {
-        LTLib.Storage storage s = LTLib.get();
-        s.startEpochTime += LTLib.RATE_REDUCTION_TIME;
-        s.miningEpoch++;
+        LTLib.Primitives storage p = LTLib.get().p;
+        p.startEpochTime += LTLib.RATE_REDUCTION_TIME;
+        p.miningEpoch++;
 
-        uint256 rate = s.rate;
+        uint256 rate = p.rate;
         if (rate == 0) {
             rate = LTLib.INITIAL_RATE;
         } else {
-            s.startEpochSupply += rate * LTLib.RATE_REDUCTION_TIME;
+            p.startEpochSupply += rate * LTLib.RATE_REDUCTION_TIME;
             rate *= LTLib.RATE_DENOMINATOR / LTLib.RATE_REDUCTION_COEFFICIENT;
         }
-        s.rate = rate;
+        p.rate = rate;
         emit LTLib.UpdateMiningParameters(
             block.timestamp,
             rate,
-            s.startEpochSupply
+            p.startEpochSupply
         );
     }
 
     function globalUpdateMiningParameters() external override delegatedOnly {
         if (
             block.timestamp <
-            LTLib.get().startEpochTime + LTLib.RATE_REDUCTION_TIME
+            LTLib.get().p.startEpochTime + LTLib.RATE_REDUCTION_TIME
         ) {
             revert LTLib.CannotUpdateGlobalMiningParametersTooSoon();
         }
@@ -48,10 +48,10 @@ contract LTEmissionControlFacet is BaseFacet, ILTEmissionControlFacet {
         delegatedOnly
         returns (uint256)
     {
-        uint256 startEpochTime = LTLib.get().startEpochTime;
+        uint256 startEpochTime = LTLib.get().p.startEpochTime;
         if (block.timestamp >= startEpochTime + LTLib.RATE_REDUCTION_TIME) {
             updateMiningParameters();
-            return LTLib.get().startEpochTime;
+            return LTLib.get().p.startEpochTime;
         } else {
             return startEpochTime;
         }
@@ -78,9 +78,9 @@ contract LTEmissionControlFacet is BaseFacet, ILTEmissionControlFacet {
         returns (uint256)
     {
         return
-            LTLib.get().startEpochSupply +
-            (block.timestamp - LTLib.get().startEpochTime) *
-            LTLib.get().rate;
+            LTLib.get().p.startEpochSupply +
+            (block.timestamp - LTLib.get().p.startEpochTime) *
+            LTLib.get().p.rate;
     }
 
     /// @notice How much supply is mintable from start timestamp till end timestamp.
@@ -95,8 +95,8 @@ contract LTEmissionControlFacet is BaseFacet, ILTEmissionControlFacet {
             revert LTLib.InvalidTimeframe(start, end);
         }
         uint256 toMint = 0;
-        uint256 currentEpochTime = LTLib.get().startEpochTime;
-        uint256 currentRate = LTLib.get().rate;
+        uint256 currentEpochTime = LTLib.get().p.startEpochTime;
+        uint256 currentRate = LTLib.get().p.rate;
         // # Special case if end is in future (not yet minted) epoch
         if (end > currentEpochTime + LTLib.RATE_REDUCTION_TIME) {
             currentEpochTime += LTLib.RATE_REDUCTION_TIME;

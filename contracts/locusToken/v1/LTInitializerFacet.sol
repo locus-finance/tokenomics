@@ -9,10 +9,10 @@ import "../../diamondBase/facets/BaseFacet.sol";
 contract LTInitializerFacet is BaseFacet, ILTInitializerFacet {
     function initialize() external override {
         InitializerLib.initialize();
-        LTLib.Storage storage s = LTLib.get();
-        s.startEpochTime = block.timestamp + LTLib.INFLATION_DELAY - LTLib.RATE_REDUCTION_TIME;
-        s.miningEpoch = -1;
-        s.rate = 0;
-        s.startEpochSupply = LTLib.INITIAL_SUPPLY;
+        LTLib.Primitives storage p = LTLib.get().p;
+        p.startEpochTime = block.timestamp + LTLib.INFLATION_DELAY - LTLib.RATE_REDUCTION_TIME;
+        p.miningEpoch = -1;
+        p.rate = 0;
+        p.startEpochSupply = LTLib.INITIAL_SUPPLY;
     }
 }
