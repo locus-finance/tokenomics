@@ -6,16 +6,16 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20CappedUp
 
 import "../LTLib.sol";
 import "../../diamondBase/facets/BaseFacet.sol";
-import "./interfaces/IERC20CappedFacet.sol";
+import "./interfaces/ILTERC20CappedFacet.sol";
 
-contract ERC20CappedFacet is
+contract LTERC20CappedFacet is
     BaseFacet,
     ERC20CappedUpgradeable,
-    IERC20CappedFacet
+    ILTERC20CappedFacet
 {
     function _init_ERC20CappedFacet() external override internalOnly {
         __ERC20_init(LTLib.name, LTLib.symbol);
-        __ERC20Capped_init(LTLib.CAP);
+        __ERC20Capped_init(LTLib.INITIAL_SUPPLY);
     }
 
     function mintTo(

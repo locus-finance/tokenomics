@@ -35,7 +35,6 @@ contract VECheckpointFacet is BaseFacet, IVECheckpointFacet {
         VELib.Primitives storage p = VELib.get().p;
         VELib.ReferenceTypes storage rt = VELib.get().rt;
         
-
         if (addr != address(0)) {
             // # Calculate slopes and biases
             // # Kept at zero when they have to

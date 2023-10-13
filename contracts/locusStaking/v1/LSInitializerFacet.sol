@@ -25,7 +25,7 @@ contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
         p.rewardsToken = IERC20(rewardsToken);
         p.stakingToken = IERC20(stakingToken);
         p.votingEscrow = votingEscrow;
-        p.rewardsDuration = 4 weeks;
+        p.rewardsDuration = 1 days;
         p.autoLockDuration = 30 days;
     }
 }
