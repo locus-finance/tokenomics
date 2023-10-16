@@ -7,5 +7,15 @@ interface ILTERC20Facet {
 
     function burnFrom(address account, uint256 amount) external;
 
+    function delegateTo(address delegatee) external;
+
+    function enablePolitics() external;
+
+    function getVotingPower(address account) external view returns (uint256);
+    
+    function getPastVotingPower(address account, uint256 timepoint) external view returns (uint256);
+
+    function getDelegatee(address account) external view returns (address);
+
     function _init_LTERC20Facet() external;
 }
