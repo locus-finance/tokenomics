@@ -9,6 +9,8 @@ interface ILTERC20Facet {
 
     function delegateTo(address delegatee) external;
 
+    /// @notice To be able to vote for something by themselves a holder must call it first to delegate
+    /// all voting power they have to themselves.
     function enablePolitics() external;
 
     function getVotingPower(address account) external view returns (uint256);

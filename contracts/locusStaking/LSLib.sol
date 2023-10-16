@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 // look for the Diamond.sol in the hardhat-deploy/solc_0.8/Diamond.sol
 library LSLib {
+    error InvalidBPS(uint16 bps);
     error OnlyRewardsDistribution();
     error CannotStakeZero();
     error CannotWithdrawZero();

@@ -8,12 +8,12 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
 
-import "./feesManagement/interfaces/ILSProcessFeesFacet.sol";
-import "./feesManagement/libraries/LSFeesLib.sol";
+import "./interfaces/ILSProcessFeesFacet.sol";
 import "../LSLib.sol";
 import "../../diamondBase/facets/BaseFacet.sol";
 import "./interfaces/ILSDepositaryFacet.sol";
 import "./interfaces/ILSLoupeFacet.sol";
+import "../../tokensDistributor/TDLib.sol";
 
 contract LSDepositaryFacet is
     BaseFacet,
@@ -33,7 +33,7 @@ contract LSDepositaryFacet is
     ) external override nonReentrant delegatedOnly whenNotPaused {
         updateReward(msg.sender);
         if (amount == 0) revert LSLib.CannotStakeZero();
-        LSFeesLib.get().stakerToStartStakingTimestamp[msg.sender] = uint32(block.timestamp);
+        TDLib.get().startTimestamps[msg.sender] = uint32(block.timestamp);
         LSLib.get().p.totalSupply += amount;
         LSLib.get().rt.balanceOf[msg.sender] += amount;
         LSLib.get().p.stakingToken.safeTransferFrom(

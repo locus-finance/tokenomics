@@ -4,11 +4,11 @@ pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-import "./feesManagement/libraries/LSFeesLib.sol";
 import "../LSLib.sol";
 import "../../diamondBase/facets/BaseFacet.sol";
 import "./interfaces/ILSInitializerFacet.sol";
 import "./interfaces/ILSDepositaryFacet.sol";
+import "../../tokensDistributor/TDLib.sol";
 
 contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
     function initialize(
@@ -24,25 +24,25 @@ contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
         ILSDepositaryFacet(address(this))._initialize_LSDepositaryFacet();
 
         if (feeDurationPoints.length != feeBasePoints.length) {
-            revert LSFeesLib.IncorrectLengths(feeDurationPoints.length, feeDurationPoints.length);
+            revert TDLib.IncorrectLengths(feeDurationPoints.length, feeDurationPoints.length);
         }
 
-        LSFeesLib.Storage storage s = LSFeesLib.get();
+        TDLib.Storage storage s = TDLib.get();
         uint32 maxFeePoint; 
         for (uint256 i = 0; i < feeDurationPoints.length; i++) {
-            if (feeBasePoints[i] > LSFeesLib.MAX_BPS) {
-                revert LSFeesLib.InvalidBPS(feeBasePoints[i]);
+            if (feeBasePoints[i] > TDLib.MAX_BPS) {
+                revert LSLib.InvalidBPS(feeBasePoints[i]);
             } else {
-                s.feeDurationPointIdxToFeeBasePoints[i] = feeBasePoints[i];
+                s.distributionDurationPointIdxToAmounts[i] = feeBasePoints[i];
             }
             if (feeDurationPoints[i] > maxFeePoint) {
                 maxFeePoint = feeDurationPoints[i];
             } else {
-                revert LSFeesLib.IntervalsMustBeSorted();
+                revert TDLib.IntervalsMustBeSorted();
             }
         }
-        s.feeDurationPoints = feeDurationPoints;
-        s.undistributedFeesReceiver = owner;
+        s.distributionDurationPoints = feeDurationPoints;
+        s.undistributedAmountsReceiver = owner;
 
         RolesManagementLib.grantRole(rewardDistributor, LSLib.REWARD_DISTRIBUTOR_ROLE);
         RolesManagementLib.grantRole(owner, RolesManagementLib.OWNER_ROLE);

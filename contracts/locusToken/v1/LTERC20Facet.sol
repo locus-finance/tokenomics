@@ -88,6 +88,7 @@ contract LTERC20Facet is
         return delegates(account);
     }
 
+    /// @inheritdoc ILTERC20Facet
     function enablePolitics() external override {
         delegate(msg.sender);
     }

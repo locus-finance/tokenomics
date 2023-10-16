@@ -2,30 +2,30 @@
 
 pragma solidity ^0.8.18;
 
-import "../libraries/LSFeesLib.sol";
+import "../../TDLib.sol";
 
-interface ILSFeesManagementLoupeFacet {
-    function getFeeReceiversByAddresses(
+interface ITDLoupeFacet {
+    function getReceiversByAddresses(
         uint256 offset,
         uint256 windowSize,
         address[] memory addresses
     ) external view returns (uint256[] memory indicies);
 
-    function getFeeReceiversByShares(
+    function getReceiversByShares(
         uint256 offset,
         uint256 windowSize,
         uint256[] memory shares
     ) external view returns (uint256[] memory indicies);
 
-    function getFeeReceiversByStatuses(
+    function getReceiversByStatuses(
         uint256 offset,
         uint256 windowSize,
         bool[] memory statuses
     ) external view returns (uint256[] memory indicies);
 
-    function getFeeReceiverByIdx(
+    function getReceiverByIdx(
         uint256 idx
-    ) external view returns (LSFeesLib.FeeReceiver memory);
+    ) external view returns (TDLib.DistributionReceiver memory);
 
     function getSumOfShares() external view returns (uint256);
 }

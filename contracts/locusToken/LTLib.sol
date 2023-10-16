@@ -20,6 +20,8 @@ library LTLib {
 
     struct Primitives {
         bool isGovernanceEnabled;
+        uint256 epochDuration;
+        uint256 lastTimeInflationMinted;
     }
 
     struct Storage {
