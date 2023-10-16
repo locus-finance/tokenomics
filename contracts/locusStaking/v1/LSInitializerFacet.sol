@@ -24,16 +24,23 @@ contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
         ILSDepositaryFacet(address(this))._initialize_LSDepositaryFacet();
 
         if (feeDurationPoints.length != feeBasePoints.length) {
-            revert TDLib.IncorrectLengths(feeDurationPoints.length, feeDurationPoints.length);
+            revert TDLib.IncorrectLengths(
+                feeDurationPoints.length,
+                feeDurationPoints.length
+            );
         }
 
         TDLib.Storage storage s = TDLib.get();
-        uint32 maxFeePoint; 
+        uint32 maxFeePoint;
         for (uint256 i = 0; i < feeDurationPoints.length; i++) {
             if (feeBasePoints[i] > TDLib.MAX_BPS) {
                 revert LSLib.InvalidBPS(feeBasePoints[i]);
             } else {
-                s.distributionDurationPointIdxToAmounts[i] = feeBasePoints[i];
+                // NEED TO KNOW: A role of middleman is occupied by the locusStaking diamond only,
+                // because we do not need a functionality of middlemen in tokenDistributor diamond.
+                s.distributionDurationPointIdxToMiddlemanToAmounts[i][
+                        address(this)
+                    ] = feeBasePoints[i];
             }
             if (feeDurationPoints[i] > maxFeePoint) {
                 maxFeePoint = feeDurationPoints[i];
@@ -44,9 +51,12 @@ contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
         s.distributionDurationPoints = feeDurationPoints;
         s.undistributedAmountsReceiver = owner;
 
-        RolesManagementLib.grantRole(rewardDistributor, LSLib.REWARD_DISTRIBUTOR_ROLE);
+        RolesManagementLib.grantRole(
+            rewardDistributor,
+            LSLib.REWARD_DISTRIBUTOR_ROLE
+        );
         RolesManagementLib.grantRole(owner, RolesManagementLib.OWNER_ROLE);
-        
+
         LSLib.Primitives storage p = LSLib.get().p;
         p.rewardsToken = IERC20(rewardsToken);
         p.stakingToken = IERC20(stakingToken);

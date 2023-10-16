@@ -33,9 +33,11 @@ library TDLib {
     }
 
     struct Storage {
+        // address (middleman) for which we are counting a fee or a share
+        //      => timestamp to which we would add durations from `distributionDurationPoints`.
         mapping(address => uint32) startTimestamps;
         uint32[] distributionDurationPoints;
-        mapping(uint256 => uint16) distributionDurationPointIdxToAmounts;
+        mapping(uint256 => mapping(address => uint256)) distributionDurationPointIdxToMiddlemanToAmounts;
         DistributionReceiver[] distributionReceivers;
         uint256 sumOfShares;
         address undistributedAmountsReceiver;
@@ -48,22 +50,28 @@ library TDLib {
         }
     }
 
-    function getAmountToDistribute(address entity) internal view returns (uint16 distributionAmounts) {
+    function getAmountToDistribute(
+        address entity,
+        address middleman
+    ) internal view returns (uint256 distributionAmounts) {
         uint32 startStakingTime = get().startTimestamps[entity];
         if (block.timestamp > startStakingTime) {
             uint32 timeCounter = startStakingTime;
-            uint256 distributionDurationPointsLen = get().distributionDurationPoints.length;
+            uint256 distributionDurationPointsLen = get()
+                .distributionDurationPoints
+                .length;
             uint256 idx;
             for (idx; idx < distributionDurationPointsLen; idx++) {
-                uint32 distributionDurationPoint = get().distributionDurationPoints[idx];
+                uint32 distributionDurationPoint = get()
+                    .distributionDurationPoints[idx];
                 if (block.timestamp < timeCounter + distributionDurationPoint) {
                     break;
                 } else {
                     timeCounter += distributionDurationPoint;
                 }
             }
-            distributionAmounts = get().distributionDurationPointIdxToAmounts[idx];
+            distributionAmounts = get()
+                .distributionDurationPointIdxToMiddlemanToAmounts[idx][middleman];
         }
     }
-
 }

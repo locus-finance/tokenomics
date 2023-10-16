@@ -6,7 +6,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20CappedUp
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PermitUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol";
 
-
+import "./autocracy/libraries/AutocracyLib.sol";
 import "../LTLib.sol";
 import "../../diamondBase/facets/BaseFacet.sol";
 import "./interfaces/ILTERC20Facet.sol";
@@ -65,6 +65,10 @@ contract LTERC20Facet is
         )
     {
         enforceDelegatedOnly();
+        if (AutocracyLib.get().isAutocracyEnabled) {
+            RolesManagementLib.enforceRole(from, AutocracyLib.AUTOCRAT_ROLE);
+            RolesManagementLib.enforceRole(to, AutocracyLib.AUTOCRAT_ROLE);
+        }
         super._update(from, to, value);
     }
 

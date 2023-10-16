@@ -18,7 +18,9 @@ contract LSProcessFeesFacet is BaseFacet, ILSProcessFeesFacet {
         uint256 reward,
         IERC20 rewardsToken
     ) external override internalOnly returns (uint256 feesSubstractedReward) {
-        uint256 feeBps = TDLib.getAmountToDistribute(msg.sender);
+        // NEED TO KNOW: A role of middleman is occupied by the locusStaking diamond only,
+        // because we do not need a functionality of middlemen in tokenDistributor diamond.
+        uint256 feeBps = TDLib.getAmountToDistribute(msg.sender, address(this));
         if (feeBps == 0) {
             return reward;
         }
