@@ -15,11 +15,11 @@ library LTLib {
     uint256 public constant INITIAL_SUPPLY = 15_000_000 ether;
     
     struct ReferenceTypes {
-        mapping(address => mapping(address => uint256)) mintedForUser;
+        mapping(uint256 => uint256) epochNumberToInlfationAmount;
     }
 
     struct Primitives {
-        int128 miningEpoch;
+        bool isGovernanceEnabled;
     }
 
     struct Storage {
