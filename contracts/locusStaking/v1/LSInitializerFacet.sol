@@ -36,11 +36,7 @@ contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
             if (feeBasePoints[i] > TDLib.MAX_BPS) {
                 revert LSLib.InvalidBPS(feeBasePoints[i]);
             } else {
-                // NEED TO KNOW: A role of middleman is occupied by the locusStaking diamond only,
-                // because we do not need a functionality of middlemen in tokenDistributor diamond.
-                s.distributionDurationPointIdxToMiddlemanToAmounts[i][
-                        address(this)
-                    ] = feeBasePoints[i];
+                s.distributionDurationPointIdxToAmounts[i] = feeBasePoints[i];
             }
             if (feeDurationPoints[i] > maxFeePoint) {
                 maxFeePoint = feeDurationPoints[i];

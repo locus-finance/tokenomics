@@ -22,10 +22,4 @@ interface ITDLoupeFacet {
         uint256 windowSize,
         bool[] memory statuses
     ) external view returns (uint256[] memory indicies);
-
-    function getReceiverByIdx(
-        uint256 idx
-    ) external view returns (TDLib.DistributionReceiver memory);
-
-    function getSumOfShares() external view returns (uint256);
 }

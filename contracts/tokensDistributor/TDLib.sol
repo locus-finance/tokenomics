@@ -37,7 +37,7 @@ library TDLib {
         //      => timestamp to which we would add durations from `distributionDurationPoints`.
         mapping(address => uint32) startTimestamps;
         uint32[] distributionDurationPoints;
-        mapping(uint256 => mapping(address => uint256)) distributionDurationPointIdxToMiddlemanToAmounts;
+        mapping(uint256 => uint256) distributionDurationPointIdxToAmounts;
         DistributionReceiver[] distributionReceivers;
         uint256 sumOfShares;
         address undistributedAmountsReceiver;
@@ -51,9 +51,8 @@ library TDLib {
     }
 
     function getAmountToDistribute(
-        address entity,
-        address middleman
-    ) internal view returns (uint256 distributionAmounts) {
+        address entity
+    ) internal view returns (uint256 distributionAmount, uint256 distributionDurationPointIdx) {
         uint32 startStakingTime = get().startTimestamps[entity];
         if (block.timestamp > startStakingTime) {
             uint32 timeCounter = startStakingTime;
@@ -70,8 +69,10 @@ library TDLib {
                     timeCounter += distributionDurationPoint;
                 }
             }
-            distributionAmounts = get()
-                .distributionDurationPointIdxToMiddlemanToAmounts[idx][middleman];
+            distributionAmount = get().distributionDurationPointIdxToAmounts[
+                idx
+            ];
+            distributionDurationPointIdx = idx;
         }
     }
 }

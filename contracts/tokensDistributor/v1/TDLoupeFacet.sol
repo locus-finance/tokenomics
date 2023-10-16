@@ -81,23 +81,4 @@ contract TDLoupeFacet is BaseFacet, ITDLoupeFacet {
             revert TDLib.NothingWasFound();
         }
     }
-
-    function getReceiverByIdx(
-        uint256 idx
-    ) external view delegatedOnly returns (TDLib.DistributionReceiver memory) {
-        if (idx >= TDLib.get().distributionReceivers.length) {
-            revert TDLib.InvalidOffset(idx);
-        }
-        return TDLib.get().distributionReceivers[idx];
-    }
-
-    function getSumOfShares()
-        external
-        view
-        override
-        delegatedOnly
-        returns (uint256)
-    {
-        return TDLib.get().sumOfShares;
-    }
 }
