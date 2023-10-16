@@ -6,17 +6,8 @@ pragma solidity ^0.8.18;
 library LGLib {
     bytes32 constant LOCUS_GOVERNANCE_STORAGE_POSITION = keccak256("diamond.standard.diamond.storage.locus_governance");
 
-    struct ReferenceTypes {
-        mapping(address => mapping(address => uint256)) mintedForUser;
-    }
-
-    struct Primitives {
-        int128 miningEpoch;
-    }
-
     struct Storage {
-        Primitives p;
-        ReferenceTypes rt;
+        uint256[] proposalsIndex;
     }
 
     function get() internal pure returns (Storage storage s) {
