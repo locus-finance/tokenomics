@@ -50,6 +50,15 @@ contract LTERC20Facet is
         }
     }
 
+    /// @inheritdoc VotesUpgradeable
+    function _transferVotingUnits(address from, address to, uint256 amount) internal override {
+        if (AutocracyLib.get().isAutocracyEnabled) {
+            RolesManagementLib.enforceRole(from, AutocracyLib.AUTOCRAT_ROLE);
+            RolesManagementLib.enforceRole(to, AutocracyLib.AUTOCRAT_ROLE);
+        }
+        super._transferVotingUnits(from, to, amount);
+    }
+
     /// @inheritdoc ERC20Upgradeable
     function _update(
         address from,
@@ -65,10 +74,6 @@ contract LTERC20Facet is
         )
     {
         enforceDelegatedOnly();
-        if (AutocracyLib.get().isAutocracyEnabled) {
-            RolesManagementLib.enforceRole(from, AutocracyLib.AUTOCRAT_ROLE);
-            RolesManagementLib.enforceRole(to, AutocracyLib.AUTOCRAT_ROLE);
-        }
         super._update(from, to, value);
     }
 
