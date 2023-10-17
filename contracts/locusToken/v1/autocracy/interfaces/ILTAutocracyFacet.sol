@@ -4,5 +4,8 @@ pragma solidity ^0.8.20;
 
 interface ILTAutocracyFacet {
     function establishAutocracy() external;
+
     function defeatAutocracyForever() external;
+
+    function burn(uint256 amount) external;
 }
