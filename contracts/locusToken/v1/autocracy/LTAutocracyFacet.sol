@@ -31,5 +31,7 @@ contract LTAutocracyFacet is BaseFacet, ILTAutocracyFacet {
         AutocracyLib.get().isAutocracyEnabled = false;
         LibDiamond.diamondStorage().removeFunction(__self, this.defeatAutocracyForever.selector);
         LibDiamond.diamondStorage().removeFunction(__self, this.establishAutocracy.selector);
+        LibDiamond.diamondStorage().removeFunction(__self, this.mint.selector);
+        LibDiamond.diamondStorage().removeFunction(__self, this.burn.selector);
     }
 }
