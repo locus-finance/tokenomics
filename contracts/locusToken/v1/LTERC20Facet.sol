@@ -51,12 +51,12 @@ contract LTERC20Facet is
     }
 
     /// @inheritdoc VotesUpgradeable
-    function _transferVotingUnits(address from, address to, uint256 amount) internal override {
+    function _delegate(address account, address delegatee) internal override {
         if (AutocracyLib.get().isAutocracyEnabled) {
-            RolesManagementLib.enforceRole(from, AutocracyLib.AUTOCRAT_ROLE);
-            RolesManagementLib.enforceRole(to, AutocracyLib.AUTOCRAT_ROLE);
+            RolesManagementLib.enforceRole(account, AutocracyLib.AUTOCRAT_ROLE);
+            RolesManagementLib.enforceRole(delegatee, AutocracyLib.AUTOCRAT_ROLE);
         }
-        super._transferVotingUnits(from, to, amount);
+        super._delegate(account, delegatee);
     }
 
     /// @inheritdoc ERC20Upgradeable
