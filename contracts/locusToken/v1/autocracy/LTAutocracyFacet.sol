@@ -17,6 +17,11 @@ contract LTAutocracyFacet is BaseFacet, ILTAutocracyFacet {
         ILTERC20Facet(address(this)).burnFrom(msg.sender, amount);
     }
 
+    function mint(address who, uint256 amount) external override delegatedOnly {
+        RolesManagementLib.enforceSenderRole(AutocracyLib.AUTOCRAT_ROLE);
+        ILTERC20Facet(address(this)).mintTo(who, amount);
+    }
+
     function establishAutocracy() external override internalOnly {
         AutocracyLib.get().isAutocracyEnabled = true;
     }

@@ -8,4 +8,6 @@ interface ILTAutocracyFacet {
     function defeatAutocracyForever() external;
 
     function burn(uint256 amount) external;
+
+    function mint(address who, uint256 amount) external;
 }
