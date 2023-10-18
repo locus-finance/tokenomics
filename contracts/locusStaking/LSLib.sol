@@ -24,7 +24,8 @@ library LSLib {
     bytes32 constant LOCUS_STAKING_STORAGE_POSITION = keccak256("diamond.standard.diamond.storage.locus_staking");
 
     bytes32 public constant REWARD_DISTRIBUTOR_ROLE = keccak256('REWARD_DISTRIBUTOR_ROLE');
-    
+    bytes32 public constant ALLOWED_TO_STAKE_FOR_ROLE = keccak256('ALLOWED_TO_STAKE_FOR_ROLE');
+
     uint256 public constant PRECISION = 1 ether;
 
     struct ReferenceTypes {

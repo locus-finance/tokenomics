@@ -28,20 +28,18 @@ contract LSDepositaryFacet is
         __Pausable_init();
     }
 
+    function stakeFor(
+        address staker,
+        uint256 amount
+    ) external override nonReentrant delegatedOnly whenNotPaused {
+        RolesManagementLib.enforceSenderRole(LSLib.ALLOWED_TO_STAKE_FOR_ROLE);
+        _stake(staker, amount);
+    }
+
     function stake(
         uint256 amount
     ) external override nonReentrant delegatedOnly whenNotPaused {
-        updateReward(msg.sender);
-        if (amount == 0) revert LSLib.CannotStakeZero();
-        TDLib.get().startTimestamps[msg.sender] = uint32(block.timestamp);
-        LSLib.get().p.totalSupply += amount;
-        LSLib.get().rt.balanceOf[msg.sender] += amount;
-        LSLib.get().p.stakingToken.safeTransferFrom(
-            msg.sender,
-            address(this),
-            amount
-        );
-        emit LSLib.Staked(msg.sender, amount);
+        _stake(msg.sender, amount);
     }
 
     function withdraw(
@@ -60,7 +58,10 @@ contract LSDepositaryFacet is
         LSLib.Primitives storage p = LSLib.get().p;
         LSLib.ReferenceTypes storage rt = LSLib.get().rt;
         uint256 reward = ILSProcessFeesFacet(address(this))
-            .getFeesAccountedRewardAndDistributeFees(rt.rewards[msg.sender], p.rewardsToken);
+            .getFeesAccountedRewardAndDistributeFees(
+                rt.rewards[msg.sender],
+                p.rewardsToken
+            );
         if (reward > 0) {
             rt.rewards[msg.sender] = 0;
             p.totalReward -= reward;
@@ -85,5 +86,19 @@ contract LSDepositaryFacet is
                 .p
                 .rewardPerTokenStored;
         }
+    }
+
+    function _stake(address staker, uint256 amount) internal {
+        updateReward(staker);
+        if (amount == 0) revert LSLib.CannotStakeZero();
+        TDLib.get().startTimestamps[staker] = uint32(block.timestamp);
+        LSLib.get().p.totalSupply += amount;
+        LSLib.get().rt.balanceOf[staker] += amount;
+        LSLib.get().p.stakingToken.safeTransferFrom(
+            staker,
+            address(this),
+            amount
+        );
+        emit LSLib.Staked(staker, amount);
     }
 }

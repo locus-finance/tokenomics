@@ -7,6 +7,8 @@ interface ILSDepositaryFacet {
 
     function stake(uint256 amount) external;
 
+    function stakeFor(address staker, uint256 amount) external;
+
     function withdraw(uint256 amount) external;
 
     function getReward() external;
