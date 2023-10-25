@@ -41,6 +41,8 @@
   "dependencies": {
     "@nomicfoundation/hardhat-network-helpers": "^1.0.8",
     "@openzeppelin/contracts-upgradeable": "^5.0.0",
-    "hardhat-contract-sizer": "^2.10.0"
+    "@openzeppelin/merkle-tree": "^1.0.5",
+    "hardhat-contract-sizer": "^2.10.0",
+    "merkletreejs": "^0.3.10"
   }
 }
