@@ -33,8 +33,6 @@ library TDLib {
     }
 
     struct Storage {
-        // address (middleman) for which we are counting a fee or a share
-        //      => timestamp to which we would add durations from `distributionDurationPoints`.
         mapping(address => uint32) startTimestamps;
         uint32[] distributionDurationPoints;
         mapping(uint256 => uint256) distributionDurationPointIdxToAmounts;

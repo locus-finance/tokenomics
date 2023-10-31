@@ -32,6 +32,7 @@ contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
 
         TDLib.Storage storage s = TDLib.get();
         uint32 maxFeePoint;
+        // just checking bps values and so they are sorted
         for (uint256 i = 0; i < feeDurationPoints.length; i++) {
             if (feeBasePoints[i] > TDLib.MAX_BPS) {
                 revert LSLib.InvalidBPS(feeBasePoints[i]);
