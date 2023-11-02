@@ -14,6 +14,7 @@ import "../../diamondBase/facets/BaseFacet.sol";
 import "./interfaces/ILSDepositaryFacet.sol";
 import "./interfaces/ILSLoupeFacet.sol";
 import "../../tokensDistributor/TDLib.sol";
+import "../../locusToken/v1/interfaces/ILTERC20Facet.sol";
 
 contract LSDepositaryFacet is
     BaseFacet,
@@ -47,26 +48,40 @@ contract LSDepositaryFacet is
     ) public override nonReentrant delegatedOnly {
         updateReward(msg.sender);
         if (amount == 0) revert LSLib.CannotWithdrawZero();
-        LSLib.get().p.totalSupply -= amount;
+        LSLib.Primitives storage p = LSLib.get().p;
+        p.totalSupply -= amount;
         LSLib.get().rt.balanceOf[msg.sender] -= amount;
-        LSLib.get().p.stakingToken.safeTransfer(msg.sender, amount);
-        emit LSLib.Withdrawn(msg.sender, amount);
+        IERC20 stakingToken = p.stakingToken;
+        uint256 amountWithFees = amount;
+        if (address(stakingToken) == p.locusToken) {
+            amountWithFees = ILSProcessFeesFacet(address(this))
+                .getFeesAccountedAmountAndDistributeFees(
+                    amount,
+                    stakingToken
+                );
+        }
+        stakingToken.safeTransfer(msg.sender, amountWithFees);
+        emit LSLib.Withdrawn(msg.sender, amount, amount - amountWithFees);
     }
 
     function getReward() public override nonReentrant delegatedOnly {
         updateReward(msg.sender);
         LSLib.Primitives storage p = LSLib.get().p;
         LSLib.ReferenceTypes storage rt = LSLib.get().rt;
-        uint256 reward = ILSProcessFeesFacet(address(this))
-            .getFeesAccountedRewardAndDistributeFees(
-                rt.rewards[msg.sender],
-                p.rewardsToken
-            );
+        uint256 rawReward = rt.rewards[msg.sender];
+        uint256 reward = rawReward;
+        if (address(LSLib.get().p.stakingToken) != LSLib.get().p.locusToken) {
+            reward = ILSProcessFeesFacet(address(this))
+                .getFeesAccountedAmountAndDistributeFees(
+                    rawReward,
+                    p.rewardsToken
+                );
+        }
         if (reward > 0) {
             rt.rewards[msg.sender] = 0;
             p.totalReward -= reward;
             p.rewardsToken.safeTransfer(msg.sender, reward);
-            emit LSLib.RewardPaid(msg.sender, reward);
+            emit LSLib.RewardPaid(msg.sender, reward, rawReward - reward);
         }
     }
 
@@ -90,11 +105,18 @@ contract LSDepositaryFacet is
 
     function _stake(address staker, uint256 amount) internal {
         updateReward(staker);
+        // if locus - delegate to sender
+        LSLib.Primitives storage p = LSLib.get().p;
+        IERC20 stakingToken = p.stakingToken;
+        address locusToken = p.locusToken;
+        if (address(stakingToken) == locusToken) {
+            ILTERC20Facet(locusToken).delegateTo(staker);
+        }
         if (amount == 0) revert LSLib.CannotStakeZero();
         TDLib.get().startTimestamps[staker] = uint32(block.timestamp);
-        LSLib.get().p.totalSupply += amount;
+        p.totalSupply += amount;
         LSLib.get().rt.balanceOf[staker] += amount;
-        LSLib.get().p.stakingToken.safeTransferFrom(
+        stakingToken.safeTransferFrom(
             staker,
             address(this),
             amount

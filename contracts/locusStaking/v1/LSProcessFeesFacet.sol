@@ -14,7 +14,7 @@ import "../../tokensDistributor/v1/interfaces/ITDProcessFacet.sol";
 contract LSProcessFeesFacet is BaseFacet, ILSProcessFeesFacet {
     using SafeERC20 for IERC20;
 
-    function getFeesAccountedRewardAndDistributeFees(
+    function getFeesAccountedAmountAndDistributeFees(
         uint256 reward,
         IERC20 rewardsToken
     ) external override internalOnly returns (uint256 feesSubstractedReward) {

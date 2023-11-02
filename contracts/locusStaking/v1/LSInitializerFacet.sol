@@ -13,7 +13,7 @@ import "../../tokensDistributor/TDLib.sol";
 contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
     function initialize(
         address owner,
-        address votingEscrow,
+        address locusToken,
         address rewardDistributor,
         address rewardsToken,
         address stakingToken,
@@ -57,7 +57,7 @@ contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
         LSLib.Primitives storage p = LSLib.get().p;
         p.rewardsToken = IERC20(rewardsToken);
         p.stakingToken = IERC20(stakingToken);
-        p.votingEscrow = votingEscrow;
         p.rewardsDuration = 4 weeks;
+        p.locusToken = locusToken;
     }
 }

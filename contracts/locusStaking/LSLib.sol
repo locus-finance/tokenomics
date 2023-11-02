@@ -14,12 +14,12 @@ library LSLib {
     error CannotRecoverToken(address token, uint256 amount);
     error ChangingRewardsDurationTooEarly(uint256 deltaInSeconds);
 
-    event RewardAdded(uint256 reward);
-    event Staked(address indexed user, uint256 amount);
-    event Withdrawn(address indexed user, uint256 amount);
-    event RewardPaid(address indexed user, uint256 reward);
-    event RewardsDurationUpdated(uint256 newDuration);
-    event Recovered(address token, uint256 amount);
+    event RewardAdded(uint256 indexed reward);
+    event Staked(address indexed user, uint256 indexed amount);
+    event Withdrawn(address indexed user, uint256 indexed amount, uint256 indexed feesTaken);
+    event RewardPaid(address indexed user, uint256 indexed reward, uint256 indexed feesTaken);
+    event RewardsDurationUpdated(uint256 indexed newDuration);
+    event Recovered(address indexed token, uint256 indexed amount);
 
     bytes32 constant LOCUS_STAKING_STORAGE_POSITION = keccak256("diamond.standard.diamond.storage.locus_staking");
 
@@ -37,7 +37,7 @@ library LSLib {
     struct Primitives {
         IERC20 rewardsToken;
         IERC20 stakingToken;
-        address votingEscrow;
+        address locusToken;
         uint256 periodFinish;
         uint256 rewardRate;
         uint256 rewardsDuration;
