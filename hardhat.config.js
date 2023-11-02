@@ -4,7 +4,7 @@ require("@nomiclabs/hardhat-etherscan");
 require("hardhat-gas-reporter");
 require("solidity-coverage");
 require("hardhat-docgen");
-require('hardhat-abi-exporter');
+require("hardhat-abi-exporter");
 require("hardhat-tracer");
 require("@nomicfoundation/hardhat-chai-matchers");
 require("hardhat-contract-sizer");
@@ -21,76 +21,76 @@ const sepoliaChainId = 11155111;
 const optimizer = {
   enabled: true,
   runs: 1,
-}
+};
 
 const compilers = [
   {
     version: "0.8.20",
     settings: {
       viaIR: true,
-      optimizer
-    }
-  }
-]
+      optimizer,
+    },
+  },
+];
 
 extendEnvironment(require("./names.plugin.js"));
 
 module.exports = {
   solidity: {
-    compilers
+    compilers,
   },
   mocha: {
-    timeout: '100000'
+    timeout: "100000",
   },
   networks: {
     hardhat: {
-      forking: {
-        url: mainnetUrl,
-        chainId: mainnetChainId
-      },
-      saveDeployments: true
+      // forking: {
+      //   url: mainnetUrl,
+      //   chainId: mainnetChainId,
+      // },
+      saveDeployments: true,
     },
     mainnet: {
       url: mainnetUrl,
       chainId: mainnetChainId,
       accounts: { mnemonic: process.env.MAINNET_DEPLOY_MNEMONIC },
-      saveDeployments: true
+      saveDeployments: true,
     },
     sepolia: {
       url: sepoliaUrl,
       chainId: sepoliaChainId,
       accounts: { mnemonic: process.env.TESTNET_DEPLOY_MNEMONIC },
-      saveDeployments: true
-    }
+      saveDeployments: true,
+    },
   },
   namedAccounts: {
-    deployer: 0
+    deployer: 0,
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS === "true" ? true : false,
-    currency: "USD"
+    currency: "USD",
   },
   etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY
+    apiKey: process.env.ETHERSCAN_API_KEY,
   },
   verify: {
     etherscan: {
-      apiKey: process.env.ETHERSCAN_API_KEY
-    }
+      apiKey: process.env.ETHERSCAN_API_KEY,
+    },
   },
   docgen: {
-    path: './docs',
+    path: "./docs",
     clear: true,
-    runOnCompile: process.env.DOCGEN === "true" ? true : false
+    runOnCompile: process.env.DOCGEN === "true" ? true : false,
   },
   abiExporter: {
-    path: './abis',
+    path: "./abis",
     flat: false,
-    format: "json"
+    format: "json",
   },
   contractSizer: {
     alphaSort: true,
     disambiguatePaths: false,
-    runOnCompile: true
-  }
+    runOnCompile: true,
+  },
 };
