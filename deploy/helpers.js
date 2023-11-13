@@ -1,3 +1,4 @@
+const { StandardMerkleTree } = require("@openzeppelin/merkle-tree");
 const diamondCutFacetAbi = require('hardhat-deploy/extendedArtifacts/DiamondCutFacet.json').abi;
 
 ////////////////////////////////////////////
@@ -110,6 +111,14 @@ const manipulateFacet = async (
   );
 }
 
+const getMockTree = (user1, user2) => StandardMerkleTree.of(
+  [
+    [user1, "10000000000000000000000000"],
+    [user2, "20000000000000000000000000"],
+  ],
+  ["address", "uint256"]
+);
+
 module.exports = {
   skipIfAlreadyDeployed,
   withImpersonatedSigner,
@@ -119,5 +128,6 @@ module.exports = {
   getEventBody,
   emptyStage,
   diamondCut,
-  manipulateFacet
+  manipulateFacet,
+  getMockTree
 };

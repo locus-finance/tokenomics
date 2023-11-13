@@ -65,6 +65,9 @@ module.exports = {
   },
   namedAccounts: {
     deployer: 0,
+    user1: 1,
+    user2: 2,
+    treasury: 3
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS === "true" ? true : false,

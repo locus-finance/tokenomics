@@ -33,4 +33,4 @@ module.exports = async ({
   }
   log(`Updated tags:\n${JSON.stringify(hre.tracer.nameTags)}`);
 }
-module.exports.tags = ["update_tracer_names"];
+module.exports.tags = ["updateTracerNames"];
