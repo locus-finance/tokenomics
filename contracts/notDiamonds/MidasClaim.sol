@@ -45,14 +45,23 @@ contract MidasClaim is Ownable {
         if (_newRoot == bytes32(0)) {
             revert CannotBeZeroBytes32();
         }
+        emit MerkleRootChanged(merkleRoot, _newRoot);
         merkleRoot = _newRoot;
     }
 
     function setNewToken(address _newToken) external onlyOwner {
+        if (_newToken == address(0)) {
+            revert CannotBeZeroAddress();
+        }
+        emit NewClaimingTokenSet(address(token), _newToken);
         token = IERC20(_newToken);
     }
 
     function setNewTreasury(address _newTreasury) external onlyOwner {
+        if (_newTreasury == address(0)) {
+            revert CannotBeZeroAddress();
+        }
+        emit NewTreasurySet(treasury, _newTreasury);
         treasury = _newTreasury;
     }
 
