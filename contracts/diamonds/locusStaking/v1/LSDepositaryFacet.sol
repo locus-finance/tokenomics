@@ -110,7 +110,8 @@ contract LSDepositaryFacet is
         IERC20 stakingToken = p.stakingToken;
         address locusToken = p.locusToken;
         if (address(stakingToken) == locusToken) {
-            ILTERC20Facet(locusToken).delegateTo(staker);
+            // WARNING: CHECK THE ROLE OF STAKING DIAMOND: VOTING_POWER_DISTRIBUTOR
+            ILTERC20Facet(locusToken).lowLevelDelegate(staker, staker);
         }
         if (amount == 0) revert LSLib.CannotStakeZero();
         TDLib.get().startTimestamps[staker] = uint32(block.timestamp);

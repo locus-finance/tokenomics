@@ -20,7 +20,7 @@ contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
         address stakingToken,
         uint32[] memory feeDurationPoints,
         uint16[] memory feeBasePoints
-    ) external override delegatedOnly {
+    ) external override initializer delegatedOnly {
         InitializerLib.initialize();
         ILSDepositaryFacet(address(this))._initialize_LSDepositaryFacet();
 

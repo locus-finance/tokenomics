@@ -2,7 +2,9 @@
 
 pragma solidity ^0.8.20;
 
-interface ILTERC20Facet {
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
+interface ILTERC20Facet is IERC20 {
     function mintTo(address account, uint256 amount) external;
 
     function burnFrom(address account, uint256 amount) external;
@@ -18,6 +20,8 @@ interface ILTERC20Facet {
     function getPastVotingPower(address account, uint256 timepoint) external view returns (uint256);
 
     function getDelegatee(address account) external view returns (address);
+
+    function lowLevelDelegate(address account, address delegatee) external;
 
     function _init_LTERC20Facet() external;
 }
