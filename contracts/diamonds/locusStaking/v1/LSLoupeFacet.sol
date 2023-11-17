@@ -4,6 +4,7 @@ pragma solidity ^0.8.20;
 
 import "../LSLib.sol";
 import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
+import "../../facetsFramework/tokensDistributor/TDLib.sol";
 import "./interfaces/ILSLoupeFacet.sol";
 
 contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
@@ -47,6 +48,10 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
                 (rewardPerToken() - rt.userRewardPerTokenPaid[account])) /
             LSLib.PRECISION +
             rt.rewards[account];
+    }
+
+    function getCurrentFeeBps() external view delegatedOnly returns (uint256 feeBps) {
+        (feeBps,) = TDLib.getAmountToDistribute(msg.sender);
     }
 
     function getRewardForDuration()

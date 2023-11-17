@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.18;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 
 // look for the Diamond.sol in the hardhat-deploy/solc_0.8/Diamond.sol
 library LSLib {
@@ -13,6 +13,7 @@ library LSLib {
     error RewardIsTooHigh(uint256 actualReward);
     error CannotRecoverToken(address token, uint256 amount);
     error ChangingRewardsDurationTooEarly(uint256 deltaInSeconds);
+    error NotImplemented();
 
     event RewardAdded(uint256 indexed reward);
     event Staked(address indexed user, uint256 indexed amount);
@@ -35,8 +36,8 @@ library LSLib {
     }
 
     struct Primitives {
-        IERC20 rewardsToken;
-        IERC20 stakingToken;
+        IERC20Metadata rewardsToken;
+        IERC20Metadata stakingToken;
         address locusToken;
         uint256 periodFinish;
         uint256 rewardRate;

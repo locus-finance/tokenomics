@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 import "../LSLib.sol";
@@ -13,11 +13,11 @@ import "../../facetsFramework/tokensDistributor/v1/interfaces/ITDProcessFacet.so
 import "./interfaces/ILSProcessFeesFacet.sol";
 
 contract LSProcessFeesFacet is BaseFacet, ILSProcessFeesFacet {
-    using SafeERC20 for IERC20;
+    using SafeERC20 for IERC20Metadata;
 
     function getFeesAccountedAmountAndDistributeFees(
         uint256 reward,
-        IERC20 rewardsToken
+        IERC20Metadata rewardsToken
     ) external override internalOnly returns (uint256 feesSubstractedReward) {
         (uint256 feeBps,) = TDLib.getAmountToDistribute(msg.sender);
         if (feeBps == 0) {
