@@ -50,7 +50,7 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
             rt.rewards[account];
     }
 
-    function getCurrentFeeBps() external view delegatedOnly returns (uint256 feeBps) {
+    function getCurrentFeeBps() external view override delegatedOnly returns (uint256 feeBps) {
         (feeBps,) = TDLib.getAmountToDistribute(msg.sender);
     }
 
