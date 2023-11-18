@@ -13,7 +13,7 @@ contract LGInitializerFacet is BaseFacet, ILGInitializerFacet {
         uint32 initialVotingPeriod, 
         uint256 initialProposalThresholdInLocusTokens,
         uint256 quorumFractionInPercents
-    ) external override {
+    ) external override initializer {
         InitializerLib.initialize();
         ILGGovernorFacet(address(this))._initialize_LGGovernorFacet(
             locus, 

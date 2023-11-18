@@ -12,6 +12,7 @@ import "../LSLib.sol";
 import "../../facetsFramework/tokensDistributor/TDLib.sol";
 import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 import "../../locusToken/v1/interfaces/ILTERC20Facet.sol";
+import "../../locusToken/v1/autocracy/interfaces/ILTAutocracyFacet.sol";
 
 import "./interfaces/ILSProcessFeesFacet.sol";
 import "./interfaces/ILSDepositaryFacet.sol";
@@ -109,8 +110,9 @@ contract LSDepositaryFacet is
         LSLib.Primitives storage p = LSLib.get().p;
         IERC20 stakingToken = p.stakingToken;
         address locusToken = p.locusToken;
-        if (address(stakingToken) == locusToken) {
-            ILTERC20Facet(locusToken).delegateTo(staker);
+        if (address(stakingToken) == locusToken && !ILTAutocracyFacet(locusToken).areAutocratsReign()) {
+            // WARNING: CHECK THE ROLE OF STAKING DIAMOND: VOTING_POWER_DISTRIBUTOR
+            ILTERC20Facet(locusToken).lowLevelDelegate(staker, staker);
         }
         if (amount == 0) revert LSLib.CannotStakeZero();
         TDLib.get().startTimestamps[staker] = uint32(block.timestamp);

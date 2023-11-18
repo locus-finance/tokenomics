@@ -2,11 +2,13 @@
 
 pragma solidity ^0.8.18;
 
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+
 import "../libraries/PausabilityLib.sol";
 import "../libraries/InitializerLib.sol";
 import "../libraries/RolesManagementLib.sol";
 
-abstract contract BaseFacet {
+abstract contract BaseFacet is Initializable {
     error DelegatedCallsOnly();
     
     /// @dev An address of the actual contract instance. The original address as part of the context.

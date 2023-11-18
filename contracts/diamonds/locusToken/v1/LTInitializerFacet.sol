@@ -19,7 +19,7 @@ contract LTInitializerFacet is BaseFacet, ILTInitializerFacet {
         uint256[] calldata distributionReceiversShares,
         uint32[] calldata distributionDurationPoints,
         uint256[][] calldata amountsPerEpochs
-    ) external override {
+    ) external override initializer {
         InitializerLib.initialize();
 
         ILTERC20Facet(address(this))._init_LTERC20Facet();
@@ -62,9 +62,7 @@ contract LTInitializerFacet is BaseFacet, ILTInitializerFacet {
                 // It has to be equal to a sum of tokens belonging to every distribution receiver per epoch.
                 // This maps a duration points (an interval from startTimestamp[...] to a certain point in time represented by the duration of the interval)
                 // to an amount that has to be distributed to each epoch.
-                s.distributionDurationPointIdxToAmounts[i] = amountsPerEpochs[
-                    j
-                ][i];
+                s.distributionDurationPointIdxToAmounts[i] = amountsPerEpochs[j][i];
             }
         }
 

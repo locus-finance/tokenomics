@@ -10,4 +10,6 @@ interface ILTAutocracyFacet {
     function burn(uint256 amount) external;
 
     function mint(address who, uint256 amount) external;
+
+    function areAutocratsReign() external view returns (bool);
 }

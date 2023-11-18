@@ -89,6 +89,11 @@ contract LTERC20Facet is
         return super.nonces(owner);
     }
 
+    function lowLevelDelegate(address account, address delegatee) external override {
+        RolesManagementLib.enforceSenderRole(LTLib.VOTING_POWER_DISTRIBUTOR);
+        _delegate(account, delegatee);
+    }
+
     function delegateTo(address delegatee) external override {
         delegate(delegatee);
     }

@@ -26,6 +26,10 @@ contract LTAutocracyFacet is BaseFacet, ILTAutocracyFacet {
         AutocracyLib.get().isAutocracyEnabled = true;
     }
 
+    function areAutocratsReign() external view override delegatedOnly returns (bool) {
+        return AutocracyLib.get().isAutocracyEnabled;
+    }
+
     function defeatAutocracyForever() external override delegatedOnly {
         RolesManagementLib.enforceSenderRole(AutocracyLib.REVOLUTIONARY_ROLE);
         AutocracyLib.get().isAutocracyEnabled = false;
