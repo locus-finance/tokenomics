@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 import "../LSLib.sol";
@@ -11,7 +11,7 @@ import "./interfaces/ILSManagementFacet.sol";
 import "./interfaces/ILSDepositaryFacet.sol";
 
 contract LSManagementFacet is BaseFacet, ILSManagementFacet {
-    using SafeERC20 for IERC20;
+    using SafeERC20 for IERC20Metadata;
 
     function notifyRewardAmount(
         uint256 reward
@@ -53,7 +53,7 @@ contract LSManagementFacet is BaseFacet, ILSManagementFacet {
         if (tokenAddress == address(LSLib.get().p.stakingToken)) {
             revert LSLib.CannotRecoverToken(tokenAddress, tokenAmount);
         }
-        IERC20(tokenAddress).safeTransfer(msg.sender, tokenAmount);
+        IERC20Metadata(tokenAddress).safeTransfer(msg.sender, tokenAmount);
         emit LSLib.Recovered(tokenAddress, tokenAmount);
     }
     

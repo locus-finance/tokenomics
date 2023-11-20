@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 import "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
@@ -24,7 +24,7 @@ contract LSDepositaryFacet is
     PausableUpgradeable,
     ILSDepositaryFacet
 {
-    using SafeERC20 for IERC20;
+    using SafeERC20 for IERC20Metadata;
 
     function _initialize_LSDepositaryFacet() external override internalOnly {
         __ReentrancyGuard_init();
@@ -53,7 +53,7 @@ contract LSDepositaryFacet is
         LSLib.Primitives storage p = LSLib.get().p;
         p.totalSupply -= amount;
         LSLib.get().rt.balanceOf[msg.sender] -= amount;
-        IERC20 stakingToken = p.stakingToken;
+        IERC20Metadata stakingToken = p.stakingToken;
         uint256 amountWithFees = amount;
         if (address(stakingToken) == p.locusToken) {
             amountWithFees = ILSProcessFeesFacet(address(this))
@@ -108,7 +108,7 @@ contract LSDepositaryFacet is
     function _stake(address staker, uint256 amount) internal {
         updateReward(staker);
         LSLib.Primitives storage p = LSLib.get().p;
-        IERC20 stakingToken = p.stakingToken;
+        IERC20Metadata stakingToken = p.stakingToken;
         address locusToken = p.locusToken;
         if (address(stakingToken) == locusToken && !ILTAutocracyFacet(locusToken).areAutocratsReign()) {
             // WARNING: CHECK THE ROLE OF STAKING DIAMOND: VOTING_POWER_DISTRIBUTOR
