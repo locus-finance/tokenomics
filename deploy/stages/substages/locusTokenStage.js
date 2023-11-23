@@ -10,9 +10,7 @@ module.exports = async ({
 
   const execute = {
     methodName: 'initialize',
-    args: [
-        deployer
-    ]
+    args: [ deployer ]
   };
  
   const facets = [
@@ -27,7 +25,8 @@ module.exports = async ({
     'LTLib',
     'InitializerLib',
     'PausabilityLib',
-    'RolesManagementLib'
+    'RolesManagementLib',
+    'AutocracytLib'
   ];
 
   await diamond.deploy('LocusToken', {
