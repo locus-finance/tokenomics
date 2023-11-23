@@ -39,7 +39,8 @@ contract TDManagementFacet is BaseFacet, ITDManagementFacet {
         uint256 share
     ) external override delegatedOnly {
         _enforceSenderOwnerOrInternal();
-        for (uint256 i = 0; i < TDLib.get().distributionReceivers.length; i++) {
+        uint256 len = TDLib.get().distributionReceivers.length;
+        for (uint256 i = 0; i < len; i++) {
             TDLib.DistributionReceiver storage containedReceiver = TDLib
                 .get()
                 .distributionReceivers[i];
@@ -73,7 +74,8 @@ contract TDManagementFacet is BaseFacet, ITDManagementFacet {
         bool status
     ) external override delegatedOnly {
         _enforceSenderOwnerOrInternal();
-        for (uint256 i = 0; i < TDLib.get().distributionReceivers.length; i++) {
+        uint256 len = TDLib.get().distributionReceivers.length;
+        for (uint256 i = 0; i < len; i++) {
             TDLib.DistributionReceiver storage containedReceiver = TDLib
                 .get()
                 .distributionReceivers[i];

@@ -3,6 +3,8 @@
 pragma solidity ^0.8.18;
 
 library RolesManagementLib {
+    event RoleSet(address who, bytes32 role, bool isGrantedOrRevoked);
+
     error HasNoRole(address who, bytes32 role);
     error HasNoRoles(address who, bytes32[] roles);
 
@@ -50,10 +52,12 @@ library RolesManagementLib {
 
     function grantRole(address who, bytes32 role) internal {
         get().roles[role][who] = true; 
+        emit RoleSet(who, role, true);
     }
 
     function revokeRole(address who, bytes32 role) internal {
         get().roles[role][who] = false; 
+        emit RoleSet(who, role, false);
     }
 
     function enforceEitherOfRoles(address who, bytes32[] memory roles) internal view {

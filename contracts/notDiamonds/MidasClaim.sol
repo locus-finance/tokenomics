@@ -20,6 +20,7 @@ contract MidasClaim is Ownable {
     event MerkleRootChanged(bytes32 indexed oldRoot, bytes32 indexed newRoot);
     event NewClaimingTokenSet(address indexed oldToken, address indexed newToken);
     event NewTreasurySet(address indexed oldToken, address indexed newToken);
+    event EmergencyExitCalled();
 
     IERC20 public token;
     address public treasury;
@@ -80,5 +81,6 @@ contract MidasClaim is Ownable {
 
     function emergencyExit() external onlyOwner {
         token.safeTransfer(treasury, token.balanceOf(address(this)));
+        emit EmergencyExitCalled();
     }
 }

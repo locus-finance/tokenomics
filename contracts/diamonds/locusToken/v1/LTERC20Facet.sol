@@ -19,9 +19,9 @@ contract LTERC20Facet is
     ILTERC20Facet
 {
     function _init_LTERC20Facet() external override internalOnly {
-        __ERC20_init(LTLib.name, LTLib.symbol);
+        __ERC20_init(LTLib.originalName, LTLib.originalSymbol);
         __ERC20Capped_init(LTLib.INITIAL_SUPPLY);
-        __ERC20Permit_init(LTLib.name);
+        __ERC20Permit_init(LTLib.originalName);
         __ERC20Votes_init();
     }
 
@@ -87,11 +87,6 @@ contract LTERC20Facet is
         returns (uint256)
     {
         return super.nonces(owner);
-    }
-
-    function lowLevelDelegate(address account, address delegatee) external override {
-        RolesManagementLib.enforceSenderRole(LTLib.VOTING_POWER_DISTRIBUTOR);
-        _delegate(account, delegatee);
     }
 
     function delegateTo(address delegatee) external override {

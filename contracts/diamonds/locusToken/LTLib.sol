@@ -12,10 +12,9 @@ library LTLib {
         keccak256("diamond.standard.diamond.storage.locus_token");
 
     bytes32 public constant ALLOWANCE_FREE_ROLE = keccak256('ALLOWANCE_FREE_ROLE');
-    bytes32 public constant VOTING_POWER_DISTRIBUTOR = keccak256('VOTING_POWER_DISTRIBUTOR');
 
-    string public constant name = "Locus Token";
-    string public constant symbol = "LCS";
+    string public constant originalName = "Locus Token";
+    string public constant originalSymbol = "LCS";
 
     uint256 public constant INITIAL_SUPPLY = 15_000_000 ether;
 

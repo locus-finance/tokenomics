@@ -21,7 +21,5 @@ interface ILTERC20Facet is IERC20 {
 
     function getDelegatee(address account) external view returns (address);
 
-    function lowLevelDelegate(address account, address delegatee) external;
-
     function _init_LTERC20Facet() external;
 }

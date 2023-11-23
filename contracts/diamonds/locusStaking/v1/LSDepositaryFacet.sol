@@ -109,11 +109,6 @@ contract LSDepositaryFacet is
         updateReward(staker);
         LSLib.Primitives storage p = LSLib.get().p;
         IERC20Metadata stakingToken = p.stakingToken;
-        address locusToken = p.locusToken;
-        if (address(stakingToken) == locusToken && !ILTAutocracyFacet(locusToken).areAutocratsReign()) {
-            // WARNING: CHECK THE ROLE OF STAKING DIAMOND: VOTING_POWER_DISTRIBUTOR
-            ILTERC20Facet(locusToken).lowLevelDelegate(staker, staker);
-        }
         if (amount == 0) revert LSLib.CannotStakeZero();
         TDLib.get().startTimestamps[staker] = uint32(block.timestamp);
         p.totalSupply += amount;
