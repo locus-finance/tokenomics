@@ -14,16 +14,31 @@ import "./autocracy/libraries/AutocracyLib.sol";
 
 contract LTInitializerFacet is BaseFacet, ILTInitializerFacet {
     function initialize(
-        address owner,
-        address[] calldata distributionReceivers,
-        uint256[] calldata distributionReceiversShares,
-        uint32[] calldata distributionDurationPoints,
-        uint256[][] calldata amountsPerEpochs
+        address owner
     ) external override initializer {
         InitializerLib.initialize();
 
         ILTERC20Facet(address(this))._init_LTERC20Facet();
 
+        TDLib.Storage storage s = TDLib.get();
+        // Initialize the start of inflation.
+        // address(0) is utilized because for every receiver we have one time of inflation start.
+        s.startTimestamps[address(0)] = uint32(block.timestamp);
+        s.undistributedAmountsReceiver = owner;
+
+        RolesManagementLib.grantRole(owner, RolesManagementLib.OWNER_ROLE);
+        RolesManagementLib.grantRole(owner, AutocracyLib.REVOLUTIONARY_ROLE);
+        RolesManagementLib.grantRole(owner, AutocracyLib.AUTOCRAT_ROLE);
+        ILTAutocracyFacet(address(this)).establishAutocracy();
+    }
+
+    function setupInflation(
+        address[] calldata distributionReceivers,
+        uint256[] calldata distributionReceiversShares,
+        uint32[] calldata distributionDurationPoints,
+        uint256[][] calldata amountsPerEpochs
+    ) external override delegatedOnly {
+        RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);
         if (distributionReceivers.length == 0) {
             revert TDLib.IncorrectLengths(distributionReceivers.length, 0);
         }
@@ -73,16 +88,7 @@ contract LTInitializerFacet is BaseFacet, ILTInitializerFacet {
                 false
             );
         }
-
-        // Initialize the start of inflation.
-        // address(0) is utilized because for every receiver we have one time of inflation start.
-        s.startTimestamps[address(0)] = uint32(block.timestamp);
         s.distributionDurationPoints = distributionDurationPoints;
-        s.undistributedAmountsReceiver = owner;
 
-        RolesManagementLib.grantRole(owner, RolesManagementLib.OWNER_ROLE);
-        RolesManagementLib.grantRole(owner, AutocracyLib.REVOLUTIONARY_ROLE);
-        RolesManagementLib.grantRole(owner, AutocracyLib.AUTOCRAT_ROLE);
-        ILTAutocracyFacet(address(this)).establishAutocracy();
     }
 }

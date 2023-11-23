@@ -9,4 +9,4 @@ module.exports = async ({
   const { deploy, get, execute } = deployments;
   const { deployer } = await getNamedAccounts();
 }
-module.exports.tags = ["mainStage", "main"];
+module.exports.tags = ["locusStakingStage", "staking"];
