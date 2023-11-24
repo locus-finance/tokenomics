@@ -1,23 +1,17 @@
 const hre = require('hardhat');
-const { manipulateFacet } = require('../../fixtures/utils/helpers');
 
 module.exports = async ({
   getNamedAccounts,
   deployments
 }) => {
-  const { diamond } = deployments;
+  const { diamond, execute } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  const execute = {
-    methodName: 'initialize',
-    args: [ deployer ]
-  };
- 
   const facets = [
     "RolesManagementFacet",
+    "LTERC20Facet",
     "LTEmissionControlFacet",
     "LTAutocracyFacet",
-    "LTERC20Facet",
     "LTInitializerFacet"
   ];
 
@@ -26,7 +20,7 @@ module.exports = async ({
     'InitializerLib',
     'PausabilityLib',
     'RolesManagementLib',
-    'AutocracytLib'
+    'AutocracyLib'
   ];
 
   await diamond.deploy('LocusToken', {
@@ -34,8 +28,15 @@ module.exports = async ({
     facets,
     log: true,
     libraries,
-    execute
+    execute: {
+        methodName: 'initialize',
+        args: [ deployer ]
+    }
   });
-
+  await execute(
+    hre.names.internal.diamonds.locusToken.proxy,
+    {from: deployer, log: true},
+    'setupTokenInfoAndEstablishAutocracy'
+  );
 }
 module.exports.tags = ["locusTokenStage", "token"];

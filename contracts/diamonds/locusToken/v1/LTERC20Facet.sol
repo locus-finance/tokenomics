@@ -18,7 +18,7 @@ contract LTERC20Facet is
     ERC20VotesUpgradeable,
     ILTERC20Facet
 {
-    function _init_LTERC20Facet() external override internalOnly {
+    function setupTokenInfo() external override initializer internalOnly {
         __ERC20_init(LTLib.originalName, LTLib.originalSymbol);
         __ERC20Capped_init(LTLib.INITIAL_SUPPLY);
         __ERC20Permit_init(LTLib.originalName);

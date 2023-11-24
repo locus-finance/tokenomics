@@ -19,4 +19,6 @@ interface ILTInitializerFacet {
         uint32[] calldata distributionDurationPoints,
         uint256[][] calldata amountsPerEpochs
     ) external;
+
+    function setupTokenInfoAndEstablishAutocracy() external;
 }

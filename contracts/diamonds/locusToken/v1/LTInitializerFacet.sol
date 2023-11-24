@@ -13,13 +13,8 @@ import "./autocracy/interfaces/ILTAutocracyFacet.sol";
 import "./autocracy/libraries/AutocracyLib.sol";
 
 contract LTInitializerFacet is BaseFacet, ILTInitializerFacet {
-    function initialize(
-        address owner
-    ) external override initializer {
+    function initialize(address owner) external override {
         InitializerLib.initialize();
-
-        ILTERC20Facet(address(this))._init_LTERC20Facet();
-
         TDLib.Storage storage s = TDLib.get();
         // Initialize the start of inflation.
         // address(0) is utilized because for every receiver we have one time of inflation start.
@@ -29,6 +24,10 @@ contract LTInitializerFacet is BaseFacet, ILTInitializerFacet {
         RolesManagementLib.grantRole(owner, RolesManagementLib.OWNER_ROLE);
         RolesManagementLib.grantRole(owner, AutocracyLib.REVOLUTIONARY_ROLE);
         RolesManagementLib.grantRole(owner, AutocracyLib.AUTOCRAT_ROLE);
+    }
+
+    function setupTokenInfoAndEstablishAutocracy() external override delegatedOnly {
+        ILTERC20Facet(address(this)).setupTokenInfo();
         ILTAutocracyFacet(address(this)).establishAutocracy();
     }
 

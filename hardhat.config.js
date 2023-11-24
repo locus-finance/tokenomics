@@ -14,9 +14,11 @@ require("./tasks/getAllArtifacts")(task);
 
 const mainnetUrl = `https://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_MAINNET_API_KEY}`;
 const sepoliaUrl = `https://eth-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_SEPOLIA_API_KEY}`;
+const arbitrumOneUrl = 'https://arb1.arbitrum.io/rpc';
 
 const mainnetChainId = 1;
 const sepoliaChainId = 11155111;
+const arbitrumOneChainId = 42161;
 
 const optimizer = {
   enabled: true,
@@ -44,10 +46,10 @@ module.exports = {
   },
   networks: {
     hardhat: {
-      // forking: {
-      //   url: mainnetUrl,
-      //   chainId: mainnetChainId,
-      // },
+      forking: {
+        url: arbitrumOneUrl,
+        chainId: arbitrumOneChainId,
+      },
       saveDeployments: true,
     },
     mainnet: {
@@ -60,6 +62,12 @@ module.exports = {
       url: sepoliaUrl,
       chainId: sepoliaChainId,
       accounts: { mnemonic: process.env.TESTNET_DEPLOY_MNEMONIC },
+      saveDeployments: true,
+    },
+    arbitrumOne: {
+      url: arbitrumOneUrl,
+      chainId: arbitrumOneChainId,
+      accounts: { mnemonic: process.env.MAINNET_DEPLOY_MNEMONIC },
       saveDeployments: true,
     },
   },
