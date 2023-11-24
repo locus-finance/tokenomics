@@ -8,12 +8,36 @@ module.exports = async ({
   const { deploy, get, execute } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  // const diamondInstance = await hre.ethers.getContractAt(
-  //   hre.names.internal.diamonds.locusToken.interface,
-  //   (await get(hre.names.internal.diamonds.locusToken.proxy)).address
-  // );
+  const facets = [
+    "RolesManagementFacet",
+    "TDLoupeFacet",
+    "TDManagementFacet",
+    "TDProcessFacet",
+    "LSDepositaryFacet",
+    "LSERC20Facet",
+    "LSInitializerFacet",
+    "LSLoupeFacet",
+    "LSManagementFacet",
+    "LSProcessFeesFacet"
+  ];
 
-  // // const initTx = await diamondInstance.initialize(deployer);
-  // // await initTx.wait();
+  const libraries = [
+    'TDLib',
+    'LSLib',
+    'InitializerLib',
+    'PausabilityLib',
+    'RolesManagementLib',
+  ];
+
+  await diamond.deploy('LocusStaking', {
+    from: deployer,
+    facets,
+    log: true,
+    libraries,
+    execute: {
+      methodName: 'initialize',
+      args: [deployer]
+    }
+  });
 }
 module.exports.tags = ["locusStakingStage", "staking"];
