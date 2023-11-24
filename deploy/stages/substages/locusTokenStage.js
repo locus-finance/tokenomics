@@ -31,15 +31,13 @@ module.exports = async ({
     from: deployer,
     facets,
     log: true,
-    libraries
+    libraries,
+    execute: {
+      methodName: 'initialize',
+      args: [deployer]
+    }
   });
 
-  await execute(
-    hre.names.internal.diamonds.locusToken.proxy,
-    {from: deployer, log: true},
-    'initialize',
-    deployer
-  );
   await execute(
     hre.names.internal.diamonds.locusToken.proxy,
     {from: deployer, log: true},

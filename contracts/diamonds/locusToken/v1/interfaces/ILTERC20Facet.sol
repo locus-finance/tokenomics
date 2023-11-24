@@ -1,10 +1,7 @@
 // SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
 
-pragma solidity ^0.8.20;
-
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-
-interface ILTERC20Facet is IERC20 {
+interface ILTERC20Facet {
     function mintTo(address account, uint256 amount) external;
 
     function burnFrom(address account, uint256 amount) external;

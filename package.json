@@ -10,7 +10,7 @@
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.5",
     "@nomiclabs/hardhat-ethers": "^2.2.1",
     "@nomiclabs/hardhat-etherscan": "^3.1.2",
-    "@openzeppelin/contracts": "^5.0.0",
+    "@openzeppelin/contracts": "4.9.3",
     "@solidity-parser/parser": "^0.16.1",
     "@uniswap/v3-core": "^1.0.1",
     "@uniswap/v3-periphery": "^1.4.3",
@@ -40,7 +40,7 @@
   "packageManager": "yarn@3.6.3",
   "dependencies": {
     "@nomicfoundation/hardhat-network-helpers": "^1.0.8",
-    "@openzeppelin/contracts-upgradeable": "^5.0.0",
+    "@openzeppelin/contracts-upgradeable": "4.9.3",
     "@openzeppelin/merkle-tree": "^1.0.5",
     "hardhat-contract-sizer": "^2.10.0",
     "merkletreejs": "^0.3.10"

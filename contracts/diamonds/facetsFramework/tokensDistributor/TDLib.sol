@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.18;
 
 // look for the Diamond.sol in the hardhat-deploy/solc_0.8/Diamond.sol
 library TDLib {

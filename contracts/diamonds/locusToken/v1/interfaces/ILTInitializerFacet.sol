@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.18;
 
 interface ILTInitializerFacet {
     /// @notice An initializer function for Locus Token owner and starting state of the inflation.

@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.18;
 
 import "./interfaces/ILTERC20Facet.sol";
 import "./interfaces/ILTInitializerFacet.sol";
@@ -27,6 +26,7 @@ contract LTInitializerFacet is BaseFacet, ILTInitializerFacet {
     }
 
     function setupTokenInfoAndEstablishAutocracy() external override delegatedOnly {
+        // WARNING: AN INITIALIZER MODIFIER PREVENTS DOUBLE CALL
         ILTERC20Facet(address(this)).setupTokenInfo();
         ILTAutocracyFacet(address(this)).establishAutocracy();
     }
@@ -88,6 +88,5 @@ contract LTInitializerFacet is BaseFacet, ILTInitializerFacet {
             );
         }
         s.distributionDurationPoints = distributionDurationPoints;
-
     }
 }
