@@ -1,0 +1,246 @@
+{
+  "address": "0xDF356ceE723997Cf587e024730AB08aF47D60b01",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "DelegatedCallsOnly",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "who",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "role",
+          "type": "bytes32"
+        }
+      ],
+      "name": "HasNoRole",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidInitialization",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NotInitializing",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "length1",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "length2",
+          "type": "uint256"
+        }
+      ],
+      "name": "UnequalLengths",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint64",
+          "name": "version",
+          "type": "uint64"
+        }
+      ],
+      "name": "Initialized",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "who",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "role",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "isGrantedOrRevoked",
+          "type": "bool"
+        }
+      ],
+      "name": "RoleSet",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "who",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "role",
+          "type": "bytes32"
+        }
+      ],
+      "name": "grantRole",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "people",
+          "type": "address[]"
+        },
+        {
+          "internalType": "bytes32[]",
+          "name": "roles",
+          "type": "bytes32[]"
+        }
+      ],
+      "name": "grantRoles",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "who",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "role",
+          "type": "bytes32"
+        }
+      ],
+      "name": "hasRole",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "who",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "role",
+          "type": "bytes32"
+        }
+      ],
+      "name": "revokeRole",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "people",
+          "type": "address[]"
+        },
+        {
+          "internalType": "bytes32[]",
+          "name": "roles",
+          "type": "bytes32[]"
+        }
+      ],
+      "name": "revokeRoles",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x1746a8a67f13ff2260ac774416b7008426f349fa408445ec924a12486066e7ea",
+  "receipt": {
+    "to": "0x4e59b44847b379578588920cA78FbF26c0B4956C",
+    "from": "0x729F2222aaCD99619B8B660b412baE9fCEa3d90F",
+    "contractAddress": null,
+    "transactionIndex": 2,
+    "gasUsed": "2385867",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x34aad85b7d9a1d04d9549a0dcb9c06cf6368ef6554282b1300b1163cdc53d96d",
+    "transactionHash": "0x1746a8a67f13ff2260ac774416b7008426f349fa408445ec924a12486066e7ea",
+    "logs": [],
+    "blockNumber": 153445389,
+    "cumulativeGasUsed": "3083344",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "f2cbd77dff83ddf9a9c16b855b9827fe",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"DelegatedCallsOnly\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"who\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"}],\"name\":\"HasNoRole\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InvalidInitialization\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NotInitializing\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"length1\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"length2\",\"type\":\"uint256\"}],\"name\":\"UnequalLengths\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint64\",\"name\":\"version\",\"type\":\"uint64\"}],\"name\":\"Initialized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"who\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"isGrantedOrRevoked\",\"type\":\"bool\"}],\"name\":\"RoleSet\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"who\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"}],\"name\":\"grantRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"people\",\"type\":\"address[]\"},{\"internalType\":\"bytes32[]\",\"name\":\"roles\",\"type\":\"bytes32[]\"}],\"name\":\"grantRoles\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"who\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"}],\"name\":\"hasRole\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"who\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"}],\"name\":\"revokeRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"people\",\"type\":\"address[]\"},{\"internalType\":\"bytes32[]\",\"name\":\"roles\",\"type\":\"bytes32[]\"}],\"name\":\"revokeRoles\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"errors\":{\"InvalidInitialization()\":[{\"details\":\"The contract is already initialized.\"}],\"NotInitializing()\":[{\"details\":\"The contract is not initializing.\"}]},\"events\":{\"Initialized(uint64)\":{\"details\":\"Triggered when the contract has been initialized or reinitialized.\"}},\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/diamonds/facetsFramework/diamondBase/facets/RolesManagementFacet.sol\":\"RolesManagementFacet\"},\"evmVersion\":\"shanghai\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":1},\"remappings\":[],\"viaIR\":true},\"sources\":{\"@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (proxy/utils/Initializable.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev This is a base contract to aid in writing upgradeable contracts, or any kind of contract that will be deployed\\n * behind a proxy. Since proxied contracts do not make use of a constructor, it's common to move constructor logic to an\\n * external initializer function, usually called `initialize`. It then becomes necessary to protect this initializer\\n * function so it can only be called once. The {initializer} modifier provided by this contract will have this effect.\\n *\\n * The initialization functions use a version number. Once a version number is used, it is consumed and cannot be\\n * reused. This mechanism prevents re-execution of each \\\"step\\\" but allows the creation of new initialization steps in\\n * case an upgrade adds a module that needs to be initialized.\\n *\\n * For example:\\n *\\n * [.hljs-theme-light.nopadding]\\n * ```solidity\\n * contract MyToken is ERC20Upgradeable {\\n *     function initialize() initializer public {\\n *         __ERC20_init(\\\"MyToken\\\", \\\"MTK\\\");\\n *     }\\n * }\\n *\\n * contract MyTokenV2 is MyToken, ERC20PermitUpgradeable {\\n *     function initializeV2() reinitializer(2) public {\\n *         __ERC20Permit_init(\\\"MyToken\\\");\\n *     }\\n * }\\n * ```\\n *\\n * TIP: To avoid leaving the proxy in an uninitialized state, the initializer function should be called as early as\\n * possible by providing the encoded function call as the `_data` argument to {ERC1967Proxy-constructor}.\\n *\\n * CAUTION: When used with inheritance, manual care must be taken to not invoke a parent initializer twice, or to ensure\\n * that all initializers are idempotent. This is not verified automatically as constructors are by Solidity.\\n *\\n * [CAUTION]\\n * ====\\n * Avoid leaving a contract uninitialized.\\n *\\n * An uninitialized contract can be taken over by an attacker. This applies to both a proxy and its implementation\\n * contract, which may impact the proxy. To prevent the implementation contract from being used, you should invoke\\n * the {_disableInitializers} function in the constructor to automatically lock it when it is deployed:\\n *\\n * [.hljs-theme-light.nopadding]\\n * ```\\n * /// @custom:oz-upgrades-unsafe-allow constructor\\n * constructor() {\\n *     _disableInitializers();\\n * }\\n * ```\\n * ====\\n */\\nabstract contract Initializable {\\n    /**\\n     * @dev Storage of the initializable contract.\\n     *\\n     * It's implemented on a custom ERC-7201 namespace to reduce the risk of storage collisions\\n     * when using with upgradeable contracts.\\n     *\\n     * @custom:storage-location erc7201:openzeppelin.storage.Initializable\\n     */\\n    struct InitializableStorage {\\n        /**\\n         * @dev Indicates that the contract has been initialized.\\n         */\\n        uint64 _initialized;\\n        /**\\n         * @dev Indicates that the contract is in the process of being initialized.\\n         */\\n        bool _initializing;\\n    }\\n\\n    // keccak256(abi.encode(uint256(keccak256(\\\"openzeppelin.storage.Initializable\\\")) - 1)) & ~bytes32(uint256(0xff))\\n    bytes32 private constant INITIALIZABLE_STORAGE = 0xf0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a00;\\n\\n    /**\\n     * @dev The contract is already initialized.\\n     */\\n    error InvalidInitialization();\\n\\n    /**\\n     * @dev The contract is not initializing.\\n     */\\n    error NotInitializing();\\n\\n    /**\\n     * @dev Triggered when the contract has been initialized or reinitialized.\\n     */\\n    event Initialized(uint64 version);\\n\\n    /**\\n     * @dev A modifier that defines a protected initializer function that can be invoked at most once. In its scope,\\n     * `onlyInitializing` functions can be used to initialize parent contracts.\\n     *\\n     * Similar to `reinitializer(1)`, except that in the context of a constructor an `initializer` may be invoked any\\n     * number of times. This behavior in the constructor can be useful during testing and is not expected to be used in\\n     * production.\\n     *\\n     * Emits an {Initialized} event.\\n     */\\n    modifier initializer() {\\n        // solhint-disable-next-line var-name-mixedcase\\n        InitializableStorage storage $ = _getInitializableStorage();\\n\\n        // Cache values to avoid duplicated sloads\\n        bool isTopLevelCall = !$._initializing;\\n        uint64 initialized = $._initialized;\\n\\n        // Allowed calls:\\n        // - initialSetup: the contract is not in the initializing state and no previous version was\\n        //                 initialized\\n        // - construction: the contract is initialized at version 1 (no reininitialization) and the\\n        //                 current contract is just being deployed\\n        bool initialSetup = initialized == 0 && isTopLevelCall;\\n        bool construction = initialized == 1 && address(this).code.length == 0;\\n\\n        if (!initialSetup && !construction) {\\n            revert InvalidInitialization();\\n        }\\n        $._initialized = 1;\\n        if (isTopLevelCall) {\\n            $._initializing = true;\\n        }\\n        _;\\n        if (isTopLevelCall) {\\n            $._initializing = false;\\n            emit Initialized(1);\\n        }\\n    }\\n\\n    /**\\n     * @dev A modifier that defines a protected reinitializer function that can be invoked at most once, and only if the\\n     * contract hasn't been initialized to a greater version before. In its scope, `onlyInitializing` functions can be\\n     * used to initialize parent contracts.\\n     *\\n     * A reinitializer may be used after the original initialization step. This is essential to configure modules that\\n     * are added through upgrades and that require initialization.\\n     *\\n     * When `version` is 1, this modifier is similar to `initializer`, except that functions marked with `reinitializer`\\n     * cannot be nested. If one is invoked in the context of another, execution will revert.\\n     *\\n     * Note that versions can jump in increments greater than 1; this implies that if multiple reinitializers coexist in\\n     * a contract, executing them in the right order is up to the developer or operator.\\n     *\\n     * WARNING: Setting the version to 2**64 - 1 will prevent any future reinitialization.\\n     *\\n     * Emits an {Initialized} event.\\n     */\\n    modifier reinitializer(uint64 version) {\\n        // solhint-disable-next-line var-name-mixedcase\\n        InitializableStorage storage $ = _getInitializableStorage();\\n\\n        if ($._initializing || $._initialized >= version) {\\n            revert InvalidInitialization();\\n        }\\n        $._initialized = version;\\n        $._initializing = true;\\n        _;\\n        $._initializing = false;\\n        emit Initialized(version);\\n    }\\n\\n    /**\\n     * @dev Modifier to protect an initialization function so that it can only be invoked by functions with the\\n     * {initializer} and {reinitializer} modifiers, directly or indirectly.\\n     */\\n    modifier onlyInitializing() {\\n        _checkInitializing();\\n        _;\\n    }\\n\\n    /**\\n     * @dev Reverts if the contract is not in an initializing state. See {onlyInitializing}.\\n     */\\n    function _checkInitializing() internal view virtual {\\n        if (!_isInitializing()) {\\n            revert NotInitializing();\\n        }\\n    }\\n\\n    /**\\n     * @dev Locks the contract, preventing any future reinitialization. This cannot be part of an initializer call.\\n     * Calling this in the constructor of a contract will prevent that contract from being initialized or reinitialized\\n     * to any version. It is recommended to use this to lock implementation contracts that are designed to be called\\n     * through proxies.\\n     *\\n     * Emits an {Initialized} event the first time it is successfully executed.\\n     */\\n    function _disableInitializers() internal virtual {\\n        // solhint-disable-next-line var-name-mixedcase\\n        InitializableStorage storage $ = _getInitializableStorage();\\n\\n        if ($._initializing) {\\n            revert InvalidInitialization();\\n        }\\n        if ($._initialized != type(uint64).max) {\\n            $._initialized = type(uint64).max;\\n            emit Initialized(type(uint64).max);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the highest version that has been initialized. See {reinitializer}.\\n     */\\n    function _getInitializedVersion() internal view returns (uint64) {\\n        return _getInitializableStorage()._initialized;\\n    }\\n\\n    /**\\n     * @dev Returns `true` if the contract is currently initializing. See {onlyInitializing}.\\n     */\\n    function _isInitializing() internal view returns (bool) {\\n        return _getInitializableStorage()._initializing;\\n    }\\n\\n    /**\\n     * @dev Returns a pointer to the storage namespace.\\n     */\\n    // solhint-disable-next-line var-name-mixedcase\\n    function _getInitializableStorage() private pure returns (InitializableStorage storage $) {\\n        assembly {\\n            $.slot := INITIALIZABLE_STORAGE\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0x631188737069917d2f909d29ce62c4d48611d326686ba6683e26b72a23bfac0b\",\"license\":\"MIT\"},\"contracts/diamonds/facetsFramework/diamondBase/facets/BaseFacet.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\n\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\nimport \\\"@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol\\\";\\r\\n\\r\\nimport \\\"../libraries/PausabilityLib.sol\\\";\\r\\nimport \\\"../libraries/InitializerLib.sol\\\";\\r\\nimport \\\"../libraries/RolesManagementLib.sol\\\";\\r\\n\\r\\nabstract contract BaseFacet is Initializable {\\r\\n    error DelegatedCallsOnly();\\r\\n    \\r\\n    /// @dev An address of the actual contract instance. The original address as part of the context.\\r\\n    address internal immutable __self = address(this);\\r\\n\\r\\n    function enforceDelegatedOnly() internal view {\\r\\n        if (address(this) == __self || !InitializerLib.get().initialized) {\\r\\n            revert DelegatedCallsOnly();\\r\\n        }\\r\\n    }\\r\\n\\r\\n    /// @dev The body of the modifier is copied into a faucet sources, so to make a small gas\\r\\n    /// optimization - the modifier uses an internal function call.\\r\\n    modifier delegatedOnly {\\r\\n        enforceDelegatedOnly();\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    modifier internalOnly {\\r\\n        RolesManagementLib.enforceSenderRole(RolesManagementLib.INTERNAL_ROLE);\\r\\n        _;\\r\\n    }\\r\\n}\",\"keccak256\":\"0x1a7f82f43a565fedfbd30dc7dd2c7166d065707634a7a2a8c9191525e5903363\",\"license\":\"MIT\"},\"contracts/diamonds/facetsFramework/diamondBase/facets/RolesManagementFacet.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\n\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\nimport \\\"../libraries/RolesManagementLib.sol\\\";\\r\\nimport \\\"../interfaces/IRolesManagement.sol\\\";\\r\\nimport \\\"./BaseFacet.sol\\\";\\r\\n\\r\\ncontract RolesManagementFacet is IRolesManagement, BaseFacet {\\r\\n    error UnequalLengths(uint256 length1, uint256 length2);\\r\\n\\r\\n    function grantRoles(address[] calldata people, bytes32[] calldata roles) \\r\\n        external \\r\\n        override \\r\\n        delegatedOnly\\r\\n    {\\r\\n        RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);\\r\\n        if (people.length != roles.length) {\\r\\n            revert UnequalLengths(people.length, roles.length);\\r\\n        }\\r\\n        for (uint256 i = 0; i < people.length; i++) {\\r\\n            RolesManagementLib.grantRole(people[i], roles[i]);\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function revokeRoles(address[] calldata people, bytes32[] calldata roles) \\r\\n        external \\r\\n        override \\r\\n        delegatedOnly\\r\\n    {\\r\\n        RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);\\r\\n        if (people.length != roles.length) {\\r\\n            revert UnequalLengths(people.length, roles.length);\\r\\n        }\\r\\n        for (uint256 i = 0; i < people.length; i++) {\\r\\n            RolesManagementLib.revokeRole(people[i], roles[i]);\\r\\n        }\\r\\n    }\\r\\n    \\r\\n    function grantRole(address who, bytes32 role) public override delegatedOnly {\\r\\n        RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);\\r\\n        RolesManagementLib.grantRole(who, role);\\r\\n    }\\r\\n\\r\\n    function revokeRole(address who, bytes32 role) public override delegatedOnly {\\r\\n        RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);\\r\\n        RolesManagementLib.revokeRole(who, role);\\r\\n    }\\r\\n\\r\\n    function hasRole(address who, bytes32 role) external view override delegatedOnly returns(bool) {\\r\\n        return RolesManagementLib.get().roles[role][who];\\r\\n    }\\r\\n}\",\"keccak256\":\"0x84dd56cce68cc7283aeec7a2cad5894286005355e3ee208858f43dbdb436c5b9\",\"license\":\"MIT\"},\"contracts/diamonds/facetsFramework/diamondBase/interfaces/IRolesManagement.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\n\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\ninterface IRolesManagement {\\r\\n    function revokeRoles(address[] calldata entities, bytes32[] calldata roles) external;\\r\\n    function grantRoles(address[] calldata entities, bytes32[] calldata roles) external;\\r\\n    function grantRole(address who, bytes32 role) external;\\r\\n    function revokeRole(address who, bytes32 role) external;\\r\\n    function hasRole(address who, bytes32 role) external view returns (bool);\\r\\n}\",\"keccak256\":\"0x4e15b5def056031305e14ea9f72f176f3330233f7e90d6a8ff5d15e6ef2bd9cd\",\"license\":\"MIT\"},\"contracts/diamonds/facetsFramework/diamondBase/libraries/InitializerLib.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\n\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\nlibrary InitializerLib {\\r\\n    error AlreadyInitialized();\\r\\n    error NotImplemented();\\r\\n\\r\\n    bytes32 constant INITIALIZER_STORAGE_POSITION = keccak256(\\\"diamond.standard.diamond.storage.locus.initializer\\\");\\r\\n\\r\\n    struct Storage {\\r\\n        bool initialized;\\r\\n    }\\r\\n\\r\\n    function get() internal pure returns (Storage storage s) {\\r\\n        bytes32 position = INITIALIZER_STORAGE_POSITION;\\r\\n        assembly {\\r\\n            s.slot := position\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function reset() internal {\\r\\n        get().initialized = false;\\r\\n    }\\r\\n\\r\\n    function initialize() internal {\\r\\n        if (get().initialized) {\\r\\n            revert AlreadyInitialized();\\r\\n        } else {\\r\\n            get().initialized = true;\\r\\n        }\\r\\n    }\\r\\n}\",\"keccak256\":\"0x28a20d1e0e0cfcbbe6c6e10bcdf2e138c97a92dfd34a5b2c5c9950c5b982dd3b\",\"license\":\"MIT\"},\"contracts/diamonds/facetsFramework/diamondBase/libraries/PausabilityLib.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\n\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\nlibrary PausabilityLib {\\r\\n    bytes32 constant PAUSABILITY_STORAGE_POSITION = keccak256(\\\"diamond.standard.diamond.storage.locus.pausability\\\");\\r\\n\\r\\n    struct Storage {\\r\\n        bool paused;\\r\\n    }\\r\\n\\r\\n    function get() internal pure returns (Storage storage s) {\\r\\n        bytes32 position = PAUSABILITY_STORAGE_POSITION;\\r\\n        assembly {\\r\\n            s.slot := position\\r\\n        }\\r\\n    }\\r\\n}\",\"keccak256\":\"0x90d5c29c2a59d08c67dd52c46c4af90e83e886c64a1a160e20c8aaa95febf356\",\"license\":\"MIT\"},\"contracts/diamonds/facetsFramework/diamondBase/libraries/RolesManagementLib.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\n\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\nlibrary RolesManagementLib {\\r\\n    event RoleSet(address who, bytes32 role, bool isGrantedOrRevoked);\\r\\n\\r\\n    error HasNoRole(address who, bytes32 role);\\r\\n    error HasNoRoles(address who, bytes32[] roles);\\r\\n\\r\\n    bytes32 constant ROLES_MANAGEMENT_STORAGE_POSITION = keccak256(\\\"diamond.standard.diamond.storage.locus.roles\\\");\\r\\n\\r\\n    // roles to check with EOA\\r\\n    bytes32 public constant PAUSER_ROLE = keccak256('PAUSER_ROLE');\\r\\n    bytes32 public constant OWNER_ROLE = keccak256('OWNER_ROLE');\\r\\n\\r\\n    // A special role - must not be removed.\\r\\n    bytes32 public constant INTERNAL_ROLE = keccak256('INTERNAL_ROLE');\\r\\n\\r\\n    // roles to check with smart-contracts\\r\\n    bytes32 public constant ALLOWED_TOKEN_ROLE = keccak256('ALLOWED_TOKEN_ROLE');\\r\\n\\r\\n    struct Storage {\\r\\n        mapping(bytes32 => mapping(address => bool)) roles;\\r\\n    }\\r\\n\\r\\n    function get() internal pure returns (Storage storage s) {\\r\\n        bytes32 position = ROLES_MANAGEMENT_STORAGE_POSITION;\\r\\n        assembly {\\r\\n            s.slot := position\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function enforceRole(address who, bytes32 role) internal view {\\r\\n        if (role == INTERNAL_ROLE) {\\r\\n            if (who != address(this)) {\\r\\n                revert HasNoRole(who, INTERNAL_ROLE);\\r\\n            }\\r\\n        } else if (!get().roles[role][who]) {\\r\\n            revert HasNoRole(who, role);\\r\\n        }\\r\\n        \\r\\n    }\\r\\n\\r\\n    function hasRole(address who, bytes32 role) internal view returns(bool) {\\r\\n        return get().roles[role][who];\\r\\n    }\\r\\n\\r\\n    function enforceSenderRole(bytes32 role) internal view {\\r\\n        enforceRole(msg.sender, role);\\r\\n    }\\r\\n\\r\\n    function grantRole(address who, bytes32 role) internal {\\r\\n        get().roles[role][who] = true; \\r\\n        emit RoleSet(who, role, true);\\r\\n    }\\r\\n\\r\\n    function revokeRole(address who, bytes32 role) internal {\\r\\n        get().roles[role][who] = false; \\r\\n        emit RoleSet(who, role, false);\\r\\n    }\\r\\n\\r\\n    function enforceEitherOfRoles(address who, bytes32[] memory roles) internal view {\\r\\n        bool result;\\r\\n        for (uint256 i = 0; i < roles.length; i++) {\\r\\n            if (roles[i] == INTERNAL_ROLE) {\\r\\n                result = result || who == address(this);\\r\\n            } else {\\r\\n                result = result || get().roles[roles[i]][who];\\r\\n            }\\r\\n        }\\r\\n        if (!result) {\\r\\n            revert HasNoRoles(who, roles);\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function enforceSenderEitherOfRoles(bytes32[] memory roles) internal view {\\r\\n        enforceEitherOfRoles(msg.sender, roles);\\r\\n    }\\r\\n}\",\"keccak256\":\"0x3fd994c63d349747c7444e147045bb062e84980fa3bc01bd2af32ec00b8943b6\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x60a08060405234610023573060805261050390816100288239608051816102e80152f35b5f80fdfe6040608081526004361015610012575f80fd5b5f90813560e01c80630b29f42214610183578063208dd1ff1461015b578063ab2742dc1461012d578063ac4ab3fb146100e05763b1cfaa8614610053575f80fd5b346100dc576100613661021b565b9190929361006d6102e5565b61007561035c565b8282036100c05750845b81811061008a578580f35b806100b66100a461009f6100bb94868a6102ad565b6102d1565b6100af8387896102ad565b35906103d5565b61028b565b61007f565b916044925191635020e50560e01b835260048301526024820152fd5b5080fd5b50346100dc5760ff816020936100f536610265565b6100fd6102e5565b82525f8051602061048e83398151915286528282206001600160a01b039091168252855220549151911615158152f35b82346101585761015561013f36610265565b906101486102e5565b61015061035c565b6103d5565b80f35b80fd5b82346101585761015561016d36610265565b906101766102e5565b61017e61035c565b610433565b50346100dc576101923661021b565b9190929361019e6102e5565b6101a661035c565b8282036100c05750845b8181106101bb578580f35b806100b66101d061009f6101e294868a6102ad565b6101db8387896102ad565b3590610433565b6101b0565b9181601f84011215610217578235916001600160401b038311610217576020808501948460051b01011161021757565b5f80fd5b6040600319820112610217576001600160401b03916004358381116102175782610247916004016101e7565b9390939260243591821161021757610261916004016101e7565b9091565b6040906003190112610217576004356001600160a01b0381168103610217579060243590565b5f1981146102995760010190565b634e487b7160e01b5f52601160045260245ffd5b91908110156102bd5760051b0190565b634e487b7160e01b5f52603260045260245ffd5b356001600160a01b03811681036102175790565b307f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316148015610330575b61031e57565b604051639f357e6b60e01b8152600490fd5b5060ff7f9f1709bc5ab0578be51bb81e11b02cdd9c21aa603d7325a8a7551bbd5685a005541615610318565b335f9081527f7eab7b82f3f21675de29d098b67b1bb6d0c69de2cb1ba0b9eb1dbc18d523752f60205260409020547fb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e9060ff16156103b75750565b60449060405190632bc93d7960e21b82523360048301526024820152fd5b6060905f805160206104ae83398151915292805f525f8051602061048e83398151915260205260405f209160018060a01b031691825f5260205260405f20600160ff19825416179055604051918252602082015260016040820152a1565b6060905f805160206104ae83398151915292805f525f8051602061048e83398151915260205260405f209160018060a01b031691825f5260205260405f2060ff19815416905560405191825260208201525f6040820152a156fe256352104e666e6cce09c45a35c339c150e1991724469c7d87b784a284535e44e6c553997164af80f976feb439e6566231f261c8b41e3e5070f237f827fc4432a264697066735822122048bd17613accf6774b976fc269abf86415d1b864efc753bcf7f344e611c00b4b64736f6c63430008140033",
+  "deployedBytecode": "0x6040608081526004361015610012575f80fd5b5f90813560e01c80630b29f42214610183578063208dd1ff1461015b578063ab2742dc1461012d578063ac4ab3fb146100e05763b1cfaa8614610053575f80fd5b346100dc576100613661021b565b9190929361006d6102e5565b61007561035c565b8282036100c05750845b81811061008a578580f35b806100b66100a461009f6100bb94868a6102ad565b6102d1565b6100af8387896102ad565b35906103d5565b61028b565b61007f565b916044925191635020e50560e01b835260048301526024820152fd5b5080fd5b50346100dc5760ff816020936100f536610265565b6100fd6102e5565b82525f8051602061048e83398151915286528282206001600160a01b039091168252855220549151911615158152f35b82346101585761015561013f36610265565b906101486102e5565b61015061035c565b6103d5565b80f35b80fd5b82346101585761015561016d36610265565b906101766102e5565b61017e61035c565b610433565b50346100dc576101923661021b565b9190929361019e6102e5565b6101a661035c565b8282036100c05750845b8181106101bb578580f35b806100b66101d061009f6101e294868a6102ad565b6101db8387896102ad565b3590610433565b6101b0565b9181601f84011215610217578235916001600160401b038311610217576020808501948460051b01011161021757565b5f80fd5b6040600319820112610217576001600160401b03916004358381116102175782610247916004016101e7565b9390939260243591821161021757610261916004016101e7565b9091565b6040906003190112610217576004356001600160a01b0381168103610217579060243590565b5f1981146102995760010190565b634e487b7160e01b5f52601160045260245ffd5b91908110156102bd5760051b0190565b634e487b7160e01b5f52603260045260245ffd5b356001600160a01b03811681036102175790565b307f00000000000000000000000000000000000000000000000000000000000000006001600160a01b0316148015610330575b61031e57565b604051639f357e6b60e01b8152600490fd5b5060ff7f9f1709bc5ab0578be51bb81e11b02cdd9c21aa603d7325a8a7551bbd5685a005541615610318565b335f9081527f7eab7b82f3f21675de29d098b67b1bb6d0c69de2cb1ba0b9eb1dbc18d523752f60205260409020547fb19546dff01e856fb3f010c267a7b1c60363cf8a4664e21cc89c26224620214e9060ff16156103b75750565b60449060405190632bc93d7960e21b82523360048301526024820152fd5b6060905f805160206104ae83398151915292805f525f8051602061048e83398151915260205260405f209160018060a01b031691825f5260205260405f20600160ff19825416179055604051918252602082015260016040820152a1565b6060905f805160206104ae83398151915292805f525f8051602061048e83398151915260205260405f209160018060a01b031691825f5260205260405f2060ff19815416905560405191825260208201525f6040820152a156fe256352104e666e6cce09c45a35c339c150e1991724469c7d87b784a284535e44e6c553997164af80f976feb439e6566231f261c8b41e3e5070f237f827fc4432a264697066735822122048bd17613accf6774b976fc269abf86415d1b864efc753bcf7f344e611c00b4b64736f6c63430008140033",
+  "libraries": [
+    "LTLib",
+    "InitializerLib",
+    "PausabilityLib",
+    "RolesManagementLib",
+    "AutocracyLib"
+  ],
+  "devdoc": {
+    "errors": {
+      "InvalidInitialization()": [
+        {
+          "details": "The contract is already initialized."
+        }
+      ],
+      "NotInitializing()": [
+        {
+          "details": "The contract is not initializing."
+        }
+      ]
+    },
+    "events": {
+      "Initialized(uint64)": {
+        "details": "Triggered when the contract has been initialized or reinitialized."
+      }
+    },
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  }
+}

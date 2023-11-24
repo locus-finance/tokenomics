@@ -1,0 +1,197 @@
+{
+  "address": "0x19eebA9E18b87372c2dD5E4B9d2590BE3EC7B191",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "DelegatedCallsOnly",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidInitialization",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "offset",
+          "type": "uint256"
+        }
+      ],
+      "name": "InvalidOffset",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NotInitializing",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NothingWasFound",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint64",
+          "name": "version",
+          "type": "uint64"
+        }
+      ],
+      "name": "Initialized",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "offset",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "windowSize",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address[]",
+          "name": "addresses",
+          "type": "address[]"
+        }
+      ],
+      "name": "getReceiversByAddresses",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "indicies",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "offset",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "windowSize",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "shares",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "getReceiversByShares",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "indicies",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "offset",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "windowSize",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool[]",
+          "name": "statuses",
+          "type": "bool[]"
+        }
+      ],
+      "name": "getReceiversByStatuses",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "indicies",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x053d0f1d9266867310640044dc100c4d4bd61478fcc7ca3c3c0682920f09488b",
+  "receipt": {
+    "to": "0x4e59b44847b379578588920cA78FbF26c0B4956C",
+    "from": "0x729F2222aaCD99619B8B660b412baE9fCEa3d90F",
+    "contractAddress": null,
+    "transactionIndex": 7,
+    "gasUsed": "2829609",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x0aea4f94315dc249801b4b01e947b7fd63b460cc16ff8c5345e85a01347e6f24",
+    "transactionHash": "0x053d0f1d9266867310640044dc100c4d4bd61478fcc7ca3c3c0682920f09488b",
+    "logs": [],
+    "blockNumber": 153447053,
+    "cumulativeGasUsed": "5523195",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "f2cbd77dff83ddf9a9c16b855b9827fe",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"DelegatedCallsOnly\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InvalidInitialization\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"offset\",\"type\":\"uint256\"}],\"name\":\"InvalidOffset\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NotInitializing\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"NothingWasFound\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint64\",\"name\":\"version\",\"type\":\"uint64\"}],\"name\":\"Initialized\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"offset\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"windowSize\",\"type\":\"uint256\"},{\"internalType\":\"address[]\",\"name\":\"addresses\",\"type\":\"address[]\"}],\"name\":\"getReceiversByAddresses\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"indicies\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"offset\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"windowSize\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"shares\",\"type\":\"uint256[]\"}],\"name\":\"getReceiversByShares\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"indicies\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"offset\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"windowSize\",\"type\":\"uint256\"},{\"internalType\":\"bool[]\",\"name\":\"statuses\",\"type\":\"bool[]\"}],\"name\":\"getReceiversByStatuses\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"indicies\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"errors\":{\"InvalidInitialization()\":[{\"details\":\"The contract is already initialized.\"}],\"NotInitializing()\":[{\"details\":\"The contract is not initializing.\"}]},\"events\":{\"Initialized(uint64)\":{\"details\":\"Triggered when the contract has been initialized or reinitialized.\"}},\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/diamonds/facetsFramework/tokensDistributor/v1/TDLoupeFacet.sol\":\"TDLoupeFacet\"},\"evmVersion\":\"shanghai\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":1},\"remappings\":[],\"viaIR\":true},\"sources\":{\"@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v5.0.0) (proxy/utils/Initializable.sol)\\n\\npragma solidity ^0.8.20;\\n\\n/**\\n * @dev This is a base contract to aid in writing upgradeable contracts, or any kind of contract that will be deployed\\n * behind a proxy. Since proxied contracts do not make use of a constructor, it's common to move constructor logic to an\\n * external initializer function, usually called `initialize`. It then becomes necessary to protect this initializer\\n * function so it can only be called once. The {initializer} modifier provided by this contract will have this effect.\\n *\\n * The initialization functions use a version number. Once a version number is used, it is consumed and cannot be\\n * reused. This mechanism prevents re-execution of each \\\"step\\\" but allows the creation of new initialization steps in\\n * case an upgrade adds a module that needs to be initialized.\\n *\\n * For example:\\n *\\n * [.hljs-theme-light.nopadding]\\n * ```solidity\\n * contract MyToken is ERC20Upgradeable {\\n *     function initialize() initializer public {\\n *         __ERC20_init(\\\"MyToken\\\", \\\"MTK\\\");\\n *     }\\n * }\\n *\\n * contract MyTokenV2 is MyToken, ERC20PermitUpgradeable {\\n *     function initializeV2() reinitializer(2) public {\\n *         __ERC20Permit_init(\\\"MyToken\\\");\\n *     }\\n * }\\n * ```\\n *\\n * TIP: To avoid leaving the proxy in an uninitialized state, the initializer function should be called as early as\\n * possible by providing the encoded function call as the `_data` argument to {ERC1967Proxy-constructor}.\\n *\\n * CAUTION: When used with inheritance, manual care must be taken to not invoke a parent initializer twice, or to ensure\\n * that all initializers are idempotent. This is not verified automatically as constructors are by Solidity.\\n *\\n * [CAUTION]\\n * ====\\n * Avoid leaving a contract uninitialized.\\n *\\n * An uninitialized contract can be taken over by an attacker. This applies to both a proxy and its implementation\\n * contract, which may impact the proxy. To prevent the implementation contract from being used, you should invoke\\n * the {_disableInitializers} function in the constructor to automatically lock it when it is deployed:\\n *\\n * [.hljs-theme-light.nopadding]\\n * ```\\n * /// @custom:oz-upgrades-unsafe-allow constructor\\n * constructor() {\\n *     _disableInitializers();\\n * }\\n * ```\\n * ====\\n */\\nabstract contract Initializable {\\n    /**\\n     * @dev Storage of the initializable contract.\\n     *\\n     * It's implemented on a custom ERC-7201 namespace to reduce the risk of storage collisions\\n     * when using with upgradeable contracts.\\n     *\\n     * @custom:storage-location erc7201:openzeppelin.storage.Initializable\\n     */\\n    struct InitializableStorage {\\n        /**\\n         * @dev Indicates that the contract has been initialized.\\n         */\\n        uint64 _initialized;\\n        /**\\n         * @dev Indicates that the contract is in the process of being initialized.\\n         */\\n        bool _initializing;\\n    }\\n\\n    // keccak256(abi.encode(uint256(keccak256(\\\"openzeppelin.storage.Initializable\\\")) - 1)) & ~bytes32(uint256(0xff))\\n    bytes32 private constant INITIALIZABLE_STORAGE = 0xf0c57e16840df040f15088dc2f81fe391c3923bec73e23a9662efc9c229c6a00;\\n\\n    /**\\n     * @dev The contract is already initialized.\\n     */\\n    error InvalidInitialization();\\n\\n    /**\\n     * @dev The contract is not initializing.\\n     */\\n    error NotInitializing();\\n\\n    /**\\n     * @dev Triggered when the contract has been initialized or reinitialized.\\n     */\\n    event Initialized(uint64 version);\\n\\n    /**\\n     * @dev A modifier that defines a protected initializer function that can be invoked at most once. In its scope,\\n     * `onlyInitializing` functions can be used to initialize parent contracts.\\n     *\\n     * Similar to `reinitializer(1)`, except that in the context of a constructor an `initializer` may be invoked any\\n     * number of times. This behavior in the constructor can be useful during testing and is not expected to be used in\\n     * production.\\n     *\\n     * Emits an {Initialized} event.\\n     */\\n    modifier initializer() {\\n        // solhint-disable-next-line var-name-mixedcase\\n        InitializableStorage storage $ = _getInitializableStorage();\\n\\n        // Cache values to avoid duplicated sloads\\n        bool isTopLevelCall = !$._initializing;\\n        uint64 initialized = $._initialized;\\n\\n        // Allowed calls:\\n        // - initialSetup: the contract is not in the initializing state and no previous version was\\n        //                 initialized\\n        // - construction: the contract is initialized at version 1 (no reininitialization) and the\\n        //                 current contract is just being deployed\\n        bool initialSetup = initialized == 0 && isTopLevelCall;\\n        bool construction = initialized == 1 && address(this).code.length == 0;\\n\\n        if (!initialSetup && !construction) {\\n            revert InvalidInitialization();\\n        }\\n        $._initialized = 1;\\n        if (isTopLevelCall) {\\n            $._initializing = true;\\n        }\\n        _;\\n        if (isTopLevelCall) {\\n            $._initializing = false;\\n            emit Initialized(1);\\n        }\\n    }\\n\\n    /**\\n     * @dev A modifier that defines a protected reinitializer function that can be invoked at most once, and only if the\\n     * contract hasn't been initialized to a greater version before. In its scope, `onlyInitializing` functions can be\\n     * used to initialize parent contracts.\\n     *\\n     * A reinitializer may be used after the original initialization step. This is essential to configure modules that\\n     * are added through upgrades and that require initialization.\\n     *\\n     * When `version` is 1, this modifier is similar to `initializer`, except that functions marked with `reinitializer`\\n     * cannot be nested. If one is invoked in the context of another, execution will revert.\\n     *\\n     * Note that versions can jump in increments greater than 1; this implies that if multiple reinitializers coexist in\\n     * a contract, executing them in the right order is up to the developer or operator.\\n     *\\n     * WARNING: Setting the version to 2**64 - 1 will prevent any future reinitialization.\\n     *\\n     * Emits an {Initialized} event.\\n     */\\n    modifier reinitializer(uint64 version) {\\n        // solhint-disable-next-line var-name-mixedcase\\n        InitializableStorage storage $ = _getInitializableStorage();\\n\\n        if ($._initializing || $._initialized >= version) {\\n            revert InvalidInitialization();\\n        }\\n        $._initialized = version;\\n        $._initializing = true;\\n        _;\\n        $._initializing = false;\\n        emit Initialized(version);\\n    }\\n\\n    /**\\n     * @dev Modifier to protect an initialization function so that it can only be invoked by functions with the\\n     * {initializer} and {reinitializer} modifiers, directly or indirectly.\\n     */\\n    modifier onlyInitializing() {\\n        _checkInitializing();\\n        _;\\n    }\\n\\n    /**\\n     * @dev Reverts if the contract is not in an initializing state. See {onlyInitializing}.\\n     */\\n    function _checkInitializing() internal view virtual {\\n        if (!_isInitializing()) {\\n            revert NotInitializing();\\n        }\\n    }\\n\\n    /**\\n     * @dev Locks the contract, preventing any future reinitialization. This cannot be part of an initializer call.\\n     * Calling this in the constructor of a contract will prevent that contract from being initialized or reinitialized\\n     * to any version. It is recommended to use this to lock implementation contracts that are designed to be called\\n     * through proxies.\\n     *\\n     * Emits an {Initialized} event the first time it is successfully executed.\\n     */\\n    function _disableInitializers() internal virtual {\\n        // solhint-disable-next-line var-name-mixedcase\\n        InitializableStorage storage $ = _getInitializableStorage();\\n\\n        if ($._initializing) {\\n            revert InvalidInitialization();\\n        }\\n        if ($._initialized != type(uint64).max) {\\n            $._initialized = type(uint64).max;\\n            emit Initialized(type(uint64).max);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the highest version that has been initialized. See {reinitializer}.\\n     */\\n    function _getInitializedVersion() internal view returns (uint64) {\\n        return _getInitializableStorage()._initialized;\\n    }\\n\\n    /**\\n     * @dev Returns `true` if the contract is currently initializing. See {onlyInitializing}.\\n     */\\n    function _isInitializing() internal view returns (bool) {\\n        return _getInitializableStorage()._initializing;\\n    }\\n\\n    /**\\n     * @dev Returns a pointer to the storage namespace.\\n     */\\n    // solhint-disable-next-line var-name-mixedcase\\n    function _getInitializableStorage() private pure returns (InitializableStorage storage $) {\\n        assembly {\\n            $.slot := INITIALIZABLE_STORAGE\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0x631188737069917d2f909d29ce62c4d48611d326686ba6683e26b72a23bfac0b\",\"license\":\"MIT\"},\"contracts/diamonds/facetsFramework/diamondBase/facets/BaseFacet.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\n\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\nimport \\\"@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol\\\";\\r\\n\\r\\nimport \\\"../libraries/PausabilityLib.sol\\\";\\r\\nimport \\\"../libraries/InitializerLib.sol\\\";\\r\\nimport \\\"../libraries/RolesManagementLib.sol\\\";\\r\\n\\r\\nabstract contract BaseFacet is Initializable {\\r\\n    error DelegatedCallsOnly();\\r\\n    \\r\\n    /// @dev An address of the actual contract instance. The original address as part of the context.\\r\\n    address internal immutable __self = address(this);\\r\\n\\r\\n    function enforceDelegatedOnly() internal view {\\r\\n        if (address(this) == __self || !InitializerLib.get().initialized) {\\r\\n            revert DelegatedCallsOnly();\\r\\n        }\\r\\n    }\\r\\n\\r\\n    /// @dev The body of the modifier is copied into a faucet sources, so to make a small gas\\r\\n    /// optimization - the modifier uses an internal function call.\\r\\n    modifier delegatedOnly {\\r\\n        enforceDelegatedOnly();\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    modifier internalOnly {\\r\\n        RolesManagementLib.enforceSenderRole(RolesManagementLib.INTERNAL_ROLE);\\r\\n        _;\\r\\n    }\\r\\n}\",\"keccak256\":\"0x1a7f82f43a565fedfbd30dc7dd2c7166d065707634a7a2a8c9191525e5903363\",\"license\":\"MIT\"},\"contracts/diamonds/facetsFramework/diamondBase/libraries/InitializerLib.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\n\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\nlibrary InitializerLib {\\r\\n    error AlreadyInitialized();\\r\\n    error NotImplemented();\\r\\n\\r\\n    bytes32 constant INITIALIZER_STORAGE_POSITION = keccak256(\\\"diamond.standard.diamond.storage.locus.initializer\\\");\\r\\n\\r\\n    struct Storage {\\r\\n        bool initialized;\\r\\n    }\\r\\n\\r\\n    function get() internal pure returns (Storage storage s) {\\r\\n        bytes32 position = INITIALIZER_STORAGE_POSITION;\\r\\n        assembly {\\r\\n            s.slot := position\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function reset() internal {\\r\\n        get().initialized = false;\\r\\n    }\\r\\n\\r\\n    function initialize() internal {\\r\\n        if (get().initialized) {\\r\\n            revert AlreadyInitialized();\\r\\n        } else {\\r\\n            get().initialized = true;\\r\\n        }\\r\\n    }\\r\\n}\",\"keccak256\":\"0x28a20d1e0e0cfcbbe6c6e10bcdf2e138c97a92dfd34a5b2c5c9950c5b982dd3b\",\"license\":\"MIT\"},\"contracts/diamonds/facetsFramework/diamondBase/libraries/PausabilityLib.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\n\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\nlibrary PausabilityLib {\\r\\n    bytes32 constant PAUSABILITY_STORAGE_POSITION = keccak256(\\\"diamond.standard.diamond.storage.locus.pausability\\\");\\r\\n\\r\\n    struct Storage {\\r\\n        bool paused;\\r\\n    }\\r\\n\\r\\n    function get() internal pure returns (Storage storage s) {\\r\\n        bytes32 position = PAUSABILITY_STORAGE_POSITION;\\r\\n        assembly {\\r\\n            s.slot := position\\r\\n        }\\r\\n    }\\r\\n}\",\"keccak256\":\"0x90d5c29c2a59d08c67dd52c46c4af90e83e886c64a1a160e20c8aaa95febf356\",\"license\":\"MIT\"},\"contracts/diamonds/facetsFramework/diamondBase/libraries/RolesManagementLib.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\n\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\nlibrary RolesManagementLib {\\r\\n    event RoleSet(address who, bytes32 role, bool isGrantedOrRevoked);\\r\\n\\r\\n    error HasNoRole(address who, bytes32 role);\\r\\n    error HasNoRoles(address who, bytes32[] roles);\\r\\n\\r\\n    bytes32 constant ROLES_MANAGEMENT_STORAGE_POSITION = keccak256(\\\"diamond.standard.diamond.storage.locus.roles\\\");\\r\\n\\r\\n    // roles to check with EOA\\r\\n    bytes32 public constant PAUSER_ROLE = keccak256('PAUSER_ROLE');\\r\\n    bytes32 public constant OWNER_ROLE = keccak256('OWNER_ROLE');\\r\\n\\r\\n    // A special role - must not be removed.\\r\\n    bytes32 public constant INTERNAL_ROLE = keccak256('INTERNAL_ROLE');\\r\\n\\r\\n    // roles to check with smart-contracts\\r\\n    bytes32 public constant ALLOWED_TOKEN_ROLE = keccak256('ALLOWED_TOKEN_ROLE');\\r\\n\\r\\n    struct Storage {\\r\\n        mapping(bytes32 => mapping(address => bool)) roles;\\r\\n    }\\r\\n\\r\\n    function get() internal pure returns (Storage storage s) {\\r\\n        bytes32 position = ROLES_MANAGEMENT_STORAGE_POSITION;\\r\\n        assembly {\\r\\n            s.slot := position\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function enforceRole(address who, bytes32 role) internal view {\\r\\n        if (role == INTERNAL_ROLE) {\\r\\n            if (who != address(this)) {\\r\\n                revert HasNoRole(who, INTERNAL_ROLE);\\r\\n            }\\r\\n        } else if (!get().roles[role][who]) {\\r\\n            revert HasNoRole(who, role);\\r\\n        }\\r\\n        \\r\\n    }\\r\\n\\r\\n    function hasRole(address who, bytes32 role) internal view returns(bool) {\\r\\n        return get().roles[role][who];\\r\\n    }\\r\\n\\r\\n    function enforceSenderRole(bytes32 role) internal view {\\r\\n        enforceRole(msg.sender, role);\\r\\n    }\\r\\n\\r\\n    function grantRole(address who, bytes32 role) internal {\\r\\n        get().roles[role][who] = true; \\r\\n        emit RoleSet(who, role, true);\\r\\n    }\\r\\n\\r\\n    function revokeRole(address who, bytes32 role) internal {\\r\\n        get().roles[role][who] = false; \\r\\n        emit RoleSet(who, role, false);\\r\\n    }\\r\\n\\r\\n    function enforceEitherOfRoles(address who, bytes32[] memory roles) internal view {\\r\\n        bool result;\\r\\n        for (uint256 i = 0; i < roles.length; i++) {\\r\\n            if (roles[i] == INTERNAL_ROLE) {\\r\\n                result = result || who == address(this);\\r\\n            } else {\\r\\n                result = result || get().roles[roles[i]][who];\\r\\n            }\\r\\n        }\\r\\n        if (!result) {\\r\\n            revert HasNoRoles(who, roles);\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function enforceSenderEitherOfRoles(bytes32[] memory roles) internal view {\\r\\n        enforceEitherOfRoles(msg.sender, roles);\\r\\n    }\\r\\n}\",\"keccak256\":\"0x3fd994c63d349747c7444e147045bb062e84980fa3bc01bd2af32ec00b8943b6\",\"license\":\"MIT\"},\"contracts/diamonds/facetsFramework/tokensDistributor/TDLib.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\n\\r\\npragma solidity ^0.8.20;\\r\\n\\r\\n// look for the Diamond.sol in the hardhat-deploy/solc_0.8/Diamond.sol\\r\\nlibrary TDLib {\\r\\n    error InvalidOffset(uint256 offset);\\r\\n    error IntervalsMustBeSorted();\\r\\n    error NothingWasFound();\\r\\n    error IncorrectLengths(uint256 l1, uint256 l2);\\r\\n\\r\\n    event ReceiverAltered(\\r\\n        address indexed receiver,\\r\\n        uint256 indexed share,\\r\\n        bool indexed isBlocked,\\r\\n        uint256 sumOfShares\\r\\n    );\\r\\n    event Distributed(\\r\\n        uint256 indexed distributedValue,\\r\\n        uint256 indexed tokensLeftAndSentToGovernance\\r\\n    );\\r\\n\\r\\n    bytes32 constant LOCUS_TOKEN_DISTRIBUTION_STORAGE_POSITION =\\r\\n        keccak256(\\\"diamond.standard.diamond.storage.locus.token_distribution\\\");\\r\\n\\r\\n    uint16 public constant MAX_BPS = 10000;\\r\\n\\r\\n    struct DistributionReceiver {\\r\\n        uint256 share;\\r\\n        uint256 previousShare;\\r\\n        address receiver;\\r\\n        bool isBlocked;\\r\\n    }\\r\\n\\r\\n    struct Storage {\\r\\n        mapping(address => uint32) startTimestamps;\\r\\n        uint32[] distributionDurationPoints;\\r\\n        mapping(uint256 => uint256) distributionDurationPointIdxToAmounts;\\r\\n        DistributionReceiver[] distributionReceivers;\\r\\n        uint256 sumOfShares;\\r\\n        address undistributedAmountsReceiver;\\r\\n    }\\r\\n\\r\\n    function get() internal pure returns (Storage storage s) {\\r\\n        bytes32 position = LOCUS_TOKEN_DISTRIBUTION_STORAGE_POSITION;\\r\\n        assembly {\\r\\n            s.slot := position\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function getAmountToDistribute(\\r\\n        address entity\\r\\n    ) internal view returns (uint256 distributionAmount, uint256 distributionDurationPointIdx) {\\r\\n        uint32 startStakingTime = get().startTimestamps[entity];\\r\\n        if (block.timestamp > startStakingTime) {\\r\\n            uint32 timeCounter = startStakingTime;\\r\\n            uint256 distributionDurationPointsLen = get()\\r\\n                .distributionDurationPoints\\r\\n                .length;\\r\\n            uint256 idx;\\r\\n            for (idx; idx < distributionDurationPointsLen; idx++) {\\r\\n                uint32 distributionDurationPoint = get()\\r\\n                    .distributionDurationPoints[idx];\\r\\n                if (block.timestamp < timeCounter + distributionDurationPoint) {\\r\\n                    break;\\r\\n                } else {\\r\\n                    timeCounter += distributionDurationPoint;\\r\\n                }\\r\\n            }\\r\\n            distributionAmount = get().distributionDurationPointIdxToAmounts[\\r\\n                idx\\r\\n            ];\\r\\n            distributionDurationPointIdx = idx;\\r\\n        }\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0xe9124aa344752d583558cc7b9e051be04f1cd4cce0b1b2a3446109f0ae160787\",\"license\":\"MIT\"},\"contracts/diamonds/facetsFramework/tokensDistributor/v1/TDLoupeFacet.sol\":{\"content\":\"//SPDX-License-Identifier: MIT\\n\\npragma solidity ^0.8.20;\\n\\nimport \\\"./interfaces/ITDLoupeFacet.sol\\\";\\nimport \\\"../TDLib.sol\\\";\\nimport \\\"../../diamondBase/facets/BaseFacet.sol\\\";\\n\\ncontract TDLoupeFacet is BaseFacet, ITDLoupeFacet {\\n    function getReceiversByAddresses(\\n        uint256 offset,\\n        uint256 windowSize,\\n        address[] memory addresses\\n    ) external view override delegatedOnly returns (uint256[] memory indicies) {\\n        uint256 distributionReceiversLength = TDLib.get().distributionReceivers.length;\\n        if (offset >= distributionReceiversLength) {\\n            revert TDLib.InvalidOffset(offset);\\n        }\\n        indicies = new uint256[](windowSize);\\n        uint256 coursor;\\n        bool foundAny;\\n        for (uint256 i = offset; i < distributionReceiversLength; i++) {\\n            for (uint256 j = 0; j < addresses.length; j++) {\\n                if (TDLib.get().distributionReceivers[i].receiver == addresses[j]) {\\n                    indicies[coursor++] = i;\\n                    if (!foundAny) foundAny = true;\\n                }\\n            }\\n        }\\n        if (!foundAny) {\\n            revert TDLib.NothingWasFound();\\n        }\\n    }\\n\\n    function getReceiversByShares(\\n        uint256 offset,\\n        uint256 windowSize,\\n        uint256[] memory shares\\n    ) external view override delegatedOnly returns (uint256[] memory indicies) {\\n        uint256 distributionReceiversLength = TDLib.get().distributionReceivers.length;\\n        if (offset >= distributionReceiversLength) {\\n            revert TDLib.InvalidOffset(offset);\\n        }\\n        indicies = new uint256[](windowSize);\\n        uint256 coursor;\\n        bool foundAny;\\n        for (uint256 i = offset; i < distributionReceiversLength; i++) {\\n            for (uint256 j = 0; j < shares.length; j++) {\\n                if (TDLib.get().distributionReceivers[i].share == shares[j]) {\\n                    indicies[coursor++] = i;\\n                    if (!foundAny) foundAny = true;\\n                }\\n            }\\n        }\\n        if (!foundAny) {\\n            revert TDLib.NothingWasFound();\\n        }\\n    }\\n\\n    function getReceiversByStatuses(\\n        uint256 offset,\\n        uint256 windowSize,\\n        bool[] memory statuses\\n    ) external view override delegatedOnly returns (uint256[] memory indicies) {\\n        uint256 distributionReceiversLength = TDLib.get().distributionReceivers.length;\\n        if (offset >= distributionReceiversLength) {\\n            revert TDLib.InvalidOffset(offset);\\n        }\\n        indicies = new uint256[](windowSize);\\n        uint256 coursor;\\n        bool foundAny;\\n        for (uint256 i = offset; i < distributionReceiversLength; i++) {\\n            for (uint256 j = 0; j < statuses.length; j++) {\\n                if (TDLib.get().distributionReceivers[i].isBlocked == statuses[j]) {\\n                    indicies[coursor++] = i;\\n                    if (!foundAny) foundAny = true;\\n                }\\n            }\\n        }\\n        if (!foundAny) {\\n            revert TDLib.NothingWasFound();\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0x0cb4a4a87b19902fe005131c94d3315fe695f34138dad0da4763018fdcfd24ef\",\"license\":\"MIT\"},\"contracts/diamonds/facetsFramework/tokensDistributor/v1/interfaces/ITDLoupeFacet.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\n\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\nimport \\\"../../TDLib.sol\\\";\\r\\n\\r\\ninterface ITDLoupeFacet {\\r\\n    function getReceiversByAddresses(\\r\\n        uint256 offset,\\r\\n        uint256 windowSize,\\r\\n        address[] memory addresses\\r\\n    ) external view returns (uint256[] memory indicies);\\r\\n\\r\\n    function getReceiversByShares(\\r\\n        uint256 offset,\\r\\n        uint256 windowSize,\\r\\n        uint256[] memory shares\\r\\n    ) external view returns (uint256[] memory indicies);\\r\\n\\r\\n    function getReceiversByStatuses(\\r\\n        uint256 offset,\\r\\n        uint256 windowSize,\\r\\n        bool[] memory statuses\\r\\n    ) external view returns (uint256[] memory indicies);\\r\\n}\\r\\n\",\"keccak256\":\"0x310bef6f5a0b4b83e7735d11376ef577aff2362a3719a55fa0ee4c910796909a\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x60a080604052346100235730608052610665908161002882396080518161059b0152f35b5f80fdfe60406080815260049081361015610014575f80fd5b5f90813560e01c80631a22405514610317578063518e45f8146101d95763562d915d1461003f575f80fd5b346101d55760603660031901126101d55782356044356001600160401b0381116101d157366023820112156101d157808501359061008461007f836104ae565b610475565b908192808352602460208094019160051b830101913683116101cd57602401905b8282106101b157505050506100b8610598565b5f8051602061061083398151915254938483101561019a576100db6024356104ff565b94818094915b8083106101145750505050501561010557610101925051918291826104c5565b0390f35b51632db5c2f560e11b81529050fd5b8193979498929596915b89518110156101825760ff600261013489610549565b50015460a01c16610145828c610584565b5115159015151461015f575b61015a90610527565b61011e565b8661017361016c8b610527565b9a88610584565b52876101515760019750610151565b50919793969290959461019490610527565b916100e1565b835163308af96f60e11b8152808701849052602490fd5b813580151581036101c95781529083019083016100a5565b8880fd5b8780fd5b8380fd5b5080fd5b50346101d55760603660031901126101d55782356044356001600160401b0381116101d157366023820112156101d157808501359061021a61007f836104ae565b908192808352602460208094019160051b830101913683116101cd57602401905b828210610308575050505061024e610598565b5f8051602061061083398151915254938483101561019a576102716024356104ff565b94818094915b8083106102975750505050501561010557610101925051918291826104c5565b8193979498929596915b89518110156102f0576102b387610549565b50546102bf828c610584565b51146102d4575b6102cf90610527565b6102a1565b866102e161016c8b610527565b52876102c657600197506102c6565b50919793969290959461030290610527565b91610277565b8135815290830190830161023b565b50346101d55760603660031901126101d55782356044356001600160401b0381116101d157366023820112156101d157808501359061035861007f836104ae565b908192808352602460208094019160051b830101913683116101cd57602401905b828210610456575050505061038c610598565b5f8051602061061083398151915254938483101561019a576103af6024356104ff565b94818094915b8083106103d55750505050501561010557610101925051918291826104c5565b8193979498929596915b895181101561043e5760026103f388610549565b5001546001600160a01b039081169061040c838d610584565b511614610422575b61041d90610527565b6103df565b8661042f61016c8b610527565b52876104145760019750610414565b50919793969290959461045090610527565b916103b5565b81356001600160a01b03811681036101c9578152908301908301610379565b6040519190601f01601f191682016001600160401b0381118382101761049a57604052565b634e487b7160e01b5f52604160045260245ffd5b6001600160401b03811161049a5760051b60200190565b602090816040818301928281528551809452019301915f5b8281106104eb575050505090565b8351855293810193928101926001016104dd565b9061050c61007f836104ae565b828152809261051d601f19916104ae565b0190602036910137565b5f1981146105355760010190565b634e487b7160e01b5f52601160045260245ffd5b5f805160206106108339815191528054821015610570575f52600360205f20910201905f90565b634e487b7160e01b5f52603260045260245ffd5b80518210156105705760209160051b010190565b307f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03161480156105e3575b6105d157565b604051639f357e6b60e01b8152600490fd5b5060ff7f9f1709bc5ab0578be51bb81e11b02cdd9c21aa603d7325a8a7551bbd5685a0055416156105cb56fef8a6c10351c569dde9f00d2a7d439ceae77f38bfadfbaac59dc5476ddac46a0aa2646970667358221220d2c864ac234b2ef654d915fe712318d14ecbe8042978104e64d769333f36584064736f6c63430008140033",
+  "deployedBytecode": "0x60406080815260049081361015610014575f80fd5b5f90813560e01c80631a22405514610317578063518e45f8146101d95763562d915d1461003f575f80fd5b346101d55760603660031901126101d55782356044356001600160401b0381116101d157366023820112156101d157808501359061008461007f836104ae565b610475565b908192808352602460208094019160051b830101913683116101cd57602401905b8282106101b157505050506100b8610598565b5f8051602061061083398151915254938483101561019a576100db6024356104ff565b94818094915b8083106101145750505050501561010557610101925051918291826104c5565b0390f35b51632db5c2f560e11b81529050fd5b8193979498929596915b89518110156101825760ff600261013489610549565b50015460a01c16610145828c610584565b5115159015151461015f575b61015a90610527565b61011e565b8661017361016c8b610527565b9a88610584565b52876101515760019750610151565b50919793969290959461019490610527565b916100e1565b835163308af96f60e11b8152808701849052602490fd5b813580151581036101c95781529083019083016100a5565b8880fd5b8780fd5b8380fd5b5080fd5b50346101d55760603660031901126101d55782356044356001600160401b0381116101d157366023820112156101d157808501359061021a61007f836104ae565b908192808352602460208094019160051b830101913683116101cd57602401905b828210610308575050505061024e610598565b5f8051602061061083398151915254938483101561019a576102716024356104ff565b94818094915b8083106102975750505050501561010557610101925051918291826104c5565b8193979498929596915b89518110156102f0576102b387610549565b50546102bf828c610584565b51146102d4575b6102cf90610527565b6102a1565b866102e161016c8b610527565b52876102c657600197506102c6565b50919793969290959461030290610527565b91610277565b8135815290830190830161023b565b50346101d55760603660031901126101d55782356044356001600160401b0381116101d157366023820112156101d157808501359061035861007f836104ae565b908192808352602460208094019160051b830101913683116101cd57602401905b828210610456575050505061038c610598565b5f8051602061061083398151915254938483101561019a576103af6024356104ff565b94818094915b8083106103d55750505050501561010557610101925051918291826104c5565b8193979498929596915b895181101561043e5760026103f388610549565b5001546001600160a01b039081169061040c838d610584565b511614610422575b61041d90610527565b6103df565b8661042f61016c8b610527565b52876104145760019750610414565b50919793969290959461045090610527565b916103b5565b81356001600160a01b03811681036101c9578152908301908301610379565b6040519190601f01601f191682016001600160401b0381118382101761049a57604052565b634e487b7160e01b5f52604160045260245ffd5b6001600160401b03811161049a5760051b60200190565b602090816040818301928281528551809452019301915f5b8281106104eb575050505090565b8351855293810193928101926001016104dd565b9061050c61007f836104ae565b828152809261051d601f19916104ae565b0190602036910137565b5f1981146105355760010190565b634e487b7160e01b5f52601160045260245ffd5b5f805160206106108339815191528054821015610570575f52600360205f20910201905f90565b634e487b7160e01b5f52603260045260245ffd5b80518210156105705760209160051b010190565b307f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03161480156105e3575b6105d157565b604051639f357e6b60e01b8152600490fd5b5060ff7f9f1709bc5ab0578be51bb81e11b02cdd9c21aa603d7325a8a7551bbd5685a0055416156105cb56fef8a6c10351c569dde9f00d2a7d439ceae77f38bfadfbaac59dc5476ddac46a0aa2646970667358221220d2c864ac234b2ef654d915fe712318d14ecbe8042978104e64d769333f36584064736f6c63430008140033",
+  "libraries": [
+    "TDLib",
+    "LTLib",
+    "InitializerLib",
+    "PausabilityLib",
+    "RolesManagementLib",
+    "AutocracyLib"
+  ],
+  "devdoc": {
+    "errors": {
+      "InvalidInitialization()": [
+        {
+          "details": "The contract is already initialized."
+        }
+      ],
+      "NotInitializing()": [
+        {
+          "details": "The contract is not initializing."
+        }
+      ]
+    },
+    "events": {
+      "Initialized(uint64)": {
+        "details": "Triggered when the contract has been initialized or reinitialized."
+      }
+    },
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  }
+}

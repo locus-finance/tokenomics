@@ -37,6 +37,14 @@ const compilers = [
 
 extendEnvironment(require("./names.plugin.js"));
 
+const etherscan = {
+  apiKey: {
+    mainnet: process.env.ETHERSCAN_API_KEY,
+    sepolia: process.env.ETHERSCAN_API_KEY,
+    arbitrumOne: process.env.ARBISCAN_API_KEY
+  }
+};
+
 module.exports = {
   solidity: {
     compilers,
@@ -67,7 +75,7 @@ module.exports = {
     arbitrumOne: {
       url: arbitrumOneUrl,
       chainId: arbitrumOneChainId,
-      accounts: { mnemonic: process.env.MAINNET_DEPLOY_MNEMONIC },
+      accounts: [`0x${process.env.ARBITRUM_DEPLOYER_PRIVATE_KEY}`],
       saveDeployments: true,
     },
   },
@@ -81,13 +89,9 @@ module.exports = {
     enabled: process.env.REPORT_GAS === "true" ? true : false,
     currency: "USD",
   },
-  etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
-  },
+  etherscan,
   verify: {
-    etherscan: {
-      apiKey: process.env.ETHERSCAN_API_KEY,
-    },
+    etherscan
   },
   docgen: {
     path: "./docs",

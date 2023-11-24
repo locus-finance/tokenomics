@@ -9,6 +9,9 @@ module.exports = async ({
 
   const facets = [
     "RolesManagementFacet",
+    "TDLoupeFacet",
+    "TDManagementFacet",
+    "TDProcessFacet",
     "LTERC20Facet",
     "LTEmissionControlFacet",
     "LTAutocracyFacet",
@@ -16,6 +19,7 @@ module.exports = async ({
   ];
 
   const libraries = [
+    'TDLib',
     'LTLib',
     'InitializerLib',
     'PausabilityLib',
@@ -27,12 +31,15 @@ module.exports = async ({
     from: deployer,
     facets,
     log: true,
-    libraries,
-    execute: {
-        methodName: 'initialize',
-        args: [ deployer ]
-    }
+    libraries
   });
+
+  await execute(
+    hre.names.internal.diamonds.locusToken.proxy,
+    {from: deployer, log: true},
+    'initialize',
+    deployer
+  );
   await execute(
     hre.names.internal.diamonds.locusToken.proxy,
     {from: deployer, log: true},
