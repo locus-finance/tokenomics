@@ -1,3 +1,5 @@
+const csvParser = require("csv-parser");
+const fsExtra = require("fs-extra");
 const { StandardMerkleTree } = require("@openzeppelin/merkle-tree");
 const diamondCutFacetAbi = require('hardhat-deploy/extendedArtifacts/DiamondCutFacet.json').abi;
 
@@ -7,6 +9,10 @@ const diamondCutFacetAbi = require('hardhat-deploy/extendedArtifacts/DiamondCutF
 
 const DEAD_ADDRESS = "0x000000000000000000000000000000000000dEaD";
 const skipIfAlreadyDeployed = true;
+const HOUR = 3600;
+const DAY = 24 * HOUR;
+const WEEK = 7 * DAY;
+const MONTH = 4 * WEEK;
 
 ////////////////////////////////////////////
 // Constants Ends
@@ -119,22 +125,30 @@ const getMockTree = (user1, user2) => StandardMerkleTree.of(
   ["address", "uint256"]
 );
 
-const getMerkleTree = async (users, deployments) => {
-  const usersToBalances = [];
-  const midasInstance = await hre.ethers.getContractAt(
-    hre.names.internal.iERC20,
-    (await deployments.get(hre.names.external.midas)).address
-  );
-  for (const user of users) {
-    usersToBalances.push([
-      user,
-      (await midasInstance.balanceOf(user)).toString()
-    ]);
-  }
-  return StandardMerkleTree.of(
-    usersToBalances
-    ["address", "uint256"]
-  );
+const getMerkleTree = (usersToBalances) => StandardMerkleTree.of(
+  usersToBalances,
+  ["address", "uint256"]
+);
+
+const parseCSV = (keys, fileName) => {
+  let result = [];
+  return new Promise((resolve, reject) => {
+    fsExtra.createReadStream(fileName)
+      .on("error", error => {
+        reject(error);
+      })
+      .pipe(csvParser())
+      .on("data", data => {
+        const entry = {};
+        for (const key of keys) {
+          entry[key] = data[key];
+        }
+        result.push(entry);
+      })
+      .on("end", () => {
+        resolve(result);
+      });
+  });
 }
 
 module.exports = {
@@ -148,5 +162,10 @@ module.exports = {
   diamondCut,
   manipulateFacet,
   getMockTree,
-  getMerkleTree
+  getMerkleTree,
+  parseCSV,
+  HOUR, 
+  DAY,
+  WEEK,
+  MONTH
 };

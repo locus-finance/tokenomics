@@ -11,4 +11,6 @@ interface ILSInitializerFacet {
         uint32[] memory feePoints,
         uint16[] memory feeBpsPerFeePointIdx
     ) external;
+
+    function prepareDepositary() external;
 }

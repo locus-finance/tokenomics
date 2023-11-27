@@ -19,6 +19,5 @@ describe("Contract", () => {
     deployer = accounts.deployer;
   });
 
-  it("Successful stake", async () => {
-  });
+  it("Successful before each", async () => {});
 });

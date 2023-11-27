@@ -49,7 +49,14 @@ library TDLib {
 
     function getAmountToDistribute(
         address entity
-    ) internal view returns (uint256 distributionAmount, uint256 distributionDurationPointIdx) {
+    )
+        internal
+        view
+        returns (
+            uint256 distributionAmount,
+            uint256 distributionDurationPointIdx
+        )
+    {
         uint32 startStakingTime = get().startTimestamps[entity];
         if (block.timestamp > startStakingTime) {
             uint32 timeCounter = startStakingTime;

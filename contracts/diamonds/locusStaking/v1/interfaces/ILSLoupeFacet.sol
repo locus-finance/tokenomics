@@ -11,4 +11,6 @@ interface ILSLoupeFacet {
     function getRewardForDuration() external view returns (uint256);
 
     function getCurrentFeeBps() external view returns (uint256 feeBps);
+
+    function getTimeOfLastStake(address staker) external view returns (uint32);
 }

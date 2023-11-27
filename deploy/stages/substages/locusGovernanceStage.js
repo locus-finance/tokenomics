@@ -5,7 +5,7 @@ module.exports = async ({
   deployments,
   network
 }) => {
-  const { diamond } = deployments;
+  const { diamond, get } = deployments;
   const { deployer } = await getNamedAccounts();
 
   const facets = [
@@ -27,17 +27,18 @@ module.exports = async ({
     from: deployer,
     facets,
     log: true,
-    libraries,
-    execute: {
-      methodName: 'initialize',
-      args: [
-        locusAddress,
-        0,
-        0,
-        1,
-        1
-      ]
-    }
+    libraries
   });
+
+  await execute(
+    hre.names.internal.diamonds.locusGovernor.proxy,
+    {from: deployer, log: true},
+    'initialize',
+    locusAddress,
+    0,
+    0,
+    1,
+    1
+  );
 }
 module.exports.tags = ["locusGovernanceStage", "governance"];

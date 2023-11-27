@@ -2,7 +2,10 @@ const { emptyStage } = require('../helpers');
 module.exports = emptyStage('Production stage performed.');
 module.exports.tags = ["production"];
 module.exports.dependencies = [
+  "configure",
+  "token",
   "staking",
-  "update_tracer_names"
+  "claim",
+  "tracer"
 ];
 module.exports.runAtTheEnd = true;

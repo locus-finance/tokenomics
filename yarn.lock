@@ -3525,6 +3525,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"csv-parser@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "csv-parser@npm:3.0.0"
+  dependencies:
+    minimist: ^1.2.0
+  bin:
+    csv-parser: bin/csv-parser
+  checksum: adc9d67d9f185249825570778c24d13004625301655330f6b735a052b9fdfbe1a239a014afb1f89939e0626ee573718f71f9f14164db7c17e4bcb2f38d6a162b
+  languageName: node
+  linkType: hard
+
 "d@npm:1, d@npm:^1.0.1":
   version: 1.0.1
   resolution: "d@npm:1.0.1"
@@ -10054,6 +10065,7 @@ __metadata:
     "@uniswap/v3-periphery": ^1.4.3
     chai: ^4.3.7
     chai-bignumber: ^3.1.0
+    csv-parser: ^3.0.0
     dotenv: ^16.0.3
     eslint: ^8.27.0
     eslint-config-prettier: ^8.5.0

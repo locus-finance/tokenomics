@@ -25,7 +25,7 @@ contract LSDepositaryFacet is
 {
     using SafeERC20 for IERC20Metadata;
 
-    function _initialize_LSDepositaryFacet() external override internalOnly {
+    function _initialize_LSDepositaryFacet() external initializer override internalOnly {
         __ReentrancyGuard_init();
         __Pausable_init();
     }

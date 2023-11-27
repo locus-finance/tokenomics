@@ -2,7 +2,6 @@
 pragma solidity ^0.8.18;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20CappedUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PermitUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol";
 
 import "./autocracy/libraries/AutocracyLib.sol";
@@ -14,7 +13,6 @@ contract LTERC20Facet is
     BaseFacet,
     ILTERC20Facet,
     ERC20CappedUpgradeable,
-    ERC20PermitUpgradeable,
     ERC20VotesUpgradeable
 {
     function setupTokenInfo() external override initializer internalOnly {
@@ -94,7 +92,6 @@ contract LTERC20Facet is
     )
         internal
         override(
-            ERC20Upgradeable,
             ERC20CappedUpgradeable,
             ERC20VotesUpgradeable
         )
