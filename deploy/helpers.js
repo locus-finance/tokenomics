@@ -119,6 +119,24 @@ const getMockTree = (user1, user2) => StandardMerkleTree.of(
   ["address", "uint256"]
 );
 
+const getMerkleTree = async (users, deployments) => {
+  const usersToBalances = [];
+  const midasInstance = await hre.ethers.getContractAt(
+    hre.names.internal.iERC20,
+    (await deployments.get(hre.names.external.midas)).address
+  );
+  for (const user of users) {
+    usersToBalances.push([
+      user,
+      (await midasInstance.balanceOf(user)).toString()
+    ]);
+  }
+  return StandardMerkleTree.of(
+    usersToBalances
+    ["address", "uint256"]
+  );
+}
+
 module.exports = {
   skipIfAlreadyDeployed,
   withImpersonatedSigner,
@@ -129,5 +147,6 @@ module.exports = {
   emptyStage,
   diamondCut,
   manipulateFacet,
-  getMockTree
+  getMockTree,
+  getMerkleTree
 };

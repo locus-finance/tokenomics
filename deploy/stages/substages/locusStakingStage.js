@@ -5,7 +5,7 @@ module.exports = async ({
   deployments,
   network
 }) => {
-  const { deploy, get, execute } = deployments;
+  const { diamond, get } = deployments;
   const { deployer } = await getNamedAccounts();
 
   const facets = [
@@ -29,6 +29,8 @@ module.exports = async ({
     'RolesManagementLib',
   ];
 
+  const locusAddress = (await get(hre.names.internal.diamonds.locusToken.proxy)).address;
+
   await diamond.deploy('LocusStaking', {
     from: deployer,
     facets,
@@ -36,7 +38,15 @@ module.exports = async ({
     libraries,
     execute: {
       methodName: 'initialize',
-      args: [deployer]
+      args: [
+        deployer,
+        locusAddress,
+        deployer,
+        locusAddress,
+        locusAddress,
+        [],
+        []
+      ]
     }
   });
 }
