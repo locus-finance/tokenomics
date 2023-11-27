@@ -54,7 +54,7 @@ module.exports = async (hre) => {
   const toCamelCase = e => e[0].toLowerCase() + e.slice(1);
   const prefix = 'diamond';
   hre.names = {
-    external: lazyObject(() => require('./resources/externalArtifactsNames.json')),
+    external: lazyObject(() => require('./resources/json/externalArtifactsNames.json')),
     internal: lazyObject(() => {
       // Gathering all our internal artifacts names and making them public
       const result = {

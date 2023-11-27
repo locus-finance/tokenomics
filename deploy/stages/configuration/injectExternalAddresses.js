@@ -29,6 +29,6 @@ module.exports = async ({
     save
   );
   
-  log(`External addresses are injected:\n${JSON.stringify(hre.names.external)}`);
+  log(`External addresses are injected.`);
 }
-module.exports.tags = ["injectExternalAddresses"], "configure";
+module.exports.tags = ["injectExternalAddresses", "configure"];

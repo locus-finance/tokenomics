@@ -21,7 +21,7 @@ module.exports = async ({
   const balanceKey = "Balance";
 
   const parsedMidasSnapshot = await parseCSV(
-    [addressKey, balanceKey], "./resources/midasHoldersSnapshot.csv"
+    [addressKey, balanceKey], "./resources/csv/midasHoldersTestSnapshot.csv"
   );
   const merkleTreeBody = [];
   for (const entry of parsedMidasSnapshot) {

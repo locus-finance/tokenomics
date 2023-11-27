@@ -13,7 +13,7 @@ library LTLib {
     bytes32 public constant ALLOWANCE_FREE_ROLE = keccak256('ALLOWANCE_FREE_ROLE');
 
     string public constant originalName = "Locus Token";
-    string public constant originalSymbol = "LCS";
+    string public constant originalSymbol = "LOCUS";
 
     uint256 public constant INITIAL_SUPPLY = 15_000_000 ether;
 
