@@ -113,8 +113,4 @@ contract LTERC20Facet is
     ) internal override(ERC20Upgradeable, ERC20VotesUpgradeable) {
         super._afterTokenTransfer(from, to, amount);
     }
-
-    // function symbol() public view override delegatedOnly returns (string memory) {
-    //     return "LOCUS";
-    // }
 }

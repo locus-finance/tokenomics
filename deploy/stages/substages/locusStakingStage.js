@@ -26,7 +26,6 @@ module.exports = async ({
     'TDLib',
     'LSLib',
     'InitializerLib',
-    'PausabilityLib',
     'RolesManagementLib',
   ];
 
