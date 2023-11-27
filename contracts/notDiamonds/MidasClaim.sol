@@ -70,7 +70,7 @@ contract MidasClaim is Ownable {
         uint256 amount,
         bytes32[] calldata merkleProof
     ) external {
-        if (claimed[account] > 0) revert AlreadyClaimed(account);
+        if (claimed[account] >= amount) revert AlreadyClaimed(account);
         bytes32 leaf = keccak256(abi.encodePacked(keccak256(abi.encode(account, amount))));
         bool isValidProof = MerkleProof.verify(merkleProof, merkleRoot, leaf);
         if (!isValidProof) revert ProofIsNotValid(account, leaf);
