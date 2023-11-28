@@ -29,6 +29,6 @@ module.exports = async ({
     save
   );
   
-  log(`External addresses are injected.`);
+  log(`external addresses are injected`);
 }
 module.exports.tags = ["injectExternalAddresses", "configure"];

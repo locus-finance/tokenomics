@@ -11,6 +11,7 @@ require("hardhat-contract-sizer");
 
 require("./tasks/accounts")(task);
 require("./tasks/getAllArtifacts")(task);
+require("./tasks/autocracyMintLocus")(task);
 
 const mainnetUrl = `https://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_MAINNET_API_KEY}`;
 const sepoliaUrl = `https://eth-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_SEPOLIA_API_KEY}`;
