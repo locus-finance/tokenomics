@@ -11,12 +11,18 @@ require("hardhat-contract-sizer");
 
 require("./tasks/accounts")(task);
 require("./tasks/getAllArtifacts")(task);
+require("./tasks/autocracyMintLocus")(task);
+require("./tasks/midasClaim/getMerkleTreeInfo")(task);
+require("./tasks/midasClaim/updateMerkleTree")(task);
+require("./tasks/midasClaim/generateJsonOfMerkleTreeBody")(task);
 
 const mainnetUrl = `https://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_MAINNET_API_KEY}`;
 const sepoliaUrl = `https://eth-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_SEPOLIA_API_KEY}`;
+const arbitrumOneUrl = 'https://arb1.arbitrum.io/rpc';
 
 const mainnetChainId = 1;
 const sepoliaChainId = 11155111;
+const arbitrumOneChainId = 42161;
 
 const optimizer = {
   enabled: true,
@@ -25,7 +31,7 @@ const optimizer = {
 
 const compilers = [
   {
-    version: "0.8.20",
+    version: "0.8.19",
     settings: {
       viaIR: true,
       optimizer,
@@ -34,6 +40,14 @@ const compilers = [
 ];
 
 extendEnvironment(require("./names.plugin.js"));
+
+const etherscan = {
+  apiKey: {
+    mainnet: process.env.ETHERSCAN_API_KEY,
+    sepolia: process.env.ETHERSCAN_API_KEY,
+    arbitrumOne: process.env.ARBISCAN_API_KEY
+  }
+};
 
 module.exports = {
   solidity: {
@@ -44,10 +58,10 @@ module.exports = {
   },
   networks: {
     hardhat: {
-      // forking: {
-      //   url: mainnetUrl,
-      //   chainId: mainnetChainId,
-      // },
+      forking: {
+        url: arbitrumOneUrl,
+        chainId: arbitrumOneChainId,
+      },
       saveDeployments: true,
     },
     mainnet: {
@@ -62,21 +76,26 @@ module.exports = {
       accounts: { mnemonic: process.env.TESTNET_DEPLOY_MNEMONIC },
       saveDeployments: true,
     },
+    arbitrumOne: {
+      url: arbitrumOneUrl,
+      chainId: arbitrumOneChainId,
+      accounts: [`0x${process.env.ARBITRUM_DEPLOYER_PRIVATE_KEY}`],
+      saveDeployments: true,
+    },
   },
   namedAccounts: {
     deployer: 0,
+    user1: 1,
+    user2: 2,
+    treasury: 3
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS === "true" ? true : false,
     currency: "USD",
   },
-  etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
-  },
+  etherscan,
   verify: {
-    etherscan: {
-      apiKey: process.env.ETHERSCAN_API_KEY,
-    },
+    etherscan
   },
   docgen: {
     path: "./docs",
