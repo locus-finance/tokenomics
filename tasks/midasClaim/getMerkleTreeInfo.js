@@ -3,7 +3,7 @@ const { getMerkleTree, parseCSV } = require('../../deploy/helpers');
 
 module.exports = (task) =>
   task(
-    "getMerkleTreeProof",
+    "getMerkleTreeInfo",
     "Print Merkle Tree proof of an address.",
   )
     .addOptionalParam("path", "Define a path to csv with addresses and balances to populate the Merkle Tree.", './resources/csv/midasHoldersTestSnapshot.csv', types.string)
@@ -32,7 +32,17 @@ module.exports = (task) =>
         if (v[0] === address) {
           const proof = merkleTree.getProof(i);
           console.log(proof);
-          return proof;
+          return {
+            proof,
+            merkleTreeBody,
+            merkleTree
+          };
         }
       }
+
+      // IF NO ADDRESS WAS FOUND TO GENERATE PROOF FOR - THEN JUST RETURN MERKLE TREE BODY
+      return {
+        merkleTreeBody,
+        merkleTree
+      };
     });
