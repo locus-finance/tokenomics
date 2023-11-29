@@ -35,19 +35,19 @@ contract LSDepositaryFacet is
         uint256 amount
     ) external override nonReentrant delegatedOnly whenNotPaused {
         RolesManagementLib.enforceSenderRole(LSLib.ALLOWED_TO_STAKE_FOR_ROLE);
-        _stake(staker, amount);
+        _stake(staker, msg.sender, amount);
     }
 
     function stake(
         uint256 amount
     ) external override nonReentrant delegatedOnly whenNotPaused {
-        _stake(msg.sender, amount);
+        _stake(msg.sender, msg.sender, amount);
     }
 
     function withdraw(
         uint256 amount
     ) public override nonReentrant delegatedOnly {
-        updateReward(msg.sender);
+        ILSDepositaryFacet(address(this)).updateReward(msg.sender);
         if (amount == 0) revert LSLib.CannotWithdrawZero();
         LSLib.Primitives storage p = LSLib.get().p;
         p.totalSupply -= amount;
@@ -66,7 +66,7 @@ contract LSDepositaryFacet is
     }
 
     function getReward() public override nonReentrant delegatedOnly {
-        updateReward(msg.sender);
+        ILSDepositaryFacet(address(this)).updateReward(msg.sender);
         LSLib.Primitives storage p = LSLib.get().p;
         LSLib.ReferenceTypes storage rt = LSLib.get().rt;
         uint256 rawReward = rt.rewards[msg.sender];
@@ -104,8 +104,8 @@ contract LSDepositaryFacet is
         }
     }
 
-    function _stake(address staker, uint256 amount) internal {
-        updateReward(staker);
+    function _stake(address staker, address fundsOwner, uint256 amount) internal {
+        ILSDepositaryFacet(address(this)).updateReward(staker);
         LSLib.Primitives storage p = LSLib.get().p;
         IERC20Metadata stakingToken = p.stakingToken;
         if (amount == 0) revert LSLib.CannotStakeZero();
@@ -113,7 +113,7 @@ contract LSDepositaryFacet is
         p.totalSupply += amount;
         LSLib.get().rt.balanceOf[staker] += amount;
         stakingToken.safeTransferFrom(
-            staker,
+            fundsOwner,
             address(this),
             amount
         );

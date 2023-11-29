@@ -29,31 +29,31 @@ module.exports = async ({
     'RolesManagementLib',
   ];
 
-  const locusAddress = (await get(hre.names.internal.diamonds.locusToken.proxy)).address;
+  // const locusAddress = (await get(hre.names.internal.diamonds.locusToken.proxy)).address;
 
   await diamond.deploy('LocusStaking', {
     from: deployer,
     facets,
     log: true,
     libraries,
-    execute: {
-      methodName: 'initialize',
-      args: [
-        deployer,
-        locusAddress,
-        deployer,
-        locusAddress,
-        locusAddress,
-        [WEEK, 2 * WEEK, MONTH, MONTH + 1],
-        [5000, 3750, 2500, 0]
-      ]
-    }
+    // execute: {
+    //   methodName: 'initialize',
+    //   args: [
+    //     deployer,
+    //     locusAddress,
+    //     deployer,
+    //     locusAddress,
+    //     locusAddress,
+    //     [WEEK, 2 * WEEK, MONTH, MONTH + 1],
+    //     [5000, 3750, 2500, 0]
+    //   ]
+    // }
   });
 
-  await execute(
-    hre.names.internal.diamonds.locusStaking.proxy,
-    {from: deployer, log: true},
-    'prepareDepositary'
-  );
+  // await execute(
+  //   hre.names.internal.diamonds.locusStaking.proxy,
+  //   {from: deployer, log: true},
+  //   'prepareDepositary'
+  // );
 }
 module.exports.tags = ["locusStakingStage", "staking"];
