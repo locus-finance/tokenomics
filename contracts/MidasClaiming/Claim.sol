@@ -19,7 +19,7 @@ contract Claim is Ownable {
 
     using SafeERC20 for IERC20;
 
-    mapping(address user => uint256 claimed) claimed;
+    mapping(address user => uint256 claimed) public claimed;
 
     constructor(
         address _token,
@@ -51,7 +51,7 @@ contract Claim is Ownable {
         uint256 amount,
         bytes32[] calldata merkleProof
     ) external {
-        if (claimed[account] > 0) revert Claim__AlreadyClaimed(account);
+        if (claimed[account] >= amount) revert Claim__AlreadyClaimed(account);
         bytes32 leaf = keccak256(
             bytes.concat(keccak256(abi.encode(account, amount)))
         );
