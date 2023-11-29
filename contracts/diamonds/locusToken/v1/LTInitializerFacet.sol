@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.18;
 
 import "./interfaces/ILTERC20Facet.sol";
 import "./interfaces/ILTInitializerFacet.sol";
@@ -13,17 +12,32 @@ import "./autocracy/interfaces/ILTAutocracyFacet.sol";
 import "./autocracy/libraries/AutocracyLib.sol";
 
 contract LTInitializerFacet is BaseFacet, ILTInitializerFacet {
-    function initialize(
-        address owner,
+    function initialize(address owner) external override {
+        InitializerLib.initialize();
+        TDLib.Storage storage s = TDLib.get();
+        // Initialize the start of inflation.
+        // address(0) is utilized because for every receiver we have one time of inflation start.
+        s.startTimestamps[address(0)] = uint32(block.timestamp);
+        s.undistributedAmountsReceiver = owner;
+
+        RolesManagementLib.grantRole(owner, RolesManagementLib.OWNER_ROLE);
+        RolesManagementLib.grantRole(owner, AutocracyLib.REVOLUTIONARY_ROLE);
+        RolesManagementLib.grantRole(owner, AutocracyLib.AUTOCRAT_ROLE);
+    }
+
+    function setupTokenInfoAndEstablishAutocracy() external override delegatedOnly {
+        // WARNING: AN INITIALIZER MODIFIER PREVENTS DOUBLE CALL
+        ILTERC20Facet(address(this)).setupTokenInfo();
+        ILTAutocracyFacet(address(this)).establishAutocracy();
+    }
+
+    function setupInflation(
         address[] calldata distributionReceivers,
         uint256[] calldata distributionReceiversShares,
         uint32[] calldata distributionDurationPoints,
         uint256[][] calldata amountsPerEpochs
-    ) external override initializer {
-        InitializerLib.initialize();
-
-        ILTERC20Facet(address(this))._init_LTERC20Facet();
-
+    ) external override delegatedOnly {
+        RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);
         if (distributionReceivers.length == 0) {
             revert TDLib.IncorrectLengths(distributionReceivers.length, 0);
         }
@@ -73,16 +87,6 @@ contract LTInitializerFacet is BaseFacet, ILTInitializerFacet {
                 false
             );
         }
-
-        // Initialize the start of inflation.
-        // address(0) is utilized because for every receiver we have one time of inflation start.
-        s.startTimestamps[address(0)] = uint32(block.timestamp);
         s.distributionDurationPoints = distributionDurationPoints;
-        s.undistributedAmountsReceiver = owner;
-
-        RolesManagementLib.grantRole(owner, RolesManagementLib.OWNER_ROLE);
-        RolesManagementLib.grantRole(owner, AutocracyLib.REVOLUTIONARY_ROLE);
-        RolesManagementLib.grantRole(owner, AutocracyLib.AUTOCRAT_ROLE);
-        ILTAutocracyFacet(address(this)).establishAutocracy();
     }
 }

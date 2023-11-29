@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.18;
 
 interface ILSInitializerFacet {
     function initialize(
@@ -12,4 +11,6 @@ interface ILSInitializerFacet {
         uint32[] memory feePoints,
         uint16[] memory feeBpsPerFeePointIdx
     ) external;
+
+    function prepareDepositary() external;
 }

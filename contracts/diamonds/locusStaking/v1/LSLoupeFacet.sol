@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.18;
 
 import "../LSLib.sol";
 import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
@@ -52,6 +51,10 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
 
     function getCurrentFeeBps() external view override delegatedOnly returns (uint256 feeBps) {
         (feeBps,) = TDLib.getAmountToDistribute(msg.sender);
+    }
+
+    function getTimeOfLastStake(address staker) external view override delegatedOnly returns (uint32) {
+        return TDLib.get().startTimestamps[staker];
     }
 
     function getRewardForDuration()

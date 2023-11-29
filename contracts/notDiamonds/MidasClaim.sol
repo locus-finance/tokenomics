@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.18;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
@@ -34,7 +33,7 @@ contract MidasClaim is Ownable {
         address _stLocus,
         bytes32 _merkleRoot,
         address _treasury
-    ) Ownable(msg.sender) {
+    ) {
         token = IERC20(_token);
         merkleRoot = _merkleRoot;
         stLocus = ILSDepositaryFacet(_stLocus);
@@ -71,7 +70,7 @@ contract MidasClaim is Ownable {
         uint256 amount,
         bytes32[] calldata merkleProof
     ) external {
-        if (claimed[account] > 0) revert AlreadyClaimed(account);
+        if (claimed[account] >= amount) revert AlreadyClaimed(account);
         bytes32 leaf = keccak256(abi.encodePacked(keccak256(abi.encode(account, amount))));
         bool isValidProof = MerkleProof.verify(merkleProof, merkleRoot, leaf);
         if (!isValidProof) revert ProofIsNotValid(account, leaf);

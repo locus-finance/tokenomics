@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.18;
 
 interface ILSLoupeFacet {
     function lastTimeRewardApplicable() external view returns (uint256);
@@ -12,4 +11,6 @@ interface ILSLoupeFacet {
     function getRewardForDuration() external view returns (uint256);
 
     function getCurrentFeeBps() external view returns (uint256 feeBps);
+
+    function getTimeOfLastStake(address staker) external view returns (uint32);
 }

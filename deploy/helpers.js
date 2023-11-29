@@ -1,3 +1,5 @@
+const csvParser = require("csv-parser");
+const fsExtra = require("fs-extra");
 const { StandardMerkleTree } = require("@openzeppelin/merkle-tree");
 const diamondCutFacetAbi = require('hardhat-deploy/extendedArtifacts/DiamondCutFacet.json').abi;
 
@@ -7,6 +9,10 @@ const diamondCutFacetAbi = require('hardhat-deploy/extendedArtifacts/DiamondCutF
 
 const DEAD_ADDRESS = "0x000000000000000000000000000000000000dEaD";
 const skipIfAlreadyDeployed = true;
+const HOUR = 3600;
+const DAY = 24 * HOUR;
+const WEEK = 7 * DAY;
+const MONTH = 4 * WEEK;
 
 ////////////////////////////////////////////
 // Constants Ends
@@ -119,6 +125,32 @@ const getMockTree = (user1, user2) => StandardMerkleTree.of(
   ["address", "uint256"]
 );
 
+const getMerkleTree = (usersToBalances) => StandardMerkleTree.of(
+  usersToBalances,
+  ["address", "uint256"]
+);
+
+const parseCSV = (keys, fileName) => {
+  let result = [];
+  return new Promise((resolve, reject) => {
+    fsExtra.createReadStream(fileName)
+      .on("error", error => {
+        reject(error);
+      })
+      .pipe(csvParser())
+      .on("data", data => {
+        const entry = {};
+        for (const key of keys) {
+          entry[key] = data[key];
+        }
+        result.push(entry);
+      })
+      .on("end", () => {
+        resolve(result);
+      });
+  });
+}
+
 module.exports = {
   skipIfAlreadyDeployed,
   withImpersonatedSigner,
@@ -129,5 +161,11 @@ module.exports = {
   emptyStage,
   diamondCut,
   manipulateFacet,
-  getMockTree
+  getMockTree,
+  getMerkleTree,
+  parseCSV,
+  HOUR, 
+  DAY,
+  WEEK,
+  MONTH
 };

@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.18;
 
 import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 
@@ -20,9 +19,8 @@ contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
         address stakingToken,
         uint32[] memory feeDurationPoints,
         uint16[] memory feeBasePoints
-    ) external override initializer delegatedOnly {
+    ) external override {
         InitializerLib.initialize();
-        ILSDepositaryFacet(address(this))._initialize_LSDepositaryFacet();
 
         if (feeDurationPoints.length != feeBasePoints.length) {
             revert TDLib.IncorrectLengths(
@@ -60,5 +58,11 @@ contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
         p.stakingToken = IERC20Metadata(stakingToken);
         p.rewardsDuration = 4 weeks;
         p.locusToken = locusToken;
+    }
+
+    function prepareDepositary() external override delegatedOnly {
+        RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);
+        // WARNING: CONTAINS INITIALIZER CUSTOM MODIFIER, SO IT COULDN'T BE CALLED TWICE.
+        ILSDepositaryFacet(address(this))._initialize_LSDepositaryFacet();
     }
 }

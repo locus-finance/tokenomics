@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: MIT
-
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.18;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20CappedUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PermitUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20VotesUpgradeable.sol";
 
 import "./autocracy/libraries/AutocracyLib.sol";
@@ -13,12 +11,11 @@ import "./interfaces/ILTERC20Facet.sol";
 
 contract LTERC20Facet is
     BaseFacet,
+    ILTERC20Facet,
     ERC20CappedUpgradeable,
-    ERC20PermitUpgradeable,
-    ERC20VotesUpgradeable,
-    ILTERC20Facet
+    ERC20VotesUpgradeable
 {
-    function _init_LTERC20Facet() external override internalOnly {
+    function setupTokenInfo() external override initializer internalOnly {
         __ERC20_init(LTLib.originalName, LTLib.originalSymbol);
         __ERC20Capped_init(LTLib.INITIAL_SUPPLY);
         __ERC20Permit_init(LTLib.originalName);
@@ -50,68 +47,70 @@ contract LTERC20Facet is
         }
     }
 
-    /// @inheritdoc VotesUpgradeable
     function _delegate(address account, address delegatee) internal override {
         if (AutocracyLib.get().isAutocracyEnabled) {
             RolesManagementLib.enforceRole(account, AutocracyLib.AUTOCRAT_ROLE);
-            RolesManagementLib.enforceRole(delegatee, AutocracyLib.AUTOCRAT_ROLE);
+            RolesManagementLib.enforceRole(
+                delegatee,
+                AutocracyLib.AUTOCRAT_ROLE
+            );
         }
         super._delegate(account, delegatee);
     }
 
-    /// @inheritdoc ERC20Upgradeable
-    function _update(
-        address from,
-        address to,
-        uint256 value
-    )
-        internal
-        virtual
-        override(
-            ERC20Upgradeable,
-            ERC20CappedUpgradeable,
-            ERC20VotesUpgradeable
-        )
-    {
-        enforceDelegatedOnly();
-        super._update(from, to, value);
-    }
-
-    /// @inheritdoc ERC20PermitUpgradeable
-    function nonces(
-        address owner
-    )
-        public
-        view
-        override(ERC20PermitUpgradeable, NoncesUpgradeable)
-        returns (uint256)
-    {
-        return super.nonces(owner);
-    }
-
-    function delegateTo(address delegatee) external override {
+    function delegateTo(address delegatee) external override delegatedOnly {
         delegate(delegatee);
     }
 
-    function getDelegatee(address account) external override view returns (address) {
+    function getDelegatee(
+        address account
+    ) external view override delegatedOnly returns (address) {
         return delegates(account);
     }
 
     /// @inheritdoc ILTERC20Facet
-    function enablePolitics() external override {
+    function enablePolitics() external override delegatedOnly {
         delegate(msg.sender);
     }
 
     function getVotingPower(
         address account
-    ) external view override returns (uint256) {
+    ) external view override delegatedOnly returns (uint256) {
         return getVotes(account);
     }
 
     function getPastVotingPower(
         address account,
         uint256 timepoint
-    ) external view override returns (uint256) {
+    ) external view override delegatedOnly returns (uint256) {
         return getPastVotes(account, timepoint);
+    }
+
+    function _mint(
+        address account,
+        uint256 amount
+    )
+        internal
+        override(
+            ERC20CappedUpgradeable,
+            ERC20VotesUpgradeable
+        )
+    {
+        super._mint(account, amount);
+    }
+
+    function _burn(
+        address account,
+        uint256 amount
+    ) internal override(ERC20Upgradeable, ERC20VotesUpgradeable) {
+        super._burn(account, amount);
+    }
+
+    function _afterTokenTransfer(
+        address from,
+        address to,
+        uint256 amount
+    ) internal override(ERC20Upgradeable, ERC20VotesUpgradeable) {
+        super._afterTokenTransfer(from, to, amount);
     }
 }

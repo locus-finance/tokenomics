@@ -31,6 +31,6 @@ module.exports = async ({
   for (const name in unpackedAccounts) {
     hre.tracer.nameTags[unpackedAccounts[name]] = name; 
   }
-  log(`Updated tags:\n${JSON.stringify(hre.tracer.nameTags)}`);
+  log(`updated tags:\n${JSON.stringify(hre.tracer.nameTags)}`);
 }
-module.exports.tags = ["updateTracerNames"];
+module.exports.tags = ["updateTracerNames", "tracer"];

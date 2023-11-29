@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.18;
 
 // look for the Diamond.sol in the hardhat-deploy/solc_0.8/Diamond.sol
 library TDLib {
@@ -50,7 +49,14 @@ library TDLib {
 
     function getAmountToDistribute(
         address entity
-    ) internal view returns (uint256 distributionAmount, uint256 distributionDurationPointIdx) {
+    )
+        internal
+        view
+        returns (
+            uint256 distributionAmount,
+            uint256 distributionDurationPointIdx
+        )
+    {
         uint32 startStakingTime = get().startTimestamps[entity];
         if (block.timestamp > startStakingTime) {
             uint32 timeCounter = startStakingTime;
