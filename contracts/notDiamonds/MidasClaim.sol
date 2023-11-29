@@ -26,6 +26,11 @@ contract MidasClaim is Ownable {
     bytes32 public merkleRoot;
     ILSDepositaryFacet public stLocus;
 
+<<<<<<< HEAD:contracts/notDiamonds/MidasClaim.sol
+=======
+    using SafeERC20 for IERC20;
+
+>>>>>>> main:contracts/MidasClaiming/Claim.sol
     mapping(address user => uint256 claimed) public claimed;
 
     constructor(
