@@ -58,7 +58,7 @@ library TDLib {
         )
     {
         uint32 startStakingTime = get().startTimestamps[entity];
-        if (block.timestamp > startStakingTime) {
+        if (block.timestamp >= startStakingTime) {
             uint32 timeCounter = startStakingTime;
             uint256 distributionDurationPointsLen = get()
                 .distributionDurationPoints

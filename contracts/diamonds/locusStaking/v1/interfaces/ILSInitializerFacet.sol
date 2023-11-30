@@ -13,4 +13,10 @@ interface ILSInitializerFacet {
     ) external;
 
     function prepareDepositary() external;
+
+    function setFeesSettings(
+        address owner,
+        uint32[] memory feeDurationPoints,
+        uint16[] memory feeBasePoints
+    ) external;
 }
