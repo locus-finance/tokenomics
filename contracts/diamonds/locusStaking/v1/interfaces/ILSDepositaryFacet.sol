@@ -12,7 +12,5 @@ interface ILSDepositaryFacet {
 
     function getReward() external;
 
-    function exit() external;
-
     function updateReward(address account) external;
 }

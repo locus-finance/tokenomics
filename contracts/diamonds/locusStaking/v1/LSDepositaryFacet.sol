@@ -57,6 +57,7 @@ contract LSDepositaryFacet is
         if (address(stakingToken) == p.locusToken) {
             amountWithFees = ILSProcessFeesFacet(address(this))
                 .getFeesAccountedAmountAndDistributeFees(
+                    msg.sender,
                     amount,
                     stakingToken
                 );
@@ -74,6 +75,7 @@ contract LSDepositaryFacet is
         if (address(LSLib.get().p.stakingToken) != LSLib.get().p.locusToken) {
             reward = ILSProcessFeesFacet(address(this))
                 .getFeesAccountedAmountAndDistributeFees(
+                    msg.sender,
                     rawReward,
                     p.rewardsToken
                 );
@@ -84,11 +86,6 @@ contract LSDepositaryFacet is
             p.rewardsToken.safeTransfer(msg.sender, reward);
             emit LSLib.RewardPaid(msg.sender, reward, rawReward - reward);
         }
-    }
-
-    function exit() external override {
-        withdraw(LSLib.get().rt.balanceOf[msg.sender]);
-        getReward();
     }
 
     function updateReward(address account) public override internalOnly {

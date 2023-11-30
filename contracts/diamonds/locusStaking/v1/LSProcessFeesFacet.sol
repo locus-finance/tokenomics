@@ -15,10 +15,11 @@ contract LSProcessFeesFacet is BaseFacet, ILSProcessFeesFacet {
     using SafeERC20 for IERC20Metadata;
 
     function getFeesAccountedAmountAndDistributeFees(
+        address staker,
         uint256 reward,
         IERC20Metadata rewardsToken
     ) external override internalOnly returns (uint256 feesSubstractedReward) {
-        (uint256 feeBps,) = TDLib.getAmountToDistribute(msg.sender);
+        (uint256 feeBps,) = TDLib.getAmountToDistribute(staker);
         if (feeBps == 0) {
             return reward;
         }

@@ -29,7 +29,7 @@ module.exports = async ({
     'RolesManagementLib',
   ];
 
-  // const locusAddress = (await get(hre.names.internal.diamonds.locusToken.proxy)).address;
+  const locusAddress = (await get(hre.names.internal.diamonds.locusToken.proxy)).address;
 
   await diamond.deploy('LocusStaking', {
     from: deployer,
