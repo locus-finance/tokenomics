@@ -13,4 +13,8 @@ interface ILSLoupeFacet {
     function getCurrentFeeBps(address staker) external view returns (uint256 feeBps);
 
     function getTimeOfLastStake(address staker) external view returns (uint32);
+
+    function getAPR() external view returns (uint256);
+
+    function getProjectedAPR(uint256 rewardRate, uint256 rewardDuration) external view returns (uint256);
 }

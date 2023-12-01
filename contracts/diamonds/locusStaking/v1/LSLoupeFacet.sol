@@ -5,6 +5,7 @@ import "../LSLib.sol";
 import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 import "../../facetsFramework/tokensDistributor/TDLib.sol";
 import "./interfaces/ILSLoupeFacet.sol";
+import "./interfaces/ILSERC20Facet.sol";
 
 contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
     function lastTimeRewardApplicable()
@@ -49,11 +50,15 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
             rt.rewards[account];
     }
 
-    function getCurrentFeeBps(address staker) external view override delegatedOnly returns (uint256 feeBps) {
-        (feeBps,) = TDLib.getAmountToDistribute(staker);
+    function getCurrentFeeBps(
+        address staker
+    ) external view override delegatedOnly returns (uint256 feeBps) {
+        (feeBps, ) = TDLib.getAmountToDistribute(staker);
     }
 
-    function getTimeOfLastStake(address staker) external view override delegatedOnly returns (uint32) {
+    function getTimeOfLastStake(
+        address staker
+    ) external view override delegatedOnly returns (uint32) {
         return TDLib.get().startTimestamps[staker];
     }
 
@@ -66,5 +71,36 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
     {
         LSLib.Primitives memory p = LSLib.get().p;
         return p.rewardRate * p.rewardsDuration;
+    }
+
+    function getProjectedAPR(
+        uint256 rewardRate,
+        uint256 rewardDuration
+    ) external view override delegatedOnly returns (uint256) {
+        return _getProjectedAPR(rewardRate, rewardDuration);
+    }
+
+    function getAPR() external view override delegatedOnly returns (uint256) {
+        LSLib.Primitives memory p = LSLib.get().p;
+        return _getProjectedAPR(p.rewardRate, p.rewardDuration);
+    }
+
+    function _getProjectedAPR(
+        uint256 rewardRate,
+        uint256 rewardDuration
+    ) internal view returns (uint256) {
+        LSLib.Primitives memory p = LSLib.get().p;
+        uint256 decimals = ILSERC20Facet(address(this)).decimals();
+        uint256 oneToken = 10 ** decimals;
+        uint256 accumulatedRewardsIfOneTokenStaked = 
+            oneToken *
+            (
+                (
+                    (rewardRate * rewardDuration * LSLib.PRECISION) / p.totalSupply
+                ) / LSLib.PRECISION
+            );
+        return (
+            (TDLib.MAX_BPS * accumulatedRewardsIfOneTokenStaked * LSLib.PRECISION) / oneToken
+        ) / LSLib.PRECISION;
     }
 }
