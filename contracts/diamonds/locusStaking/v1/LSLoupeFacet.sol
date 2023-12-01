@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
+import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+
 import "../LSLib.sol";
 import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 import "../../facetsFramework/tokensDistributor/TDLib.sol";
 import "./interfaces/ILSLoupeFacet.sol";
-import "./interfaces/ILSERC20Facet.sol";
 
 contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
     function lastTimeRewardApplicable()
@@ -82,7 +83,7 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
 
     function getAPR() external view override delegatedOnly returns (uint256) {
         LSLib.Primitives memory p = LSLib.get().p;
-        return _getProjectedAPR(p.rewardRate, p.rewardDuration);
+        return _getProjectedAPR(p.rewardRate, p.rewardsDuration);
     }
 
     function _getProjectedAPR(
@@ -90,7 +91,7 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
         uint256 rewardDuration
     ) internal view returns (uint256) {
         LSLib.Primitives memory p = LSLib.get().p;
-        uint256 decimals = ILSERC20Facet(address(this)).decimals();
+        uint256 decimals = IERC20Metadata(address(this)).decimals();
         uint256 oneToken = 10 ** decimals;
         uint256 accumulatedRewardsIfOneTokenStaked = 
             oneToken *
