@@ -9,12 +9,13 @@ require("hardhat-tracer");
 require("@nomicfoundation/hardhat-chai-matchers");
 require("hardhat-contract-sizer");
 
-require("./tasks/accounts")(task);
-require("./tasks/getAllArtifacts")(task);
-require("./tasks/autocracyMintLocus")(task);
-require("./tasks/midasClaim/getMerkleTreeInfo")(task);
-require("./tasks/midasClaim/updateMerkleTree")(task);
-require("./tasks/midasClaim/generateJsonOfMerkleTreeBody")(task);
+require("./tasks/utils/accounts")(task);
+require("./tasks/utils/getAllArtifacts")(task);
+require("./tasks/manual/autocracyMintLocus")(task);
+require("./tasks/manual/autocracyProvideRewardForStaking")(task);
+require("./tasks/manual/midasClaim/getMerkleTreeInfo")(task);
+require("./tasks/manual/midasClaim/updateMerkleTree")(task);
+require("./tasks/manual/midasClaim/generateJsonOfMerkleTreeBody")(task);
 
 const mainnetUrl = `https://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_MAINNET_API_KEY}`;
 const sepoliaUrl = `https://eth-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_SEPOLIA_API_KEY}`;

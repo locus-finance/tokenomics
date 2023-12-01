@@ -36,37 +36,24 @@ module.exports = async ({
     facets,
     log: true,
     libraries,
-    // execute: {
-    //   methodName: 'initialize',
-    //   args: [
-    //     deployer,
-    //     locusAddress,
-    //     deployer,
-    //     locusAddress,
-    //     locusAddress,
-    //     [WEEK, WEEK, WEEK, WEEK, WEEK],
-    //     [5000, 3750, 3750, 2500, 0]
-    //   ]
-    // }
+    execute: {
+      methodName: 'initialize',
+      args: [
+        deployer,
+        locusAddress,
+        deployer,
+        locusAddress,
+        locusAddress,
+        [WEEK, WEEK, WEEK, WEEK, WEEK],
+        [5000, 3750, 3750, 2500, 0]
+      ]
+    }
   });
 
-  // await execute(
-  //   hre.names.internal.diamonds.locusStaking.proxy,
-  //   {from: deployer, log: true},
-  //   'prepareDepositary'
-  // );
-
-
-  // const locusStakingInstance = await hre.ethers.getContractAt(
-  //   hre.names.internal.diamonds.locusStaking.interface,
-  //   (await get(hre.names.internal.diamonds.locusStaking.proxy)).address
-  // );
-  // const setFeesSettingsTx = await locusStakingInstance.setFeesSettings(
-  //   deployer,
-  //   [WEEK, WEEK, WEEK, WEEK, WEEK],
-  //   [5000, 3750, 3750, 2500, 0]
-  // );
-  // await setFeesSettingsTx.wait();
-  // console.log(setFeesSettingsTx);
+  await execute(
+    hre.names.internal.diamonds.locusStaking.proxy,
+    {from: deployer, log: true},
+    'prepareDepositary'
+  );
 }
 module.exports.tags = ["locusStakingStage", "staking"];

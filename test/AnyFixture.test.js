@@ -30,7 +30,12 @@ describe("AnyFixture", () => {
     console.log((await locusStaking.balanceOf(person)).toString());
   });
 
-  it("Successful fixture performance", async () => {
+  it('Successful run mint and notifyRewardAmount', async () => {
+    await deployments.fixture(['debug']);
+    await hre.run('provide');
+  });
+
+  xit("Successful fixture performance", async () => {
     await deployments.fixture(['debug']);
     const { deployer } = await getNamedAccounts();
     const locusStaking = await hre.ethers.getContractAt(

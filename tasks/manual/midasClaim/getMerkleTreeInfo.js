@@ -1,5 +1,5 @@
 const { types } = require("hardhat/config");
-const { getMerkleTree, parseCSV } = require('../../deploy/helpers');
+const { getMerkleTree, parseCSV } = require('../../../deploy/helpers');
 
 module.exports = (task) =>
   task(
