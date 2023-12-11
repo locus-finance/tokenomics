@@ -27,18 +27,17 @@ module.exports = async ({
     from: deployer,
     facets,
     log: true,
-    libraries
+    libraries,
+    execute: {
+      methodName: 'initialize',
+      args: [
+        locusAddress,
+        0,
+        0,
+        1,
+        1
+      ]
+    }
   });
-
-  await execute(
-    hre.names.internal.diamonds.locusGovernor.proxy,
-    {from: deployer, log: true},
-    'initialize',
-    locusAddress,
-    0,
-    0,
-    1,
-    1
-  );
 }
 module.exports.tags = ["locusGovernanceStage", "governance"];
