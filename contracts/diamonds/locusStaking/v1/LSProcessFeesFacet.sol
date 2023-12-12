@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 import "../LSLib.sol";
 import "../v2/manualWithdrawQueueFacets/interfaces/ILSSendingsDequeFacet.sol";
+import "../v2/manualWithdrawQueueFacets/libraries/DelayedSendingsQueueLib.sol";
 import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 import "./interfaces/ILSProcessFeesFacet.sol";
 
@@ -15,7 +16,7 @@ contract LSProcessFeesFacet is BaseFacet, ILSProcessFeesFacet {
     function processRewardSending(
         address staker,
         uint256 reward,
-        WithdrawalsQueueLib.DueDuration dueDuration
+        DelayedSendingsQueueLib.DueDuration dueDuration
     ) external override internalOnly {
         LSLib.Primitives storage p = LSLib.get().p;
         if (address(p.stakingToken) != p.locusToken) {
@@ -24,14 +25,14 @@ contract LSProcessFeesFacet is BaseFacet, ILSProcessFeesFacet {
             );
         } else {
             p.rewardsToken.safeTransfer(staker, reward);
-            emit LSLib.RewardPaid(staker, reward, 0);
+            emit LSLib.SentOut(address(p.rewardsToken), staker, reward, 0);
         }
     }
 
     function processWithdrawalSending(
         address staker,
         uint256 amount,
-        WithdrawalsQueueLib.DueDuration dueDuration
+        DelayedSendingsQueueLib.DueDuration dueDuration
     ) external override internalOnly {
         LSLib.Primitives storage p = LSLib.get().p;
         if (address(p.stakingToken) == p.locusToken) {
@@ -40,7 +41,7 @@ contract LSProcessFeesFacet is BaseFacet, ILSProcessFeesFacet {
             );
         } else {
             p.stakingToken.safeTransfer(staker, amount);
-            emit LSLib.Withdrawn(staker, amount, 0);
+            emit LSLib.SentOut(address(p.stakingToken), staker, amount, 0);
         }
     }
 }

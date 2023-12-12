@@ -7,10 +7,11 @@ import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 
 // look for the Diamond.sol in the hardhat-deploy/solc_0.8/Diamond.sol
 library DelayedSendingsQueueLib {
-    error DueDurationUndefined();
+    error InvalidDueDuration(DueDuration invalidDueDuration);
 
     enum DueDuration {
         UNDEFINED,
+        NOW,
         ONE_WEEK,
         TWO_WEEKS,
         MONTH

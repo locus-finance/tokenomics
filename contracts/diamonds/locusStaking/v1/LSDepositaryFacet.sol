@@ -9,8 +9,11 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 
 import "../LSLib.sol";
 import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
+
 import "../../locusToken/v1/interfaces/ILTERC20Facet.sol";
 import "../../locusToken/v1/autocracy/interfaces/ILTAutocracyFacet.sol";
+
+import "../v2/manualWithdrawQueueFacets/libraries/DelayedSendingsQueueLib.sol";
 
 import "./interfaces/ILSProcessFeesFacet.sol";
 import "./interfaces/ILSDepositaryFacet.sol";
@@ -50,7 +53,7 @@ contract LSDepositaryFacet is
 
     function withdraw(
         uint256 amount,
-        LSLib.DueDuration dueDuration
+        DelayedSendingsQueueLib.DueDuration dueDuration
     ) public override nonReentrant delegatedOnly {
         ILSDepositaryFacet(address(this)).updateReward(msg.sender);
         if (amount == 0) revert LSLib.CannotWithdrawZero();
@@ -64,7 +67,7 @@ contract LSDepositaryFacet is
         );
     }
 
-    function getReward(LSLib.DueDuration dueDuration) public override nonReentrant delegatedOnly {
+    function getReward(DelayedSendingsQueueLib.DueDuration dueDuration) public override nonReentrant delegatedOnly {
         ILSDepositaryFacet(address(this)).updateReward(msg.sender);
         LSLib.Primitives storage p = LSLib.get().p;
         LSLib.ReferenceTypes storage rt = LSLib.get().rt;
@@ -72,7 +75,7 @@ contract LSDepositaryFacet is
         if (reward > 0) {
             rt.rewards[msg.sender] = 0;
             p.totalReward -= reward;
-            ILSProcessFeesFacet(address(this)).processWithdrawalSending(
+            ILSProcessFeesFacet(address(this)).processRewardSending(
                 msg.sender,
                 reward,
                 dueDuration

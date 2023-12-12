@@ -16,15 +16,22 @@ library LSLib {
 
     event RewardAdded(uint256 indexed reward);
     event Staked(address indexed user, uint256 indexed amount);
-    event Withdrawn(address indexed user, uint256 indexed amount, uint256 indexed feesTaken);
-    event RewardPaid(address indexed user, uint256 indexed reward, uint256 indexed feesTaken);
+    event SentOut(
+        address indexed token,
+        address indexed user,
+        uint256 indexed amount,
+        uint256 feesTaken
+    );
     event RewardsDurationUpdated(uint256 indexed newDuration);
     event Recovered(address indexed token, uint256 indexed amount);
 
-    bytes32 constant LOCUS_STAKING_STORAGE_POSITION = keccak256("diamond.standard.diamond.storage.locus_staking");
+    bytes32 constant LOCUS_STAKING_STORAGE_POSITION =
+        keccak256("diamond.standard.diamond.storage.locus_staking");
 
-    bytes32 public constant REWARD_DISTRIBUTOR_ROLE = keccak256('REWARD_DISTRIBUTOR_ROLE');
-    bytes32 public constant ALLOWED_TO_STAKE_FOR_ROLE = keccak256('ALLOWED_TO_STAKE_FOR_ROLE');
+    bytes32 public constant REWARD_DISTRIBUTOR_ROLE =
+        keccak256("REWARD_DISTRIBUTOR_ROLE");
+    bytes32 public constant ALLOWED_TO_STAKE_FOR_ROLE =
+        keccak256("ALLOWED_TO_STAKE_FOR_ROLE");
 
     uint256 public constant PRECISION = 1 ether;
 
