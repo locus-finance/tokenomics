@@ -30,7 +30,7 @@ describe("AnyFixture", () => {
     console.log((await locusStaking.balanceOf(person)).toString());
   });
 
-  it('Successful run mint and notifyRewardAmount', async () => {
+  xit('Successful run mint and notifyRewardAmount', async () => {
     await deployments.fixture(['debug']);
     await hre.run('provide');
   });

@@ -5,6 +5,12 @@ import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 
 // look for the Diamond.sol in the hardhat-deploy/solc_0.8/Diamond.sol
 library LSLib {
+    enum DueDuration {
+        ONE_WEEK,
+        TWO_WEEKS,
+        MONTH
+    }
+
     error InvalidBPS(uint16 bps);
     error OnlyRewardsDistribution();
     error CannotStakeZero();
