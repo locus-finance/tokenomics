@@ -3,11 +3,14 @@ pragma solidity ^0.8.18;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/structs/DoubleEndedQueue.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 
 // look for the Diamond.sol in the hardhat-deploy/solc_0.8/Diamond.sol
-library WithdrawalsQueueLib {
+library DelayedSendingsQueueLib {
+    error DueDurationUndefined();
+
     enum DueDuration {
-        NOT_DEFINED,
+        UNDEFINED,
         ONE_WEEK,
         TWO_WEEKS,
         MONTH
@@ -17,9 +20,13 @@ library WithdrawalsQueueLib {
         address receiver;
         uint256 amount;
         uint256 dueToTimestamp;
+        DueDuration dueToDuration;
+        IERC20Metadata sendingToken;
     }
 
-    bytes32 constant LOCUS_STAKING_WITHDRAWALS_STORAGE_POSITION = keccak256("diamond.standard.diamond.storage.locus_staking.withdrawals");
+    bytes32 constant LOCUS_STAKING_DELAYED_SENDINGS_STORAGE_POSITION = keccak256("diamond.standard.diamond.storage.locus_staking.delayed_sendings");
+
+    bytes32 public constant DELAYED_SENDINGS_QUEUE_PROCESSOR_ROLE = keccak256('DELAYED_SENDINGS_QUEUE_PROCESSOR_ROLE');
 
     struct Storage {
         Counters.Counter nodeCounter;
@@ -28,7 +35,7 @@ library WithdrawalsQueueLib {
     }
 
     function get() internal pure returns (Storage storage s) {
-        bytes32 position = LOCUS_STAKING_WITHDRAWALS_STORAGE_POSITION;
+        bytes32 position = LOCUS_STAKING_DELAYED_SENDINGS_STORAGE_POSITION;
         assembly {
             s.slot := position
         }
