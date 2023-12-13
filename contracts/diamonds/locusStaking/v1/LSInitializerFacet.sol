@@ -52,6 +52,7 @@ contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
         _setFeesSettings(undistributedAmountsReceiver, feeDurationPoints, feeBasePoints);
     }
 
+    /// @dev DEPRECATED
     function _setFeesSettings(
         address undistributedAmountsReceiver,
         uint32[] memory feeDurationPoints,
