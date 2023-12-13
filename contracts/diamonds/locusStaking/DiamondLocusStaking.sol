@@ -10,6 +10,9 @@ import "./v1/interfaces/ILSLoupeFacet.sol";
 import "./v1/interfaces/ILSManagementFacet.sol";
 import "./v1/interfaces/ILSProcessFeesFacet.sol";
 
+import "./v2/manualWithdrawQueueFacets/interfaces/ILSSendingsDequeFacet.sol";
+import "./v2/manualWithdrawQueueFacets/interfaces/ILSSendingsDequeLoupeFacet.sol";
+
 /// @notice IMPORTANT: all of the collective diamond interfaces MUST be prefixed with "Diamond" word.
 /// @dev This MUST aggregate all of the faucets interfaces, to be able to grasp a full view of ABI in one place.
 interface DiamondLocusStaking is
@@ -19,5 +22,7 @@ interface DiamondLocusStaking is
     IERC20Metadata,
     ILSLoupeFacet,
     ILSManagementFacet,
-    ILSProcessFeesFacet
+    ILSProcessFeesFacet,
+    ILSSendingsDequeFacet,
+    ILSSendingsDequeLoupeFacet
 {}

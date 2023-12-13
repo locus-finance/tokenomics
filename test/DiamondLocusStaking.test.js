@@ -15,10 +15,13 @@ describe("DiamondLocusStaking", () => {
       "claim",
       "tracer"
     ]);
+  });
+
+  xit('should perform delayed withdrawal', async () => {
 
   });
 
-  it('should perform delayed withdrawal', async () => {
-
+  it('should perform calculate apr correctly', async () => {
+    
   });
 });
