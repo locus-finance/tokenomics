@@ -51,6 +51,7 @@ contract LSSendingsDequeFacet is BaseFacet, ILSSendingsDequeFacet {
         ];
         sending.receiver = receiver;
         sending.amount = amount;
+        s.totalSendingsPerStaker[receiver] += amount;
         sending.dueToDuration = dueToDuration;
         sending.sendingToken = sendingToken;
 
@@ -67,27 +68,6 @@ contract LSSendingsDequeFacet is BaseFacet, ILSSendingsDequeFacet {
         }
         s.sendingsDeque.pushBack(bytes32(currentCounter));
         s.nodeCounter.increment();
-    }
-
-    function getDelayedSending(
-        uint256 index
-    )
-        external
-        view
-        override
-        returns (DelayedSendingsQueueLib.DelayedSending memory)
-    {
-        return DelayedSendingsQueueLib.get().queueNodes[index];
-    }
-
-    function getDequeSize()
-        external
-        view
-        override
-        internalOnly
-        returns (uint256)
-    {
-        return DelayedSendingsQueueLib.get().sendingsDeque.length();
     }
 
     function processQueue() external override delegatedOnly {
@@ -111,6 +91,7 @@ contract LSSendingsDequeFacet is BaseFacet, ILSSendingsDequeFacet {
                         sending.amount,
                         sending.dueToDuration
                     );
+                s.totalSendingsPerStaker[sending.receiver] -= sending.amount;
                 sending.sendingToken.safeTransfer(sending.receiver, amountWithFees);
                 emit LSLib.SentOut(
                     address(sending.sendingToken),

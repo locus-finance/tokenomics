@@ -33,6 +33,7 @@ library DelayedSendingsQueueLib {
         Counters.Counter nodeCounter;
         mapping(uint256 => DelayedSending) queueNodes;
         DoubleEndedQueue.Bytes32Deque sendingsDeque;
+        mapping(address => uint256) totalSendingsPerStaker;
     }
 
     function get() internal pure returns (Storage storage s) {

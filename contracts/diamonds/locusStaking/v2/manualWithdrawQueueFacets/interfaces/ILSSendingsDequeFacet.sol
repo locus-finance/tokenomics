@@ -13,9 +13,5 @@ interface ILSSendingsDequeFacet {
         DelayedSendingsQueueLib.DueDuration dueToDuration
     ) external;
 
-    function getDelayedSending(uint256 index) external view returns (DelayedSendingsQueueLib.DelayedSending memory);
-    
-    function getDequeSize() external view returns (uint256);
-
     function processQueue() external;
 }
