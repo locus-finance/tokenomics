@@ -20,7 +20,8 @@ module.exports = (
       "LSLoupeFacet",
       "LSManagementFacet",
       "LSProcessFeesFacet",
-      "LSSendingDequeFacet"
+      "LSSendingsDequeFacet",
+      "LSSendingsDequeLoupeFacet"
     ];
 
     const libraries = [

@@ -8,6 +8,8 @@ import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 import "../../facetsFramework/tokensDistributor/TDLib.sol";
 import "./interfaces/ILSLoupeFacet.sol";
 
+import "hardhat/console.sol";
+
 contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
     function lastTimeRewardApplicable()
         public
@@ -51,16 +53,14 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
             rt.rewards[account];
     }
 
-    function getCurrentFeeBps(
-        address staker
-    ) external view override delegatedOnly returns (uint256 feeBps) {
-        (feeBps, ) = TDLib.getAmountToDistribute(staker);
-    }
-
-    function getTimeOfLastStake(
-        address staker
-    ) external view override delegatedOnly returns (uint32) {
-        return TDLib.get().startTimestamps[staker];
+    function getTotalReward()
+        external
+        view
+        override
+        delegatedOnly
+        returns (uint256)
+    {
+        return LSLib.get().p.totalReward;
     }
 
     function getRewardForDuration()
@@ -93,15 +93,10 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
         LSLib.Primitives memory p = LSLib.get().p;
         uint256 decimals = IERC20Metadata(address(this)).decimals();
         uint256 oneToken = 10 ** decimals;
-        uint256 accumulatedRewardsIfOneTokenStaked = 
-            oneToken *
-            (
-                (
-                    (rewardRate * rewardDuration * LSLib.PRECISION) / p.totalSupply
-                ) / LSLib.PRECISION
-            );
-        return (
-            (TDLib.MAX_BPS * accumulatedRewardsIfOneTokenStaked * LSLib.PRECISION) / oneToken
-        ) / LSLib.PRECISION;
+        uint256 accumulatedRewardsIfOneTokenStaked = oneToken *
+            ((rewardRate * rewardDuration * LSLib.PRECISION) / p.totalSupply);
+        return
+            ((TDLib.MAX_BPS * accumulatedRewardsIfOneTokenStaked) / oneToken) /
+            LSLib.PRECISION;
     }
 }
