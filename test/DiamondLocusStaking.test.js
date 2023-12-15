@@ -93,7 +93,7 @@ describe("DiamondLocusStaking", () => {
     expect(await locusToken.balanceOf(namedAccounts.deployer)).to.be.equal('0');
   });
 
-  it('should perform calculate apr correctly', async () => {
+  it('should calculate APR correctly', async () => {
     expect(await locusStaking.getAPR()).to.be.equal(hre.ethers.BigNumber.from('166'));
   });
 });

@@ -13,6 +13,7 @@ require("./tasks/utils/accounts")(task);
 require("./tasks/utils/getAllArtifacts")(task);
 require("./tasks/manual/autocracyMintLocus")(task);
 require("./tasks/manual/autocracyProvideRewardForStaking")(task);
+require("./tasks/manual/autocracyClearSendingsQueue")(task);
 require("./tasks/manual/midasClaim/getMerkleTreeInfo")(task);
 require("./tasks/manual/midasClaim/updateMerkleTree")(task);
 require("./tasks/manual/midasClaim/generateJsonOfMerkleTreeBody")(task);
