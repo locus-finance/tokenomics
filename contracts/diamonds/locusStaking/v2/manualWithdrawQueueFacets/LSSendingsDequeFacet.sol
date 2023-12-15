@@ -24,6 +24,8 @@ contract LSSendingsDequeFacet is BaseFacet, ILSSendingsDequeFacet {
         uint256 amount,
         DelayedSendingsQueueLib.DueDuration dueToDuration
     ) external override internalOnly {
+        DelayedSendingsQueueLib.Storage storage s = DelayedSendingsQueueLib
+            .get();
         if (dueToDuration == DelayedSendingsQueueLib.DueDuration.NOW) {
             (
                 uint256 amountWithFees,
@@ -43,8 +45,6 @@ contract LSSendingsDequeFacet is BaseFacet, ILSSendingsDequeFacet {
             return;
         }
 
-        DelayedSendingsQueueLib.Storage storage s = DelayedSendingsQueueLib
-            .get();
         uint256 currentCounter = s.nodeCounter.current();
         DelayedSendingsQueueLib.DelayedSending storage sending = s.queueNodes[
             currentCounter
@@ -92,7 +92,10 @@ contract LSSendingsDequeFacet is BaseFacet, ILSSendingsDequeFacet {
                         sending.dueToDuration
                     );
                 s.totalSendingsPerStaker[sending.receiver] -= sending.amount;
-                sending.sendingToken.safeTransfer(sending.receiver, amountWithFees);
+                sending.sendingToken.safeTransfer(
+                    sending.receiver,
+                    amountWithFees
+                );
                 emit LSLib.SentOut(
                     address(sending.sendingToken),
                     sending.receiver,

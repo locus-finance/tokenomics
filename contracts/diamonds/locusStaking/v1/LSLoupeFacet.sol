@@ -8,8 +8,6 @@ import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 import "../../facetsFramework/tokensDistributor/TDLib.sol";
 import "./interfaces/ILSLoupeFacet.sol";
 
-import "hardhat/console.sol";
-
 contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
     function lastTimeRewardApplicable()
         public

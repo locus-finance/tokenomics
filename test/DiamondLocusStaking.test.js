@@ -1,10 +1,16 @@
 const { expect } = require("chai");
+const networkHelpers = require("@nomicfoundation/hardhat-network-helpers");
 const hre = require("hardhat");
+const keccak256 = require('keccak256');
 const { deployments, getNamedAccounts } = hre;
-const { withImpersonatedSigner, mintNativeTokens } = require("../deploy/helpers");
+const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/helpers");
 
 describe("DiamondLocusStaking", () => {
   let namedAccounts;
+  let person;
+  let personBalance;
+  let totalReward;
+
   let locusStaking;
   let locusToken;
 
@@ -23,12 +29,18 @@ describe("DiamondLocusStaking", () => {
       (await deployments.get(hre.names.internal.diamonds.locusToken.proxy)).address
     );
 
-    const person = "0x35AC85c14Be0acc68870348F33B150364aF35303";
-    const personBalance = hre.ethers.BigNumber.from('1954286826623793992312644');
-    const totalReward = hre.ethers.BigNumber.from('32499999999999998323200');
-    await locusToken.mint(person, personBalance);
+    // some random person
+    person = "0x35AC85c14Be0acc68870348F33B150364aF35303";
 
+    // a real total supply from onchain arbitrumOne
+    personBalance = hre.ethers.BigNumber.from('1954286826623793992312644');
+    
+    // a real total reward acquired from onchain arbitrumOne
+    totalReward = hre.ethers.BigNumber.from('32499999999999998323200');
+    
+    await locusToken.mint(person, personBalance);
     await locusToken.mint(namedAccounts.deployer, totalReward);
+
     await locusToken.approve(locusStaking.address, totalReward);
     await locusStaking.notifyRewardAmount(totalReward);
 
@@ -37,10 +49,48 @@ describe("DiamondLocusStaking", () => {
       await locusToken.connect(personSigner).approve(locusStaking.address, personBalance);
       await locusStaking.connect(personSigner).stake(personBalance);
     });
+
+    await locusStaking.grantRole(namedAccounts.deployer, keccak256('DELAYED_SENDINGS_QUEUE_PROCESSOR_ROLE'));
   });
 
-  it('should perform delayed withdrawal', async () => {
-    
+  it('should perform an instant withdrawal', async () => {
+    await withImpersonatedSigner(person, async (personSigner) => {
+      await locusStaking.connect(personSigner).withdraw(personBalance, 1);
+      expect(await locusToken.balanceOf(person)).to.be.equal(personBalance.div('2'));
+      expect(await locusToken.balanceOf(namedAccounts.deployer)).to.be.equal(personBalance.div('2'));
+    });
+  });
+
+  it('should perform delayed withdrawal (1 week)', async () => {
+    await withImpersonatedSigner(person, async (personSigner) => {
+      await locusStaking.connect(personSigner).withdraw(personBalance, 2);
+    });
+    await networkHelpers.time.increase(WEEK);
+    await locusStaking.processQueue();
+    const feeTaken = personBalance.mul('3750').div('10000');
+    expect(await locusToken.balanceOf(person)).to.be.equal(personBalance.sub(feeTaken));
+    expect(await locusToken.balanceOf(namedAccounts.deployer)).to.be.equal(feeTaken);
+  });
+
+  it('should perform delayed withdrawal (2 weeks)', async () => {
+    await withImpersonatedSigner(person, async (personSigner) => {
+      await locusStaking.connect(personSigner).withdraw(personBalance, 3);
+    });
+    await networkHelpers.time.increase(2 * WEEK);
+    await locusStaking.processQueue();
+    const feeTaken = personBalance.mul('2500').div('10000');
+    expect(await locusToken.balanceOf(person)).to.be.equal(personBalance.sub(feeTaken));
+    expect(await locusToken.balanceOf(namedAccounts.deployer)).to.be.equal(feeTaken);
+  });
+
+  it('should perform delayed withdrawal (month)', async () => {
+    await withImpersonatedSigner(person, async (personSigner) => {
+      await locusStaking.connect(personSigner).withdraw(personBalance, 4);
+    });
+    await networkHelpers.time.increase(4 * WEEK);
+    await locusStaking.processQueue();
+    expect(await locusToken.balanceOf(person)).to.be.equal(personBalance);
+    expect(await locusToken.balanceOf(namedAccounts.deployer)).to.be.equal('0');
   });
 
   it('should perform calculate apr correctly', async () => {
