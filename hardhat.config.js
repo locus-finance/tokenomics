@@ -12,6 +12,7 @@ require("hardhat-contract-sizer");
 require("./tasks/utils/accounts")(task);
 require("./tasks/utils/getAllArtifacts")(task);
 require("./tasks/manual/autocracyMintLocus")(task);
+require("./tasks/manual/autocracyGrantRole")(task);
 require("./tasks/manual/autocracyProvideRewardForStaking")(task);
 require("./tasks/manual/autocracyClearSendingsQueue")(task);
 require("./tasks/manual/midasClaim/getMerkleTreeInfo")(task);
