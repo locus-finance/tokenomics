@@ -3,10 +3,18 @@ pragma solidity ^0.8.18;
 
 import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 
+import "../../v2/manualWithdrawQueueFacets/libraries/DelayedSendingsQueueLib.sol";
+
 interface ILSProcessFeesFacet {
-    function getFeesAccountedAmountAndDistributeFees(
+    function processRewardSending(
         address staker,
         uint256 reward,
-        IERC20Metadata rewardsToken
-    ) external returns (uint256 feesSubstractedReward);
+        DelayedSendingsQueueLib.DueDuration dueDuration
+    ) external;
+
+    function processWithdrawalSending(
+        address staker,
+        uint256 amount,
+        DelayedSendingsQueueLib.DueDuration dueDuration
+    ) external;
 }

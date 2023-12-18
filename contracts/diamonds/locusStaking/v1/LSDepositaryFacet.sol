@@ -8,10 +8,12 @@ import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.
 import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 
 import "../LSLib.sol";
-import "../../facetsFramework/tokensDistributor/TDLib.sol";
 import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
+
 import "../../locusToken/v1/interfaces/ILTERC20Facet.sol";
 import "../../locusToken/v1/autocracy/interfaces/ILTAutocracyFacet.sol";
+
+import "../v2/manualWithdrawQueueFacets/libraries/DelayedSendingsQueueLib.sol";
 
 import "./interfaces/ILSProcessFeesFacet.sol";
 import "./interfaces/ILSDepositaryFacet.sol";
@@ -25,7 +27,12 @@ contract LSDepositaryFacet is
 {
     using SafeERC20 for IERC20Metadata;
 
-    function _initialize_LSDepositaryFacet() external initializer override internalOnly {
+    function _initialize_LSDepositaryFacet()
+        external
+        override
+        initializer
+        internalOnly
+    {
         __ReentrancyGuard_init();
         __Pausable_init();
     }
@@ -45,46 +52,34 @@ contract LSDepositaryFacet is
     }
 
     function withdraw(
-        uint256 amount
+        uint256 amount,
+        DelayedSendingsQueueLib.DueDuration dueDuration
     ) public override nonReentrant delegatedOnly {
         ILSDepositaryFacet(address(this)).updateReward(msg.sender);
         if (amount == 0) revert LSLib.CannotWithdrawZero();
         LSLib.Primitives storage p = LSLib.get().p;
         p.totalSupply -= amount;
         LSLib.get().rt.balanceOf[msg.sender] -= amount;
-        IERC20Metadata stakingToken = p.stakingToken;
-        uint256 amountWithFees = amount;
-        if (address(stakingToken) == p.locusToken) {
-            amountWithFees = ILSProcessFeesFacet(address(this))
-                .getFeesAccountedAmountAndDistributeFees(
-                    msg.sender,
-                    amount,
-                    stakingToken
-                );
-        }
-        stakingToken.safeTransfer(msg.sender, amountWithFees);
-        emit LSLib.Withdrawn(msg.sender, amount, amount - amountWithFees);
+        ILSProcessFeesFacet(address(this)).processWithdrawalSending(
+            msg.sender,
+            amount,
+            dueDuration
+        );
     }
 
-    function getReward() public override nonReentrant delegatedOnly {
+    function getReward(DelayedSendingsQueueLib.DueDuration dueDuration) public override nonReentrant delegatedOnly {
         ILSDepositaryFacet(address(this)).updateReward(msg.sender);
         LSLib.Primitives storage p = LSLib.get().p;
         LSLib.ReferenceTypes storage rt = LSLib.get().rt;
-        uint256 rawReward = rt.rewards[msg.sender];
-        uint256 reward = rawReward;
-        if (address(LSLib.get().p.stakingToken) != LSLib.get().p.locusToken) {
-            reward = ILSProcessFeesFacet(address(this))
-                .getFeesAccountedAmountAndDistributeFees(
-                    msg.sender,
-                    rawReward,
-                    p.rewardsToken
-                );
-        }
+        uint256 reward = rt.rewards[msg.sender];
         if (reward > 0) {
             rt.rewards[msg.sender] = 0;
             p.totalReward -= reward;
-            p.rewardsToken.safeTransfer(msg.sender, reward);
-            emit LSLib.RewardPaid(msg.sender, reward, rawReward - reward);
+            ILSProcessFeesFacet(address(this)).processRewardSending(
+                msg.sender,
+                reward,
+                dueDuration
+            );
         }
     }
 
@@ -101,19 +96,18 @@ contract LSDepositaryFacet is
         }
     }
 
-    function _stake(address staker, address fundsOwner, uint256 amount) internal {
+    function _stake(
+        address staker,
+        address fundsOwner,
+        uint256 amount
+    ) internal {
         ILSDepositaryFacet(address(this)).updateReward(staker);
         LSLib.Primitives storage p = LSLib.get().p;
         IERC20Metadata stakingToken = p.stakingToken;
         if (amount == 0) revert LSLib.CannotStakeZero();
-        TDLib.get().startTimestamps[staker] = uint32(block.timestamp);
         p.totalSupply += amount;
         LSLib.get().rt.balanceOf[staker] += amount;
-        stakingToken.safeTransferFrom(
-            fundsOwner,
-            address(this),
-            amount
-        );
+        stakingToken.safeTransferFrom(fundsOwner, address(this), amount);
         emit LSLib.Staked(staker, amount);
     }
 }

@@ -30,7 +30,16 @@ describe("AnyFixture", () => {
     console.log((await locusStaking.balanceOf(person)).toString());
   });
 
-  it('Successful run mint and notifyRewardAmount', async () => {
+  it('test', async () => {
+    const locusStaking = await hre.ethers.getContractAt(
+      hre.names.internal.diamonds.locusStaking.interface,
+      "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952"
+    );
+    console.log((await locusStaking.totalSupply()).toString());
+    console.log((await locusStaking.getRewardForDuration()).toString());
+  });
+
+  xit('Successful run mint and notifyRewardAmount', async () => {
     await deployments.fixture(['debug']);
     await hre.run('provide');
   });

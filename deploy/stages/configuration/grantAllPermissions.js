@@ -22,6 +22,13 @@ module.exports = async ({
     (await get(hre.names.internal.diamonds.locusStaking.proxy)).address,
     keccak256('ALLOWANCE_FREE_ROLE')
   );
+  await execute(
+    hre.names.internal.diamonds.locusStaking.proxy,
+    {from: deployer, log: true},
+    'grantRole',
+    deployer,
+    keccak256('DELAYED_SENDINGS_QUEUE_PROCESSOR_ROLE')
+  );
   log(`permissions are granted`);
 }
 module.exports.tags = ["grantAllPermissions", "permissions"];
