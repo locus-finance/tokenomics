@@ -1,5 +1,6 @@
 const hre = require('hardhat');
 module.exports = (
+  stakingContractName,
   isReconfigurationRequired
 ) => async ({
   getNamedAccounts,
@@ -59,7 +60,7 @@ module.exports = (
       };
     }
     
-    await diamond.deploy('LocusStaking', diamondDeployConfig);
+    await diamond.deploy(`${stakingContractName}Staking`, diamondDeployConfig);
 
     if (isReconfigurationRequired) {
       await execute(
