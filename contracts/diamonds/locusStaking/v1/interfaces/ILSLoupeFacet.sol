@@ -15,4 +15,6 @@ interface ILSLoupeFacet {
     function getAPR() external view returns (uint256);
 
     function getProjectedAPR(uint256 rewardRate, uint256 rewardDuration) external view returns (uint256);
+
+    function getAPRInAbsoluteValue() external view returns (uint256);
 }

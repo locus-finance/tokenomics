@@ -84,17 +84,43 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
         return _getProjectedAPR(p.rewardRate, p.rewardsDuration);
     }
 
+    function getAPRInAbsoluteValue()
+        external
+        view
+        override
+        delegatedOnly
+        returns (uint256)
+    {
+        LSLib.Primitives memory p = LSLib.get().p;
+        return _getProjectedAPRInAbsoluteValue(p.rewardRate, p.rewardsDuration) / LSLib.PRECISION;
+    }
+
+    function _getProjectedAPRInAbsoluteValue(
+        uint256 rewardRate,
+        uint256 rewardDuration
+    )
+        internal
+        view
+        returns (uint256 accumulatedRewardsIfOneTokenStakedWithPrecision)
+    {
+        LSLib.Primitives memory p = LSLib.get().p;
+        uint256 oneToken = 10 ** IERC20Metadata(address(this)).decimals();
+        accumulatedRewardsIfOneTokenStakedWithPrecision =
+            oneToken *
+            ((rewardRate * rewardDuration * LSLib.PRECISION) / p.totalSupply);
+    }
+
     function _getProjectedAPR(
         uint256 rewardRate,
         uint256 rewardDuration
     ) internal view returns (uint256) {
-        LSLib.Primitives memory p = LSLib.get().p;
-        uint256 decimals = IERC20Metadata(address(this)).decimals();
-        uint256 oneToken = 10 ** decimals;
-        uint256 accumulatedRewardsIfOneTokenStaked = oneToken *
-            ((rewardRate * rewardDuration * LSLib.PRECISION) / p.totalSupply);
+        uint256 oneToken = 10 ** IERC20Metadata(address(this)).decimals();
+        uint256 accumulatedRewardsIfOneTokenStakedWithPrecision = _getProjectedAPRInAbsoluteValue(
+                rewardRate,
+                rewardDuration
+            );
         return
-            ((TDLib.MAX_BPS * accumulatedRewardsIfOneTokenStaked) / oneToken) /
-            LSLib.PRECISION;
+            ((TDLib.MAX_BPS * accumulatedRewardsIfOneTokenStakedWithPrecision) /
+                oneToken) / LSLib.PRECISION;
     }
 }

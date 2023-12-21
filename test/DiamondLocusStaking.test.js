@@ -96,4 +96,8 @@ describe("DiamondLocusStaking", () => {
   it('should calculate APR correctly', async () => {
     expect(await locusStaking.getAPR()).to.be.equal(hre.ethers.BigNumber.from('166'));
   });
+
+  it('should calculate APR in absolute value correctly', async () => {
+    expect(await locusStaking.getAPRInAbsoluteValue()).to.be.equal(hre.ethers.BigNumber.from('16630107493559001'));
+  });
 });
