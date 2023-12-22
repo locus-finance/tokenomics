@@ -5,11 +5,13 @@ module.exports = (task) =>
   )
     .setAction(async (_, hre) => {
       const signers = await hre.ethers.getSigners();
-      const deployer = signers[0].address;
-      await hre.deployments.execute(
-        hre.names.internal.diamonds.locusStaking.proxy,
-        { from: deployer, log: true },
-        'processQueue'
+      const deployer = signers[0];
+      const locusStakingInstance = await hre.ethers.getContractAt(
+        "DiamondLocusStaking",// hre.names.internal.diamonds.locusStaking.interface,
+        (await hre.deployments.get("LocusStaking_DiamondProxy")).address
       );
-      console.log(`The queue has been cleared.`);
+      const processQueueTx = await locusStakingInstance.connect(deployer).processQueue();
+      await processQueueTx.wait();
+
+      console.log(`The queue has been cleared:\n${processQueueTx}`);
     });
