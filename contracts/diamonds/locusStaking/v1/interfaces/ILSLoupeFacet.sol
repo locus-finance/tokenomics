@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
+import "../../LSLib.sol";
+
 interface ILSLoupeFacet {
+    function getPrimitives() external view returns (LSLib.Primitives memory);
+    
     function lastTimeRewardApplicable() external view returns (uint256);
 
     function rewardPerToken() external view returns (uint256);

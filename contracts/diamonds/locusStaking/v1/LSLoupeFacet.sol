@@ -92,7 +92,9 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
         returns (uint256)
     {
         LSLib.Primitives memory p = LSLib.get().p;
-        return _getProjectedAPRInAbsoluteValue(p.rewardRate, p.rewardsDuration) / LSLib.PRECISION;
+        return
+            _getProjectedAPRInAbsoluteValue(p.rewardRate, p.rewardsDuration) /
+            LSLib.PRECISION;
     }
 
     function _getProjectedAPRInAbsoluteValue(
@@ -122,5 +124,14 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
         return
             ((TDLib.MAX_BPS * accumulatedRewardsIfOneTokenStakedWithPrecision) /
                 oneToken) / LSLib.PRECISION;
+    }
+
+    function getPrimitives()
+        external
+        view
+        override
+        returns (LSLib.Primitives memory)
+    {
+        return LSLib.get().p;
     }
 }
