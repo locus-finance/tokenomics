@@ -11,9 +11,9 @@ import "./interfaces/ILTAutocracyFacet.sol";
 contract LTAutocracyFacet is BaseFacet, ILTAutocracyFacet {
     using LibDiamond for LibDiamond.DiamondStorage;
 
-    function burn(uint256 amount) external override delegatedOnly {
+    function burn(address from, uint256 amount) external override delegatedOnly {
         RolesManagementLib.enforceSenderRole(AutocracyLib.AUTOCRAT_ROLE);
-        ILTERC20Facet(address(this)).burnFrom(msg.sender, amount);
+        ILTERC20Facet(address(this)).burnFrom(from, amount);
     }
 
     function mint(address who, uint256 amount) external override delegatedOnly {

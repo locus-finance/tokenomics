@@ -14,6 +14,12 @@ const DAY = 24 * HOUR;
 const WEEK = 7 * DAY;
 const MONTH = 4 * WEEK;
 
+const facetCutActions = {
+  ADD: 0,
+  REPLACE: 1,
+  REMOVE: 2
+}
+
 ////////////////////////////////////////////
 // Constants Ends
 ////////////////////////////////////////////
@@ -167,5 +173,6 @@ module.exports = {
   HOUR, 
   DAY,
   WEEK,
-  MONTH
+  MONTH,
+  facetCutActions
 };

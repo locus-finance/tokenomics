@@ -134,3 +134,4 @@ artifacts
 cache
 abis
 .idea
+deployments/hardhat

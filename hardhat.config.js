@@ -22,8 +22,6 @@ require("./tasks/manual/midasClaim/getMerkleTreeInfo")(task);
 require("./tasks/manual/midasClaim/updateMerkleTree")(task);
 require("./tasks/manual/midasClaim/generateJsonOfMerkleTreeBody")(task);
 
-const mainnetUrl = `https://eth-mainnet.g.alchemy.com/v2/${process.env.ALCHEMY_MAINNET_API_KEY}`;
-const sepoliaUrl = `https://eth-sepolia.g.alchemy.com/v2/${process.env.ALCHEMY_SEPOLIA_API_KEY}`;
 const arbitrumOneUrl = 'https://arb1.arbitrum.io/rpc';
 
 const mainnetChainId = 1;
@@ -66,18 +64,6 @@ module.exports = {
         url: arbitrumOneUrl,
         chainId: arbitrumOneChainId,
       },
-      saveDeployments: true,
-    },
-    mainnet: {
-      url: mainnetUrl,
-      chainId: mainnetChainId,
-      accounts: { mnemonic: process.env.MAINNET_DEPLOY_MNEMONIC },
-      saveDeployments: true,
-    },
-    sepolia: {
-      url: sepoliaUrl,
-      chainId: sepoliaChainId,
-      accounts: { mnemonic: process.env.TESTNET_DEPLOY_MNEMONIC },
       saveDeployments: true,
     },
     arbitrumOne: {
