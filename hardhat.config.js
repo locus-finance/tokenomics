@@ -18,14 +18,13 @@ require("./tasks/manual/autocracyGrantRole")(task);
 require("./tasks/manual/autocracyProvideRewardForStaking")(task);
 require("./tasks/manual/autocracyClearSendingsQueue")(task);
 require("./tasks/manual/autocracyPrintSendingsQueue")(task);
+require("./tasks/manual/autocracyRenounceAndGrantOwnership")(task);
 require("./tasks/manual/midasClaim/getMerkleTreeInfo")(task);
 require("./tasks/manual/midasClaim/updateMerkleTree")(task);
 require("./tasks/manual/midasClaim/generateJsonOfMerkleTreeBody")(task);
 
 const arbitrumOneUrl = 'https://arb1.arbitrum.io/rpc';
 
-const mainnetChainId = 1;
-const sepoliaChainId = 11155111;
 const arbitrumOneChainId = 42161;
 
 const optimizer = {
