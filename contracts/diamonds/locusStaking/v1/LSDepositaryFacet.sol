@@ -9,6 +9,7 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 
 import "../LSLib.sol";
 import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
+import "../../facetsFramework/diamondBase/facets/PausabilityFacet.sol";
 
 import "../../locusToken/v1/interfaces/ILTERC20Facet.sol";
 import "../../locusToken/v1/autocracy/interfaces/ILTAutocracyFacet.sol";
@@ -21,8 +22,8 @@ import "./interfaces/ILSLoupeFacet.sol";
 
 contract LSDepositaryFacet is
     BaseFacet,
+    PausabilityFacet,
     ReentrancyGuardUpgradeable,
-    PausableUpgradeable,
     ILSDepositaryFacet
 {
     using SafeERC20 for IERC20Metadata;
@@ -34,7 +35,6 @@ contract LSDepositaryFacet is
         internalOnly
     {
         __ReentrancyGuard_init();
-        __Pausable_init();
     }
 
     function stakeFor(
@@ -67,8 +67,18 @@ contract LSDepositaryFacet is
         );
     }
 
-    function getReward(DelayedSendingsQueueLib.DueDuration dueDuration) public override nonReentrant delegatedOnly {
-        ILSDepositaryFacet(address(this)).updateReward(msg.sender);
+    function getReward(
+        DelayedSendingsQueueLib.DueDuration dueDuration
+    ) public override nonReentrant delegatedOnly {
+        _getReward(dueDuration);
+    }
+
+    function updateReward(address account) public override internalOnly {
+        _updateReward(account);
+    }
+
+    function _getReward(DelayedSendingsQueueLib.DueDuration dueDuration) internal {
+        _updateReward(msg.sender);
         LSLib.Primitives storage p = LSLib.get().p;
         LSLib.ReferenceTypes storage rt = LSLib.get().rt;
         uint256 reward = rt.rewards[msg.sender];
@@ -83,7 +93,7 @@ contract LSDepositaryFacet is
         }
     }
 
-    function updateReward(address account) public override internalOnly {
+    function _updateReward(address account) internal {
         ILSLoupeFacet self = ILSLoupeFacet(address(this));
         LSLib.get().p.rewardPerTokenStored = self.rewardPerToken();
         LSLib.get().p.lastUpdateTime = self.lastTimeRewardApplicable();

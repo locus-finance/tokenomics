@@ -62,6 +62,7 @@ module.exports = {
       forking: {
         url: arbitrumOneUrl,
         chainId: arbitrumOneChainId,
+        blockNumber: 173714997
       },
       saveDeployments: true,
     },

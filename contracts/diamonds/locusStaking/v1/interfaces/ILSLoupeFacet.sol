@@ -5,7 +5,7 @@ import "../../LSLib.sol";
 
 interface ILSLoupeFacet {
     function getPrimitives() external view returns (LSLib.Primitives memory);
-    
+
     function lastTimeRewardApplicable() external view returns (uint256);
 
     function rewardPerToken() external view returns (uint256);
@@ -18,7 +18,20 @@ interface ILSLoupeFacet {
 
     function getAPR() external view returns (uint256);
 
-    function getProjectedAPR(uint256 rewardRate, uint256 rewardDuration) external view returns (uint256);
+    function getProjectedAPR(
+        uint256 rewardRate,
+        uint256 rewardDuration
+    ) external view returns (uint256);
 
     function getAPRInAbsoluteValue() external view returns (uint256);
+
+    function totalSupply() external view returns (uint256);
+
+    function balanceOf(address account) external view returns (uint256);
+
+    function name() external view returns (string memory);
+
+    function symbol() external view returns (string memory);
+
+    function decimals() external view returns (uint8);
 }

@@ -20,9 +20,6 @@ contract LGGovernorFacet is
     GovernorVotesUpgradeable,
     GovernorVotesQuorumFractionUpgradeable
 {
-    constructor() {
-        _disableInitializers();
-    }
 
     function _initialize_LGGovernorFacet(
         address locus,
@@ -31,7 +28,7 @@ contract LGGovernorFacet is
         uint256 initialProposalThresholdInLocusTokens,
         uint256 quorumFractionInPercents,
         string memory governorName
-    ) external override internalOnly {
+    ) external override initializer internalOnly {
         __Governor_init(governorName);
         __GovernorSettings_init(
             initialVotingDelay,
@@ -42,6 +39,7 @@ contract LGGovernorFacet is
         __GovernorVotes_init(IVotesUpgradeable(locus));
         __GovernorVotesQuorumFraction_init(quorumFractionInPercents);
     }
+
     function proposalThreshold()
         public
         view

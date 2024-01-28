@@ -1,11 +1,31 @@
 const networkHelpers = require("@nomicfoundation/hardhat-network-helpers");
 const hre = require("hardhat");
+const { expect } = require("chai");
 const { deployments, getNamedAccounts } = hre;
 const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/helpers");
 
 // TO BE UTILIZED ONLY FOR HYPOTHESIS' TESTING!!!
 // ALLOWED TO SMELL AND BE LITTERED
 describe("AnyFixture", () => {
+
+  it('should', async () => {
+    const locusStaking = await hre.ethers.getContractAt(
+      hre.names.internal.diamonds.locusStaking.interface,
+      "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952"
+    );
+    // const dequeSize = parseInt((await locusStaking.getDequeSize()).toString());
+    // const user = "0x43eB6fE17D7CC599AaC8b095B5CA412f4C72a2DD";
+    // for (let i = 0; i < dequeSize; i++) {
+    //   const delayedSending = await locusStaking.getDelayedSending(i);
+    //   console.log(delayedSending.receiver);
+    // }
+    const user2 = "0xF70fEAa153A0Ffc391525c1226d6E0f00eDF9974";
+    const amount = hre.ethers.utils.parseUnits("1.1", 6);
+    await withImpersonatedSigner(user2, async (user2Signer) => {
+      await locusStaking.connect(user2Signer).withdraw(amount, 4);
+    });
+    expect(true).to.be.true;
+  });
 
   // it('should work 2', async () => {
   //   const locusStaking = await hre.ethers.getContractAt(
