@@ -15,5 +15,9 @@ module.exports = (task) =>
         processQueueTx = await locusStakingInstance.connect(deployer).processQueue();
         await processQueueTx.wait();
       }
-      console.log(`The queue has been cleared:\n${JSON.stringify(processQueueTx)}`);
+      if (processQueueTx === undefined) {
+        console.log('Nothing to clear.');
+      } else {
+        console.log(`The queue has been cleared:\n${JSON.stringify(processQueueTx)}`);
+      }
     });
