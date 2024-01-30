@@ -10,9 +10,14 @@ module.exports = (task) =>
         "DiamondLocusStaking",// hre.names.internal.diamonds.locusStaking.interface,
         (await hre.deployments.get("LocusStaking_DiamondProxy")).address
       );
+      let processQueueTx;
       if ((await locusStakingInstance.getDequeSize()).gt(0)) {
-        const processQueueTx = await locusStakingInstance.connect(deployer).processQueue();
+        processQueueTx = await locusStakingInstance.connect(deployer).processQueue();
         await processQueueTx.wait();
       }
-      console.log(`The queue has been cleared:\n${JSON.stringify(processQueueTx)}`);
+      if (processQueueTx === undefined) {
+        console.log('Nothing to clear.');
+      } else {
+        console.log(`The queue has been cleared:\n${JSON.stringify(processQueueTx)}`);
+      }
     });
