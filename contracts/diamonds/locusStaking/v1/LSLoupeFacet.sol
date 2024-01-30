@@ -82,14 +82,6 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
         return LSLib.get().rt.balanceOf[account];
     }
 
-    function name() external view override delegatedOnly returns (string memory) {
-        return string(abi.encodePacked("Staking ", LSLib.get().p.stakingToken.name()));
-    }
-
-    function symbol() external view override delegatedOnly returns (string memory) {
-        return string(abi.encodePacked("st", LSLib.get().p.stakingToken.symbol()));
-    }
-
     function decimals() external view override delegatedOnly returns (uint8) {
         return LSLib.get().p.stakingToken.decimals();
     }
