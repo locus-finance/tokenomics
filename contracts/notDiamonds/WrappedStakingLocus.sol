@@ -44,16 +44,6 @@ contract WrappedStakingLocus is ERC20, ERC20Permit, ERC20Votes {
         }
     }
 
-    function enableOrRefreshPolitics() external {
-        address sender = _msgSender();
-        _enableOrRefreshPolitics(sender);
-    }
-
-    function disablePolitics() external {
-        address sender = _msgSender();
-        _disablePolitics(sender);
-    }
-
     function name() public view override returns (string memory) {
         return string(abi.encodePacked(locusDiamond.name(), " with voting power"));
     }

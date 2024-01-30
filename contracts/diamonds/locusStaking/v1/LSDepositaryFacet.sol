@@ -28,6 +28,8 @@ contract LSDepositaryFacet is
 {
     using SafeERC20 for IERC20Metadata;
 
+    /// @dev MIND THAT THIS SHOULD BE THE ONLY SMART CONTRACT (MEANING REENTRANCY GUARD) FROM OZ LIB THAT
+    /// IS TO BE UTILIZIED IN THIS DIAMOND.
     function _initialize_LSDepositaryFacet()
         external
         override
@@ -55,7 +57,7 @@ contract LSDepositaryFacet is
         uint256 amount,
         DelayedSendingsQueueLib.DueDuration dueDuration
     ) public override nonReentrant delegatedOnly {
-        ILSDepositaryFacet(address(this)).updateReward(msg.sender);
+        _updateReward(msg.sender);
         if (amount == 0) revert LSLib.CannotWithdrawZero();
         LSLib.Primitives storage p = LSLib.get().p;
         p.totalSupply -= amount;
@@ -78,9 +80,11 @@ contract LSDepositaryFacet is
     }
 
     function _getReward(DelayedSendingsQueueLib.DueDuration dueDuration) internal {
-        _updateReward(msg.sender);
         LSLib.Primitives storage p = LSLib.get().p;
         LSLib.ReferenceTypes storage rt = LSLib.get().rt;
+        if (address(p.stakingToken) != p.locusToken) {
+            _updateReward(msg.sender);
+        }
         uint256 reward = rt.rewards[msg.sender];
         if (reward > 0) {
             rt.rewards[msg.sender] = 0;
@@ -95,14 +99,16 @@ contract LSDepositaryFacet is
 
     function _updateReward(address account) internal {
         ILSLoupeFacet self = ILSLoupeFacet(address(this));
-        LSLib.get().p.rewardPerTokenStored = self.rewardPerToken();
-        LSLib.get().p.lastUpdateTime = self.lastTimeRewardApplicable();
+        LSLib.Primitives storage p = LSLib.get().p;
+        LSLib.ReferenceTypes storage rt = LSLib.get().rt;
+        p.rewardPerTokenStored = self.rewardPerToken();
+        p.lastUpdateTime = self.lastTimeRewardApplicable();
         if (account != address(0)) {
-            LSLib.get().rt.rewards[account] = self.earned(account);
-            LSLib.get().rt.userRewardPerTokenPaid[account] = LSLib
-                .get()
-                .p
-                .rewardPerTokenStored;
+            rt.rewards[account] = self.earned(account);
+            rt.userRewardPerTokenPaid[account] = p.rewardPerTokenStored;
+        }
+        if (address(p.stakingToken) == p.locusToken) {
+            _getReward(DelayedSendingsQueueLib.DueDuration.UNDEFINED);
         }
     }
 
@@ -111,7 +117,7 @@ contract LSDepositaryFacet is
         address fundsOwner,
         uint256 amount
     ) internal {
-        ILSDepositaryFacet(address(this)).updateReward(staker);
+        _updateReward(staker);
         LSLib.Primitives storage p = LSLib.get().p;
         IERC20Metadata stakingToken = p.stakingToken;
         if (amount == 0) revert LSLib.CannotStakeZero();
