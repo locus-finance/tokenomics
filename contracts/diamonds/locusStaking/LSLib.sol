@@ -52,6 +52,7 @@ library LSLib {
         uint256 rewardPerTokenStored;
         uint256 totalSupply;
         uint256 totalReward;
+        address wrappedStLocusToken;
     }
 
     struct Storage {

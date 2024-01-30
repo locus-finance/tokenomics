@@ -7,8 +7,9 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 
 import "../diamonds/locusStaking/v1/interfaces/ILSLoupeFacet.sol";
+import "./interfaces/IWrappedStakingLocus.sol";
 
-contract WrappedStakingLocus is ERC20, ERC20Permit, ERC20Votes {
+contract WrappedStakingLocus is IWrappedStakingLocus, ERC20, ERC20Permit, ERC20Votes {
     event PoliticsEnabled(address indexed who);
     event PoliticsDisabled(address indexed who);
 
@@ -28,43 +29,41 @@ contract WrappedStakingLocus is ERC20, ERC20Permit, ERC20Votes {
         locusDiamond = _locusDiamond;
     }
 
-    function enableOrRefreshPoliticsFor(address who) external {
+    function syncBalanceOnStake(address who) external override {
         if (_msgSender() == address(locusStakingDiamond)) {
-            _enableOrRefreshPolitics(who);
+            _syncBalanceOnStake(who);
         } else {
             revert OnlyStakingDiamond();
         }
     }
 
-    function disablePoliticsFor(address who) external {
+    function syncBalanceOnWithdraw(address who) external override {
         if (_msgSender() == address(locusStakingDiamond)) {
-            _disablePolitics(who);
+            _syncBalanceOnWithdraw(who);
         } else {
             revert OnlyStakingDiamond();
         }
     }
 
-    function name() public view override returns (string memory) {
+    function name() public view override(ERC20, IERC20Metadata) returns (string memory) {
         return string(abi.encodePacked(locusDiamond.name(), " with voting power"));
     }
 
-    function symbol() public view override returns (string memory) {
+    function symbol() public view override(ERC20, IERC20Metadata) returns (string memory) {
         return string(abi.encodePacked("st", locusDiamond.symbol()));
     }
 
-    function decimals() public view override returns (uint8) {
+    function decimals() public view override(ERC20, IERC20Metadata) returns (uint8) {
         return locusDiamond.decimals();
     }
 
-    function _enableOrRefreshPolitics(address sender) internal {
+    function _syncBalanceOnStake(address sender) internal {
         _mint(sender, locusStakingDiamond.balanceOf(sender) - balanceOf(sender));
         emit PoliticsEnabled(sender);
     }
 
-    /// @dev It has been rejected to implement partial disabling of politics because
-    /// of unnecessary complexations for possible boost systems.
-    function _disablePolitics(address sender) internal {
-        _burn(sender, locusStakingDiamond.balanceOf(sender));
+    function _syncBalanceOnWithdraw(address sender) internal {
+        _burn(sender, balanceOf(sender) - locusStakingDiamond.balanceOf(sender));
         emit PoliticsDisabled(sender);
     }
 

@@ -43,6 +43,12 @@ contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
         ILSDepositaryFacet(address(this))._initialize_LSDepositaryFacet();
     }
 
+    function setWrappedStakingLocus(address wrappedStLocusToken) external override delegatedOnly {
+        RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);
+        LSLib.get().p.wrappedStLocusToken = wrappedStLocusToken;
+    }
+
+    /// @dev DEPRECATED
     function setFeesSettings(
         address undistributedAmountsReceiver,
         uint32[] memory feeDurationPoints,

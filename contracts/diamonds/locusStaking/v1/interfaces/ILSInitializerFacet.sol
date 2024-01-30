@@ -19,4 +19,6 @@ interface ILSInitializerFacet {
         uint32[] memory feeDurationPoints,
         uint16[] memory feeBasePoints
     ) external;
+
+    function setWrappedStakingLocus(address wrappedStLocusToken) external;
 }

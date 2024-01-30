@@ -7,6 +7,8 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 
+import "../../../notDiamonds/interfaces/IWrappedStakingLocus.sol";
+
 import "../LSLib.sol";
 import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 import "../../facetsFramework/diamondBase/facets/PausabilityFacet.sol";
@@ -19,6 +21,7 @@ import "../v2/manualWithdrawQueueFacets/libraries/DelayedSendingsQueueLib.sol";
 import "./interfaces/ILSProcessFeesFacet.sol";
 import "./interfaces/ILSDepositaryFacet.sol";
 import "./interfaces/ILSLoupeFacet.sol";
+
 
 contract LSDepositaryFacet is
     BaseFacet,
@@ -67,6 +70,9 @@ contract LSDepositaryFacet is
             amount,
             dueDuration
         );
+        if (address(p.stakingToken) == p.locusToken) {
+            IWrappedStakingLocus(p.wrappedStLocusToken).syncBalanceOnWithdraw(msg.sender);
+        }
     }
 
     function getReward(
@@ -125,5 +131,8 @@ contract LSDepositaryFacet is
         LSLib.get().rt.balanceOf[staker] += amount;
         stakingToken.safeTransferFrom(fundsOwner, address(this), amount);
         emit LSLib.Staked(staker, amount);
+        if (address(p.stakingToken) == p.locusToken) {
+            IWrappedStakingLocus(p.wrappedStLocusToken).syncBalanceOnStake(staker);
+        }
     }
 }
