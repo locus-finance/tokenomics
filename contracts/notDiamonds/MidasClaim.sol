@@ -26,7 +26,8 @@ contract MidasClaim is Ownable {
     bytes32 public merkleRoot;
     ILSDepositaryFacet public stLocus;
 
-    mapping(address user => uint256 claimed) public claimed;
+    /// @dev user => amount
+    mapping(address => uint256) public claimed;
 
     constructor(
         address _token,

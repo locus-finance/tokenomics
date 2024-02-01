@@ -3,7 +3,7 @@ const networkHelpers = require("@nomicfoundation/hardhat-network-helpers");
 const hre = require("hardhat");
 const keccak256 = require('keccak256');
 const { deployments, getNamedAccounts } = hre;
-const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/helpers");
+const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../../../deploy/helpers");
 
 describe("LSDepositaryFacet", () => {
   let namedAccounts;
@@ -57,23 +57,23 @@ describe("LSDepositaryFacet", () => {
     
   });
 
-  it('should stake locus successfully', async () => {
+  // it('should stake locus successfully', async () => {
     
-  });
+  // });
 
-  it('should claim rewards successfully', async () => {
+  // it('should claim rewards successfully', async () => {
 
-  });
+  // });
 
-  it('should perform a withdrawal of locus through the queue successfully', async () => {
+  // it('should perform a withdrawal of locus through the queue successfully', async () => {
     
-  });
+  // });
 
-  it('should auto restake locus', async () => {
+  // it('should auto restake locus', async () => {
     
-  });
+  // });
 
-  it('should sync wrapped balance of locus', async () => {
+  // it('should sync wrapped balance of locus', async () => {
     
-  });
+  // });
 });

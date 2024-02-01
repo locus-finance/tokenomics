@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for diamonds\facetsFramework\diamondBase\libraries\RolesManagementLib.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../index.html">all files</a> / <a href="index.html">diamonds/facetsFramework/diamondBase/libraries/</a> RolesManagementLib.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/13</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/20</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
+&nbsp;
+library RolesManagementLib {
+    event RoleSet(address who, bytes32 role, bool isGrantedOrRevoked);
+&nbsp;
+    error HasNoRole(address who, bytes32 role);
+    error HasNoRoles(address who, bytes32[] roles);
+&nbsp;
+    bytes32 constant ROLES_MANAGEMENT_STORAGE_POSITION = keccak256("diamond.standard.diamond.storage.locus.roles");
+&nbsp;
+    // roles to check with EOA
+    bytes32 public constant PAUSER_ROLE = keccak256('PAUSER_ROLE');
+    bytes32 public constant OWNER_ROLE = keccak256('OWNER_ROLE');
+&nbsp;
+    // A special role - must not be removed.
+    bytes32 public constant INTERNAL_ROLE = keccak256('INTERNAL_ROLE');
+&nbsp;
+    // roles to check with smart-contracts
+    bytes32 public constant ALLOWED_TOKEN_ROLE = keccak256('ALLOWED_TOKEN_ROLE');
+&nbsp;
+    struct Storage {
+        mapping(bytes32 =&gt; mapping(address =&gt; bool)) roles;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function get() internal pure returns (Storage storage s) {</span>
+<span class="cstat-no" title="statement not covered" >        bytes32 position = ROLES_MANAGEMENT_STORAGE_POSITION;</span>
+        assembly {
+            s.slot := position
+        }
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function enforceRole(address who, bytes32 role) internal view {</span>
+<span class="cstat-no" title="statement not covered" >        if (role == INTERNAL_ROLE) {</span>
+<span class="cstat-no" title="statement not covered" >            if (who != address(this)) {</span>
+                revert HasNoRole(who, INTERNAL_ROLE);
+            }
+        } else <span class="cstat-no" title="statement not covered" >if (!get().roles[role][who]) {</span>
+            revert HasNoRole(who, role);
+        }
+        
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function hasRole(address who, bytes32 role) internal view returns(bool) {</span>
+<span class="cstat-no" title="statement not covered" >        return get().roles[role][who];</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function enforceSenderRole(bytes32 role) internal view {</span>
+<span class="cstat-no" title="statement not covered" >        enforceRole(msg.sender, role)</span>;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function grantRole(address who, bytes32 role) internal {</span>
+        get().roles[role][who] = true; 
+<span class="cstat-no" title="statement not covered" >        emit RoleSet(who, role, true);</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function revokeRole(address who, bytes32 role) internal {</span>
+        get().roles[role][who] = false; 
+<span class="cstat-no" title="statement not covered" >        emit RoleSet(who, role, false);</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function enforceEitherOfRoles(address who, bytes32[] memory roles) internal view {</span>
+<span class="cstat-no" title="statement not covered" >        bool result;</span>
+<span class="cstat-no" title="statement not covered" >        for (uint256 i = 0; i &lt; roles.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >            if (roles[i] == INTERNAL_ROLE) {</span>
+                result = result || who == address(this);
+            } else {
+                result = result || get().roles[roles[i]][who];
+            }
+        }
+<span class="cstat-no" title="statement not covered" >        if (!result) {</span>
+            revert HasNoRoles(who, roles);
+        }
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function enforceSenderEitherOfRoles(bytes32[] memory roles) internal view {</span>
+<span class="cstat-no" title="statement not covered" >        enforceEitherOfRoles(msg.sender, roles)</span>;
+    }
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Feb 01 2024 17:54:38 GMT+0500 (Екатеринбург, стандартное время)
+</div>
+</div>
+<script src="../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../sorter.js"></script>
+</body>
+</html>

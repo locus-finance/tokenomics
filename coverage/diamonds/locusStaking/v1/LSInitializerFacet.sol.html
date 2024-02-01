@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for diamonds\locusStaking\v1\LSInitializerFacet.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">diamonds/locusStaking/v1/</a> LSInitializerFacet.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/16</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/5</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/28</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
+&nbsp;
+import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+&nbsp;
+import "../LSLib.sol";
+import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
+import "../../facetsFramework/tokensDistributor/TDLib.sol";
+&nbsp;
+import "./interfaces/ILSInitializerFacet.sol";
+import "./interfaces/ILSDepositaryFacet.sol";
+&nbsp;
+contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
+<span class="fstat-no" title="function not covered" >    function initialize(</span>
+        address owner,
+        address locusToken,
+        address rewardDistributor,
+        address rewardsToken,
+        address stakingToken,
+        uint32[] memory feeDurationPoints,
+        uint16[] memory feeBasePoints
+    ) external override {
+<span class="cstat-no" title="statement not covered" >        InitializerLib.initialize()</span>;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        _setFeesSettings(owner, feeDurationPoints, feeBasePoints)</span>;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        RolesManagementLib.grantRole(</span>
+            rewardDistributor,
+            LSLib.REWARD_DISTRIBUTOR_ROLE
+        );
+<span class="cstat-no" title="statement not covered" >        RolesManagementLib.grantRole(owner, RolesManagementLib.OWNER_ROLE)</span>;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        LSLib.Primitives storage p = LSLib.get().p;</span>
+        p.rewardsToken = IERC20Metadata(rewardsToken);
+        p.stakingToken = IERC20Metadata(stakingToken);
+        p.rewardsDuration = 4 weeks;
+        p.locusToken = locusToken;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function prepareDepositary() external override delegatedOnly {</span>
+<span class="cstat-no" title="statement not covered" >        RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE)</span>;
+        // WARNING: CONTAINS INITIALIZER CUSTOM MODIFIER, SO IT COULDN'T BE CALLED TWICE.
+<span class="cstat-no" title="statement not covered" >        ILSDepositaryFacet(address(this))._initialize_LSDepositaryFacet()</span>;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function setWrappedStakingLocus(address wrappedStLocusToken) external override delegatedOnly {</span>
+<span class="cstat-no" title="statement not covered" >        RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE)</span>;
+        LSLib.get().p.wrappedStLocusToken = wrappedStLocusToken;
+    }
+&nbsp;
+    /// @dev DEPRECATED
+<span class="fstat-no" title="function not covered" >    function setFeesSettings(</span>
+        address undistributedAmountsReceiver,
+        uint32[] memory feeDurationPoints,
+        uint16[] memory feeBasePoints
+    ) external override delegatedOnly {
+<span class="cstat-no" title="statement not covered" >        RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE)</span>;
+<span class="cstat-no" title="statement not covered" >        _setFeesSettings(undistributedAmountsReceiver, feeDurationPoints, feeBasePoints)</span>;
+    }
+&nbsp;
+    /// @dev DEPRECATED
+<span class="fstat-no" title="function not covered" >    function _setFeesSettings(</span>
+        address undistributedAmountsReceiver,
+        uint32[] memory feeDurationPoints,
+        uint16[] memory feeBasePoints
+    ) internal {
+<span class="cstat-no" title="statement not covered" >        if (feeDurationPoints.length != feeBasePoints.length) {</span>
+            revert TDLib.IncorrectLengths(
+                feeDurationPoints.length,
+                feeDurationPoints.length
+            );
+        }
+<span class="cstat-no" title="statement not covered" >        TDLib.Storage storage s = TDLib.get();</span>
+<span class="cstat-no" title="statement not covered" >        uint32 maxFeePoint;</span>
+        // just checking bps values and so they are sorted
+<span class="cstat-no" title="statement not covered" >        for (uint256 i = 0; i &lt; feeDurationPoints.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >            if (feeBasePoints[i] &gt; TDLib.MAX_BPS) {</span>
+                revert LSLib.InvalidBPS(feeBasePoints[i]);
+            } else {
+                s.distributionDurationPointIdxToAmounts[i] = feeBasePoints[i];
+            }
+<span class="cstat-no" title="statement not covered" >            if (feeDurationPoints[i] &gt;= maxFeePoint) {</span>
+                maxFeePoint = feeDurationPoints[i];
+            } else {
+                revert TDLib.IntervalsMustBeSorted();
+            }
+        }
+        s.distributionDurationPoints = feeDurationPoints;
+        s.undistributedAmountsReceiver = undistributedAmountsReceiver;
+    }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Feb 01 2024 17:54:38 GMT+0500 (Екатеринбург, стандартное время)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

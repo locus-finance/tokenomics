@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for diamonds\locusStaking\v2\manualWithdrawQueueFacets\LSSendingsDequeFacet.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../index.html">all files</a> / <a href="index.html">diamonds/locusStaking/v2/manualWithdrawQueueFacets/</a> LSSendingsDequeFacet.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/31</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/24</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/3</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/43</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
+&nbsp;
+import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/structs/DoubleEndedQueue.sol";
+&nbsp;
+import "../../../facetsFramework/tokensDistributor/TDLib.sol";
+import "../../../facetsFramework/tokensDistributor/v1/interfaces/ITDProcessFacet.sol";
+import "../../../facetsFramework/diamondBase/facets/BaseFacet.sol";
+import "../../LSLib.sol";
+import "./libraries/DelayedSendingsQueueLib.sol";
+import "./interfaces/ILSSendingsDequeFacet.sol";
+&nbsp;
+contract LSSendingsDequeFacet is BaseFacet, ILSSendingsDequeFacet {
+    using Counters for Counters.Counter;
+    using DoubleEndedQueue for DoubleEndedQueue.Bytes32Deque;
+    using SafeERC20 for IERC20Metadata;
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function addDelayedSending(</span>
+        IERC20Metadata sendingToken,
+        address receiver,
+        uint256 amount,
+        DelayedSendingsQueueLib.DueDuration dueToDuration
+    ) external override internalOnly {
+<span class="cstat-no" title="statement not covered" >        DelayedSendingsQueueLib.Storage storage s = DelayedSendingsQueueLib</span>
+            .get();
+<span class="cstat-no" title="statement not covered" >        if (dueToDuration == DelayedSendingsQueueLib.DueDuration.NOW) {</span>
+<span class="cstat-no" title="statement not covered" >            (</span>
+                uint256 amountWithFees,
+                uint256 feesGathered
+            ) = _getAmountWithAccountedFees(
+                    sendingToken,
+                    amount,
+                    dueToDuration
+                );
+<span class="cstat-no" title="statement not covered" >            sendingToken.safeTransfer(receiver, amountWithFees)</span>;
+<span class="cstat-no" title="statement not covered" >            emit LSLib.SentOut(</span>
+                address(sendingToken),
+                receiver,
+                amount,
+                feesGathered
+            );
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        uint256 currentCounter = s.nodeCounter.current();</span>
+<span class="cstat-no" title="statement not covered" >        DelayedSendingsQueueLib.DelayedSending storage sending = s.queueNodes[</span>
+            currentCounter
+        ];
+        sending.receiver = receiver;
+        sending.amount = amount;
+        s.totalSendingsPerStaker[receiver] += amount;
+        sending.dueToDuration = dueToDuration;
+        sending.sendingToken = sendingToken;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (dueToDuration == DelayedSendingsQueueLib.DueDuration.ONE_WEEK) {</span>
+            sending.dueToTimestamp = block.timestamp + 1 weeks;
+        } else <span class="cstat-no" title="statement not covered" >if (</span>
+            dueToDuration == DelayedSendingsQueueLib.DueDuration.TWO_WEEKS
+        ) {
+            sending.dueToTimestamp = block.timestamp + 2 weeks;
+        } else <span class="cstat-no" title="statement not covered" >if (dueToDuration == DelayedSendingsQueueLib.DueDuration.MONTH) {</span>
+            sending.dueToTimestamp = block.timestamp + 4 weeks;
+        } else {
+            revert DelayedSendingsQueueLib.InvalidDueDuration(dueToDuration);
+        }
+<span class="cstat-no" title="statement not covered" >        s.sendingsDeque.pushBack(bytes32(currentCounter))</span>;
+<span class="cstat-no" title="statement not covered" >        s.nodeCounter.increment()</span>;
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function processQueue() external override delegatedOnly {</span>
+<span class="cstat-no" title="statement not covered" >        RolesManagementLib.enforceSenderRole(</span>
+            DelayedSendingsQueueLib.DELAYED_SENDINGS_QUEUE_PROCESSOR_ROLE
+        );
+<span class="cstat-no" title="statement not covered" >        DelayedSendingsQueueLib.Storage storage s = DelayedSendingsQueueLib</span>
+            .get();
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        uint256 sendingsDequeLen = s.sendingsDeque.length();</span>
+<span class="cstat-no" title="statement not covered" >        for (uint256 i; i &lt; sendingsDequeLen; i++) {</span>
+<span class="cstat-no" title="statement not covered" >            uint256 delayedSendingIdx = uint256(s.sendingsDeque.popFront());</span>
+<span class="cstat-no" title="statement not covered" >            DelayedSendingsQueueLib.DelayedSending storage sending = s</span>
+                .queueNodes[delayedSendingIdx];
+<span class="cstat-no" title="statement not covered" >            if (block.timestamp &gt;= sending.dueToTimestamp) {</span>
+<span class="cstat-no" title="statement not covered" >                (</span>
+                    uint256 amountWithFees,
+                    uint256 feesGathered
+                ) = _getAmountWithAccountedFees(
+                        sending.sendingToken,
+                        sending.amount,
+                        sending.dueToDuration
+                    );
+                s.totalSendingsPerStaker[sending.receiver] -= sending.amount;
+<span class="cstat-no" title="statement not covered" >                sending.sendingToken.safeTransfer(</span>
+                    sending.receiver,
+                    amountWithFees
+                );
+<span class="cstat-no" title="statement not covered" >                emit LSLib.SentOut(</span>
+                    address(sending.sendingToken),
+                    sending.receiver,
+                    sending.amount,
+                    feesGathered
+                );
+            } else {
+<span class="cstat-no" title="statement not covered" >                s.sendingsDeque.pushBack(bytes32(delayedSendingIdx))</span>;
+            }
+        }
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    function _getAmountWithAccountedFees(</span>
+        IERC20Metadata sendingToken,
+        uint256 amount,
+        DelayedSendingsQueueLib.DueDuration dueToDuration
+    ) internal returns (uint256 amountWithFees, uint256 feesGathered) {
+<span class="cstat-no" title="statement not covered" >        uint256 basePoints;</span>
+<span class="cstat-no" title="statement not covered" >        if (dueToDuration == DelayedSendingsQueueLib.DueDuration.ONE_WEEK) {</span>
+            basePoints = 3750;
+        } else <span class="cstat-no" title="statement not covered" >if (</span>
+            dueToDuration == DelayedSendingsQueueLib.DueDuration.TWO_WEEKS
+        ) {
+            basePoints = 2500;
+        } else <span class="cstat-no" title="statement not covered" >if (dueToDuration == DelayedSendingsQueueLib.DueDuration.MONTH) {</span>
+            // COULD CHANGE IN THE FUTURE
+            basePoints = 0;
+        } else <span class="cstat-no" title="statement not covered" >if (dueToDuration == DelayedSendingsQueueLib.DueDuration.NOW) {</span>
+            basePoints = 5000;
+        } else {
+            revert DelayedSendingsQueueLib.InvalidDueDuration(dueToDuration);
+        }
+&nbsp;
+        feesGathered = (amount * basePoints) / TDLib.MAX_BPS;
+        amountWithFees = amount - feesGathered;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (feesGathered &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >            ITDProcessFacet(address(this)).distribute(</span>
+                feesGathered,
+                sendingToken
+            );
+        }
+    }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Feb 01 2024 17:54:38 GMT+0500 (Екатеринбург, стандартное время)
+</div>
+</div>
+<script src="../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../sorter.js"></script>
+</body>
+</html>

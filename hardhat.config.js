@@ -23,7 +23,7 @@ require("./tasks/manual/midasClaim/getMerkleTreeInfo")(task);
 require("./tasks/manual/midasClaim/updateMerkleTree")(task);
 require("./tasks/manual/midasClaim/generateJsonOfMerkleTreeBody")(task);
 
-const arbitrumOneUrl = 'https://arb1.arbitrum.io/rpc';
+const arbitrumOneUrl = 'https://endpoints.omniatech.io/v1/arbitrum/one/public';//'https://arb1.arbitrum.io/rpc';
 
 const arbitrumOneChainId = 42161;
 

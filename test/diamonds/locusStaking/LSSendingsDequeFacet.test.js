@@ -3,7 +3,7 @@ const networkHelpers = require("@nomicfoundation/hardhat-network-helpers");
 const hre = require("hardhat");
 const keccak256 = require('keccak256');
 const { deployments, getNamedAccounts } = hre;
-const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/helpers");
+const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../../../deploy/helpers");
 
 describe("LSSendingsDequeFacet", () => {
   let namedAccounts;
