@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 const { deployments, getNamedAccounts } = hre;
 const { StandardMerkleTree } = require("@openzeppelin/merkle-tree");
-const { getMockTree } = require('../deploy/helpers');
+const { getMockTree } = require('../../deploy/helpers');
 
 describe("MidasClaim", () => {
   let tokenMock;

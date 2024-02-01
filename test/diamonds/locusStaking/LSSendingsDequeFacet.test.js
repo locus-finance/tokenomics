@@ -5,7 +5,7 @@ const keccak256 = require('keccak256');
 const { deployments, getNamedAccounts } = hre;
 const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/helpers");
 
-describe("DiamondLocusStaking", () => {
+describe("LSSendingsDequeFacet", () => {
   let namedAccounts;
   let person;
   let personBalance;
@@ -17,7 +17,7 @@ describe("DiamondLocusStaking", () => {
   beforeEach(async () => {
     namedAccounts = await getNamedAccounts();
     await deployments.fixture([
-      "debug"
+      "deploy"
     ]);
 
     locusStaking = await hre.ethers.getContractAt(

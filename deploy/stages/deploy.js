@@ -1,10 +1,10 @@
 const { emptyStage } = require('../helpers');
-module.exports = emptyStage('Production stage performed.');
-module.exports.tags = ["production"];
+module.exports = emptyStage('Debug stage performed.');
+module.exports.tags = ["deploy"];
 module.exports.dependencies = [
   "configure",
-  "token",
-  "staking",
+  "tokenWithInit",
+  "stakingWithInit",
   "claim",
   "tracer"
 ];

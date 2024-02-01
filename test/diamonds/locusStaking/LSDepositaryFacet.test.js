@@ -5,7 +5,7 @@ const keccak256 = require('keccak256');
 const { deployments, getNamedAccounts } = hre;
 const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/helpers");
 
-describe("DiamondLocusStaking", () => {
+describe("LSDepositaryFacet", () => {
   let namedAccounts;
   let person;
   let personBalance;
@@ -17,7 +17,7 @@ describe("DiamondLocusStaking", () => {
   beforeEach(async () => {
     namedAccounts = await getNamedAccounts();
     await deployments.fixture([
-      "debug"
+      "deploy"
     ]);
 
     locusStaking = await hre.ethers.getContractAt(
@@ -53,4 +53,27 @@ describe("DiamondLocusStaking", () => {
     await locusStaking.grantRole(namedAccounts.deployer, keccak256('DELAYED_SENDINGS_QUEUE_PROCESSOR_ROLE'));
   });
 
+  it('should stake locus for someone successfully', async () => {
+    
+  });
+
+  it('should stake locus successfully', async () => {
+    
+  });
+
+  it('should claim rewards successfully', async () => {
+
+  });
+
+  it('should perform a withdrawal of locus through the queue successfully', async () => {
+    
+  });
+
+  it('should auto restake', async () => {
+    
+  });
+
+  it('should sync wrapped balance', async () => {
+    
+  });
 });
