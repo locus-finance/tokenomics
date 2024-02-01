@@ -69,11 +69,11 @@ describe("LSDepositaryFacet", () => {
     
   });
 
-  it('should auto restake', async () => {
+  it('should auto restake locus', async () => {
     
   });
 
-  it('should sync wrapped balance', async () => {
+  it('should sync wrapped balance of locus', async () => {
     
   });
 });

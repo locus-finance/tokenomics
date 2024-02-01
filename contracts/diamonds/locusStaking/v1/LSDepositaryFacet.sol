@@ -70,7 +70,7 @@ contract LSDepositaryFacet is
             amount,
             dueDuration
         );
-        if (address(p.stakingToken) == p.locusToken) {
+        if (p.wrappedStLocusToken != address(0) && address(p.stakingToken) == p.locusToken) {
             IWrappedStakingLocus(p.wrappedStLocusToken).syncBalanceOnWithdraw(msg.sender);
         }
     }
@@ -131,7 +131,7 @@ contract LSDepositaryFacet is
         LSLib.get().rt.balanceOf[staker] += amount;
         stakingToken.safeTransferFrom(fundsOwner, address(this), amount);
         emit LSLib.Staked(staker, amount);
-        if (address(p.stakingToken) == p.locusToken) {
+        if (p.wrappedStLocusToken != address(0) && address(p.stakingToken) == p.locusToken) {
             IWrappedStakingLocus(p.wrappedStLocusToken).syncBalanceOnStake(staker);
         }
     }
