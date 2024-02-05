@@ -6,9 +6,12 @@ module.exports = (task) =>
     .setAction(async (_, hre) => {
       const signers = await hre.ethers.getSigners();
       const deployer = signers[0];
+
+      await hre.names.gather();
+
       const locusStakingInstance = await hre.ethers.getContractAt(
-        "DiamondLocusStaking",// hre.names.internal.diamonds.locusStaking.interface,
-        (await hre.deployments.get("LocusStaking_DiamondProxy")).address
+        hre.names.internal.diamonds.locusStaking.interface,
+        (await hre.deployments.get(hre.names.internal.diamonds.locusStaking.proxy)).address
       );
       let processQueueTx;
       if ((await locusStakingInstance.getDequeSize()).gt(0)) {

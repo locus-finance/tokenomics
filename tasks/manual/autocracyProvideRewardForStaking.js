@@ -9,6 +9,7 @@ module.exports = (task) =>
     .setAction(async ({ amount }, hre) => {
       const signers = await hre.ethers.getSigners();
       const deployer = signers[0].address;
+      await hre.names.gather();
       await hre.run('mint', {
         amount: amount,
         address: deployer

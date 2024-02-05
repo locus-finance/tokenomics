@@ -16,6 +16,7 @@ describe("LSSendingsDequeFacet", () => {
 
   beforeEach(async () => {
     namedAccounts = await getNamedAccounts();
+    // blockNumber: 173714997
     await deployments.fixture([
       "deploy"
     ]);

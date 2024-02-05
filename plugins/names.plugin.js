@@ -1,6 +1,6 @@
-const { lazyObject } = require("hardhat/plugins");
+const { lazyObject, HardhatPluginError } = require("hardhat/plugins");
 
-module.exports = async (hre) => {
+module.exports = (hre) => {
   // LICENCE: MIT
   // Author: Oleg Bedrin <simplavero@gmail.com>
   // This is for the deploy artifacts stage management.
@@ -13,6 +13,9 @@ module.exports = async (hre) => {
   // There are two groups of artifact names: internal (our own and local libraries) and external (like Uniswap or etc.). The internal
   // ones are populated automatically. The external ones and their subgroups are defined in the "external_artifacts_names.json"
   // file.
+  //
+  // Initialization: somewhere in the staging (either test or fixture that to be called first) the plugin MUST be initialized
+  // by calling `await hre.names()`.
   //
   // Code example:
   // const <someContractInstanceVariable> = await hre.ethers.getContractAt(
@@ -50,16 +53,33 @@ module.exports = async (hre) => {
   // );
   //
   // "names" object contains all names of all types for the artifacts.
-  const allArtifacts = await hre.run("getAllArtifacts");
   const toCamelCase = e => e[0].toLowerCase() + e.slice(1);
   const prefix = 'diamond';
+
+  let allArtifacts;
+  let initialized = false;
+
   hre.names = {
-    external: lazyObject(() => require('./resources/json/externalArtifactsNames.json')),
+    isInitialized: () => initialized,
+    gather: async () => {
+      // Initialize the state of the plugin.
+      if (allArtifacts === undefined) {
+        allArtifacts = await hre.run("getAllArtifacts");
+        initialized = true; 
+      }
+    },
+    external: lazyObject(() => require('../resources/json/externalArtifactsNames.json')),
     internal: lazyObject(() => {
       // Gathering all our internal artifacts names and making them public
       const result = {
         diamonds: {}
       };
+      if (allArtifacts === undefined) {
+        throw new HardhatPluginError(
+          'names', 
+          'The plugin has not been initialized. Please call `await hre.names.gather()` first.'
+        );
+      }
       allArtifacts
         .map(e => e.split(':')[1])
         .forEach(e => {

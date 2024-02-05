@@ -10,7 +10,8 @@ module.exports = (task) =>
     .setAction(async ({diamond, address, role}, hre) => {
       const signers = await hre.ethers.getSigners();
       const deployer = signers[0].address;
-      const roleHash = keccak256(role);
+      const roleHash = keccak256(role)
+      await hre.names.gather();
       await hre.deployments.execute(
         hre.names.internal.diamonds[diamond].proxy,
         { from: deployer, log: true },

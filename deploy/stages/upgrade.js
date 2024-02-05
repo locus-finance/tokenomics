@@ -6,6 +6,7 @@ module.exports.dependencies = [
   "token",
   "staking",
   "claim",
+  "stLOCUS",
   "tracer"
 ];
 module.exports.runAtTheEnd = true;

@@ -8,7 +8,7 @@ module.exports = async ({
   deployments,
   network
 }) => {
-  const { deploy, get } = deployments;
+  const { deploy, get, execute } = deployments;
   const { deployer } = await getNamedAccounts();
 
   const locusAddress = (await get(hre.names.internal.diamonds.locusToken.proxy)).address;
@@ -23,5 +23,12 @@ module.exports = async ({
         locusAddress
     ]
   });
+
+  await execute(
+    hre.names.internal.diamonds.locusStaking.proxy,
+    { from: deployer, log: true },
+    'setWrappedStakingLocus',
+    (await get(hre.names.internal.wrappedStakingLocus)).address
+  );
 }
 module.exports.tags = ["wrappedStakingLocusStage", "stLOCUS"];

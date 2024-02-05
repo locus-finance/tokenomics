@@ -9,6 +9,7 @@ module.exports = (task) =>
     .setAction(async ({ amount, address }, hre) => {
       const signers = await hre.ethers.getSigners();
       const deployer = signers[0].address;
+      await hre.names.gather();
       await hre.deployments.execute(
         hre.names.internal.diamonds.locusToken.proxy,
         { from: deployer, log: true },

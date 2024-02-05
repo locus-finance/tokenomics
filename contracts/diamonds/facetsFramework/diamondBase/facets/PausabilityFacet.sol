@@ -8,8 +8,8 @@ import "./BaseFacet.sol";
 
 contract PausabilityFacet is IPausable, BaseFacet {
     modifier whenNotPaused {
-        if (!PausabilityLib.get().paused) {
-            revert PausabilityLib.OnlyWhenPaused(); 
+        if (PausabilityLib.get().paused) {
+            revert PausabilityLib.OnlyWhenNotPaused(); 
         }
         _;
     }

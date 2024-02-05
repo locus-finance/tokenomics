@@ -16,7 +16,6 @@ module.exports = (
       "TDManagementFacet",
       "TDProcessFacet",
       "LSDepositaryFacet",
-      "LSERC20Facet",
       "LSInitializerFacet",
       "LSLoupeFacet",
       "LSManagementFacet",

@@ -1,5 +1,5 @@
 const hre = require('hardhat');
-const { getFakeDeployment } = require('../../helpers');
+const { getFakeDeployment } = require('../helpers');
 
 module.exports = async ({
   getNamedAccounts,
@@ -7,6 +7,8 @@ module.exports = async ({
   network
 }) => {
   const { log, save } = deployments;
+  // Initiate indexing of all artifacts names.
+  await hre.names.gather();
 
   // Injecting Midas Token
   await getFakeDeployment(
@@ -31,4 +33,4 @@ module.exports = async ({
   
   log(`external addresses are injected`);
 }
-module.exports.tags = ["injectExternalAddresses", "configure"];
+module.exports.tags = ["globalConfiguration", "configure"];

@@ -9,7 +9,7 @@ module.exports = (
 }) => {
     const { diamond, get } = deployments;
     const { deployer } = await getNamedAccounts();
-
+    
     const facets = [
       "RolesManagementFacet",
       "LGGovernorFacet",

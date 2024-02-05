@@ -57,23 +57,23 @@ describe("LSDepositaryFacet", () => {
     
   });
 
-  // it('should stake locus successfully', async () => {
+  it('should stake locus successfully', async () => {
     
-  // });
+  });
 
-  // it('should claim rewards successfully', async () => {
+  it('should claim rewards successfully', async () => {
 
-  // });
+  });
 
-  // it('should perform a withdrawal of locus through the queue successfully', async () => {
+  it('should perform a withdrawal of locus through the queue successfully', async () => {
     
-  // });
+  });
 
-  // it('should auto restake locus', async () => {
+  it('should auto restake locus', async () => {
     
-  // });
+  });
 
-  // it('should sync wrapped balance of locus', async () => {
+  it('should sync wrapped balance of locus', async () => {
     
-  // });
+  });
 });
