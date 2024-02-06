@@ -83,22 +83,4 @@ contract LSDepositaryFacet is
             _getReward(DelayedSendingsQueueLib.DueDuration.UNDEFINED);
         }
     }
-
-    function _stake(
-        address staker,
-        address fundsOwner,
-        uint256 amount
-    ) internal {
-        _updateReward(staker);
-        LSLib.Primitives storage p = LSLib.get().p;
-        IERC20Metadata stakingToken = p.stakingToken;
-        if (amount == 0) revert LSLib.CannotStakeZero();
-        p.totalSupply += amount;
-        LSLib.get().rt.balanceOf[staker] += amount;
-        stakingToken.safeTransferFrom(fundsOwner, address(this), amount);
-        emit LSLib.Staked(staker, amount);
-        if (p.wrappedStLocusToken != address(0) && address(p.stakingToken) == p.locusToken) {
-            IWrappedStakingLocus(p.wrappedStLocusToken).syncBalanceOnStake(staker);
-        }
-    }
 }
