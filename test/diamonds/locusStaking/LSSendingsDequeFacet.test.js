@@ -16,7 +16,6 @@ describe("LSSendingsDequeFacet", () => {
 
   beforeEach(async () => {
     namedAccounts = await getNamedAccounts();
-    // blockNumber: 173714997
     await deployments.fixture([
       "deploy"
     ]);
@@ -56,15 +55,14 @@ describe("LSSendingsDequeFacet", () => {
 
   it('should perform an instant withdrawal', async () => {
     await withImpersonatedSigner(person, async (personSigner) => {
-      const earnedByPerson = await locusStaking.earned(person);
       await locusStaking.connect(personSigner).withdraw(personBalance, 1);
-      const expectedBalance = personBalance.div('2').add(earnedByPerson);
+      const expectedBalance = personBalance.div('2');
       expect(await locusToken.balanceOf(person)).to.be.equal(expectedBalance);
-      // expect(await locusToken.balanceOf(namedAccounts.deployer)).to.be.equal(personBalance.div('2'));
+      expect(await locusToken.balanceOf(namedAccounts.deployer)).to.be.equal(expectedBalance);
     });
   });
 
-  xit('should perform delayed withdrawal (1 week)', async () => {
+  it('should perform delayed withdrawal (1 week)', async () => {
     await withImpersonatedSigner(person, async (personSigner) => {
       await locusStaking.connect(personSigner).withdraw(personBalance, 2);
     });
@@ -75,7 +73,7 @@ describe("LSSendingsDequeFacet", () => {
     expect(await locusToken.balanceOf(namedAccounts.deployer)).to.be.equal(feeTaken);
   });
 
-  xit('should perform delayed withdrawal (2 weeks)', async () => {
+  it('should perform delayed withdrawal (2 weeks)', async () => {
     await withImpersonatedSigner(person, async (personSigner) => {
       await locusStaking.connect(personSigner).withdraw(personBalance, 3);
     });
@@ -86,7 +84,7 @@ describe("LSSendingsDequeFacet", () => {
     expect(await locusToken.balanceOf(namedAccounts.deployer)).to.be.equal(feeTaken);
   });
 
-  xit('should perform delayed withdrawal (month)', async () => {
+  it('should perform delayed withdrawal (month)', async () => {
     await withImpersonatedSigner(person, async (personSigner) => {
       await locusStaking.connect(personSigner).withdraw(personBalance, 4);
     });
@@ -96,11 +94,11 @@ describe("LSSendingsDequeFacet", () => {
     expect(await locusToken.balanceOf(namedAccounts.deployer)).to.be.equal('0');
   });
 
-  xit('should calculate APR correctly', async () => {
+  it('should calculate APR correctly', async () => {
     expect(await locusStaking.getAPR()).to.be.equal(hre.ethers.BigNumber.from('166'));
   });
 
-  xit('should calculate APR in absolute value correctly', async () => {
+  it('should calculate APR in absolute value correctly', async () => {
     expect(await locusStaking.getAPRInAbsoluteValue()).to.be.equal(hre.ethers.BigNumber.from('16630107493559001'));
   });
 });

@@ -49,12 +49,9 @@ module.exports = (
         methodName: 'initialize',
         args: [
           deployer,
-          locusAddress,
           deployer,
           locusAddress,
-          locusAddress,
-          [],
-          []
+          locusAddress
         ]
       };
     }

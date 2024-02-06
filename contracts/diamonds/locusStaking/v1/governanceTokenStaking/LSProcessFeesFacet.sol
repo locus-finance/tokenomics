@@ -4,11 +4,11 @@ pragma solidity ^0.8.18;
 import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-import "../LSLib.sol";
-import "../v2/manualWithdrawQueueFacets/interfaces/ILSSendingsDequeFacet.sol";
-import "../v2/manualWithdrawQueueFacets/libraries/DelayedSendingsQueueLib.sol";
-import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
-import "./interfaces/ILSProcessFeesFacet.sol";
+import "../../LSLib.sol";
+import "../../v2/manualWithdrawQueueFacets/interfaces/ILSSendingsDequeFacet.sol";
+import "../../v2/manualWithdrawQueueFacets/libraries/DelayedSendingsQueueLib.sol";
+import "../../../facetsFramework/diamondBase/facets/BaseFacet.sol";
+import "../interfaces/ILSProcessFeesFacet.sol";
 
 contract LSProcessFeesFacet is BaseFacet, ILSProcessFeesFacet {
     using SafeERC20 for IERC20Metadata;
@@ -16,17 +16,11 @@ contract LSProcessFeesFacet is BaseFacet, ILSProcessFeesFacet {
     function processRewardSending(
         address staker,
         uint256 reward,
-        DelayedSendingsQueueLib.DueDuration dueDuration
+        DelayedSendingsQueueLib.DueDuration
     ) external override internalOnly {
         LSLib.Primitives storage p = LSLib.get().p;
-        if (address(p.stakingToken) != p.locusToken) {
-            ILSSendingsDequeFacet(address(this)).addDelayedSending(
-                p.rewardsToken, staker, reward, dueDuration
-            );
-        } else {
-            p.rewardsToken.safeTransfer(staker, reward);
-            emit LSLib.SentOut(address(p.rewardsToken), staker, reward, 0);
-        }
+        p.rewardsToken.safeTransfer(staker, reward);
+        emit LSLib.SentOut(address(p.rewardsToken), staker, reward, 0);
     }
 
     function processWithdrawalSending(
@@ -35,13 +29,8 @@ contract LSProcessFeesFacet is BaseFacet, ILSProcessFeesFacet {
         DelayedSendingsQueueLib.DueDuration dueDuration
     ) external override internalOnly {
         LSLib.Primitives storage p = LSLib.get().p;
-        if (address(p.stakingToken) == p.locusToken) {
-            ILSSendingsDequeFacet(address(this)).addDelayedSending(
-                p.stakingToken, staker, amount, dueDuration
-            );
-        } else {
-            p.stakingToken.safeTransfer(staker, amount);
-            emit LSLib.SentOut(address(p.stakingToken), staker, amount, 0);
-        }
+        ILSSendingsDequeFacet(address(this)).addDelayedSending(
+            p.stakingToken, staker, amount, dueDuration
+        );
     }
 }

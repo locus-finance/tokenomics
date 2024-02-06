@@ -4,11 +4,11 @@ pragma solidity ^0.8.18;
 import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-import "../LSLib.sol";
-import "../v2/manualWithdrawQueueFacets/interfaces/ILSSendingsDequeFacet.sol";
-import "../v2/manualWithdrawQueueFacets/libraries/DelayedSendingsQueueLib.sol";
-import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
-import "./interfaces/ILSProcessFeesFacet.sol";
+import "../../LSLib.sol";
+import "../../v2/manualWithdrawQueueFacets/interfaces/ILSSendingsDequeFacet.sol";
+import "../../v2/manualWithdrawQueueFacets/libraries/DelayedSendingsQueueLib.sol";
+import "../../../facetsFramework/diamondBase/facets/BaseFacet.sol";
+import "../interfaces/ILSProcessFeesFacet.sol";
 
 contract LSProcessFeesForVaultTokensFacet is BaseFacet, ILSProcessFeesFacet {
     using SafeERC20 for IERC20Metadata;
@@ -27,7 +27,7 @@ contract LSProcessFeesForVaultTokensFacet is BaseFacet, ILSProcessFeesFacet {
     function processWithdrawalSending(
         address staker,
         uint256 amount,
-        DelayedSendingsQueueLib.DueDuration dueDuration
+        DelayedSendingsQueueLib.DueDuration
     ) external override internalOnly {
         LSLib.Primitives storage p = LSLib.get().p;
         p.stakingToken.safeTransfer(staker, amount);
