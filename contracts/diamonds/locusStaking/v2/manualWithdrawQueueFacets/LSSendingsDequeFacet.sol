@@ -13,6 +13,8 @@ import "../../LSLib.sol";
 import "./libraries/DelayedSendingsQueueLib.sol";
 import "./interfaces/ILSSendingsDequeFacet.sol";
 
+import "hardhat/console.sol";
+
 contract LSSendingsDequeFacet is BaseFacet, ILSSendingsDequeFacet {
     using Counters for Counters.Counter;
     using DoubleEndedQueue for DoubleEndedQueue.Bytes32Deque;
@@ -35,6 +37,10 @@ contract LSSendingsDequeFacet is BaseFacet, ILSSendingsDequeFacet {
                     amount,
                     dueToDuration
                 );
+        
+            console.log(feesGathered);
+            console.log(amountWithFees);
+
             sendingToken.safeTransfer(receiver, amountWithFees);
             emit LSLib.SentOut(
                 address(sendingToken),

@@ -13,16 +13,14 @@ import "./interfaces/ILSDepositaryFacet.sol";
 contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
     function initialize(
         address owner,
-        address locusToken,
         address rewardDistributor,
         address rewardsToken,
-        address stakingToken,
-        uint32[] memory feeDurationPoints,
-        uint16[] memory feeBasePoints
+        address stakingToken
     ) external override {
         InitializerLib.initialize();
 
-        _setFeesSettings(owner, feeDurationPoints, feeBasePoints);
+        TDLib.Storage storage s = TDLib.get();
+        s.undistributedAmountsReceiver = owner;
 
         RolesManagementLib.grantRole(
             rewardDistributor,
@@ -34,7 +32,6 @@ contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
         p.rewardsToken = IERC20Metadata(rewardsToken);
         p.stakingToken = IERC20Metadata(stakingToken);
         p.rewardsDuration = 4 weeks;
-        p.locusToken = locusToken;
     }
 
     function prepareDepositary() external override delegatedOnly {
@@ -46,46 +43,5 @@ contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
     function setWrappedStakingLocus(address wrappedStLocusToken) external override delegatedOnly {
         RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);
         LSLib.get().p.wrappedStLocusToken = wrappedStLocusToken;
-    }
-
-    /// @dev DEPRECATED
-    function setFeesSettings(
-        address undistributedAmountsReceiver,
-        uint32[] memory feeDurationPoints,
-        uint16[] memory feeBasePoints
-    ) external override delegatedOnly {
-        RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);
-        _setFeesSettings(undistributedAmountsReceiver, feeDurationPoints, feeBasePoints);
-    }
-
-    /// @dev DEPRECATED
-    function _setFeesSettings(
-        address undistributedAmountsReceiver,
-        uint32[] memory feeDurationPoints,
-        uint16[] memory feeBasePoints
-    ) internal {
-        if (feeDurationPoints.length != feeBasePoints.length) {
-            revert TDLib.IncorrectLengths(
-                feeDurationPoints.length,
-                feeDurationPoints.length
-            );
-        }
-        TDLib.Storage storage s = TDLib.get();
-        uint32 maxFeePoint;
-        // just checking bps values and so they are sorted
-        for (uint256 i = 0; i < feeDurationPoints.length; i++) {
-            if (feeBasePoints[i] > TDLib.MAX_BPS) {
-                revert LSLib.InvalidBPS(feeBasePoints[i]);
-            } else {
-                s.distributionDurationPointIdxToAmounts[i] = feeBasePoints[i];
-            }
-            if (feeDurationPoints[i] >= maxFeePoint) {
-                maxFeePoint = feeDurationPoints[i];
-            } else {
-                revert TDLib.IntervalsMustBeSorted();
-            }
-        }
-        s.distributionDurationPoints = feeDurationPoints;
-        s.undistributedAmountsReceiver = undistributedAmountsReceiver;
     }
 }
