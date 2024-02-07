@@ -5,7 +5,7 @@ const keccak256 = require('keccak256');
 const { deployments, getNamedAccounts } = hre;
 const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../../../deploy/helpers");
 
-describe("LSDepositaryFacet", () => {
+describe("LSDepositaryForVaultTokensFacet", () => {
   let namedAccounts;
   let user1Balance;
   let totalReward;
@@ -48,11 +48,11 @@ describe("LSDepositaryFacet", () => {
     await locusStaking.grantRole(namedAccounts.deployer, keccak256('DELAYED_SENDINGS_QUEUE_PROCESSOR_ROLE'));
   });
 
-  it('should stake locus for someone successfully', async () => {
+  it('should stake vault tokens for someone successfully', async () => {
     
   });
 
-  it('should stake locus successfully', async () => {
+  it('should stake vault tokens successfully', async () => {
     
   });
 
@@ -60,11 +60,4 @@ describe("LSDepositaryFacet", () => {
 
   });
 
-  it('should perform a withdrawal of locus through the queue successfully', async () => {
-    
-  });
-
-  it('should sync wrapped balance of locus', async () => {
-    
-  });
 });
