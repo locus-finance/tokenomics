@@ -10,17 +10,31 @@ module.exports = async ({
   // Initiate indexing of all artifacts names.
   await hre.names.gather();
 
-  // Injecting Midas Token
+  // Injecting xDEFI Vault
   await getFakeDeployment(
-    "0x97e6e31afb2d93d437301e006d9da714616766a5",
-    hre.names.external.midas,
+    "0xB0a66dD3B92293E5DC946B47922C6Ca9De464649",
+    hre.names.external.xDEFI,
     save
   );
 
-  // Injecting Presale Gnosis Safe
+  // Injecting xETH Vault
   await getFakeDeployment(
-    "0x1A07EaaF78ceffd17f15d06373A1E3A75dAF9d85",
-    hre.names.external.presale,
+    "0x0CD5cda0E120F7E22516f074284e5416949882C2",
+    hre.names.external.xETH,
+    save
+  );
+
+  // Injecting xARB Vault
+  await getFakeDeployment(
+    "0xF8F045583580C4Ba954CD911a8b161FafD89A9EF",
+    hre.names.external.xARB,
+    save
+  );
+
+  // Injecting xUSD Vault
+  await getFakeDeployment(
+    "0x2a889E9ef10c7Bd607473Aadc8c806c4511EB26f",
+    hre.names.external.xARB,
     save
   );
 

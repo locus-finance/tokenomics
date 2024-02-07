@@ -5,6 +5,7 @@ module.exports.dependencies = [
   "configure",
   "token",
   "staking",
+  "xDefiStaking",
   "claim",
   "stLOCUS",
   "tracer"

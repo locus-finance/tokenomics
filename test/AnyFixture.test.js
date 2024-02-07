@@ -8,6 +8,10 @@ const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/he
 // ALLOWED TO SMELL AND BE LITTERED
 describe("AnyFixture", () => {
 
+  it('should test fixture', async () => {
+    await deployments.fixture(['deploy']);
+  });
+
   xit('should', async () => {
     const locusStaking = await hre.ethers.getContractAt(
       hre.names.internal.diamonds.locusStaking.interface,

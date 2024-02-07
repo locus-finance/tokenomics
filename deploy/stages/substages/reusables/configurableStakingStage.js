@@ -1,7 +1,8 @@
 const hre = require('hardhat');
 module.exports = (
   stakingContractName,
-  isReconfigurationRequired
+  isReconfigurationRequired,
+  stakingTokenAddressOrName
 ) => async ({
   getNamedAccounts,
   deployments,
@@ -15,11 +16,11 @@ module.exports = (
       "TDLoupeFacet",
       "TDManagementFacet",
       "TDProcessFacet",
-      "LSDepositaryFacet",
+      stakingTokenAddressOrName === undefined ? "LSDepositaryFacet" : "LSDepositaryForVaultTokensFacet",
       "LSInitializerFacet",
       "LSLoupeFacet",
       "LSManagementFacet",
-      "LSProcessFeesFacet",
+      stakingTokenAddressOrName === undefined ? "LSProcessFeesFacet" : "LSProcessFeesForVaultTokensFacet",
       "LSSendingsDequeFacet",
       "LSSendingsDequeLoupeFacet"
     ];
@@ -32,9 +33,9 @@ module.exports = (
       'DelayedSendingsQueueLib'
     ];
 
-    let locusAddress;
-    if (isReconfigurationRequired) {
-      locusAddress = (await get(hre.names.internal.diamonds.locusToken.proxy)).address;
+    const locusToken = (await get(hre.names.internal.diamonds.locusToken.proxy)).address;
+    if (isReconfigurationRequired && stakingTokenAddressOrName === undefined) {
+      stakingTokenAddressOrName = locusToken;
     }
 
     let diamondDeployConfig = {
@@ -50,17 +51,20 @@ module.exports = (
         args: [
           deployer,
           deployer,
-          locusAddress,
-          locusAddress
+          locusToken,
+          stakingTokenAddressOrName.startsWith("0x") 
+            ? stakingTokenAddressOrName 
+            : (await get(stakingTokenAddressOrName)).address  
         ]
       };
     }
     
-    await diamond.deploy(`${stakingContractName}Staking`, diamondDeployConfig);
+    const rawName = `${stakingContractName}Staking`;
+    await diamond.deploy(rawName, diamondDeployConfig);
 
     if (isReconfigurationRequired) {
       await execute(
-        hre.names.internal.diamonds.locusStaking.proxy,
+        hre.names.internal.diamonds[rawName[0].toLowerCase() + rawName.slice(1)].proxy,
         { from: deployer, log: true },
         'prepareDepositary'
       );

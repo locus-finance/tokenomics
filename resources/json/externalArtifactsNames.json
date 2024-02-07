@@ -1,5 +1,7 @@
 {
-    "midas": "Midas",
-    "presale": "PresaleGnosisSafe",
+    "xDEFI": "xDEFI",
+    "xETH": "xETH",
+    "xUSD": "xUSD",
+    "xARB": "xARB",
     "allFeesReceiver": "AllFeesReceiverEOA"
 }
