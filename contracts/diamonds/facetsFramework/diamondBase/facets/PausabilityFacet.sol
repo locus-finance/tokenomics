@@ -7,6 +7,13 @@ import "../libraries/RolesManagementLib.sol";
 import "./BaseFacet.sol";
 
 contract PausabilityFacet is IPausable, BaseFacet {
+    modifier whenNotPaused {
+        if (PausabilityLib.get().paused) {
+            revert PausabilityLib.OnlyWhenNotPaused(); 
+        }
+        _;
+    }
+    
     function paused() external view override delegatedOnly returns (bool) {
         return PausabilityLib.get().paused;
     }

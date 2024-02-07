@@ -10,6 +10,7 @@ module.exports = (task) =>
     .setAction(async ({ diamond, address }, hre) => {
       const signers = await hre.ethers.getSigners();
       const deployer = signers[0].address;
+      await hre.names.gather();
       // gather all roles
       const allRoles = [
         "PAUSER_ROLE",

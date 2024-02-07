@@ -35,6 +35,7 @@ contract LSSendingsDequeFacet is BaseFacet, ILSSendingsDequeFacet {
                     amount,
                     dueToDuration
                 );
+        
             sendingToken.safeTransfer(receiver, amountWithFees);
             emit LSLib.SentOut(
                 address(sendingToken),

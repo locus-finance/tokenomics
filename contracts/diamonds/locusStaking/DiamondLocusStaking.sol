@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
-import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
-
 import "../facetsFramework/diamondBase/interfaces/IRolesManagement.sol";
 import "./v1/interfaces/ILSDepositaryFacet.sol";
 import "./v1/interfaces/ILSInitializerFacet.sol";
@@ -19,7 +17,6 @@ interface DiamondLocusStaking is
     IRolesManagement,
     ILSDepositaryFacet,
     ILSInitializerFacet,
-    IERC20Metadata,
     ILSLoupeFacet,
     ILSManagementFacet,
     ILSProcessFeesFacet,

@@ -44,7 +44,6 @@ library LSLib {
     struct Primitives {
         IERC20Metadata rewardsToken;
         IERC20Metadata stakingToken;
-        address locusToken;
         uint256 periodFinish;
         uint256 rewardRate;
         uint256 rewardsDuration;
@@ -52,6 +51,7 @@ library LSLib {
         uint256 rewardPerTokenStored;
         uint256 totalSupply;
         uint256 totalReward;
+        address wrappedStLocusToken;
     }
 
     struct Storage {

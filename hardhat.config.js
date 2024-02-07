@@ -9,7 +9,8 @@ require("hardhat-tracer");
 require("@nomicfoundation/hardhat-chai-matchers");
 require("hardhat-contract-sizer");
 
-extendEnvironment(require("./names.plugin.js"));
+extendEnvironment(require("./plugins/names.plugin.js"));
+extendEnvironment(require("./plugins/disync.plugin.js"));
 
 require("./tasks/utils/accounts")(task);
 require("./tasks/utils/getAllArtifacts")(task);
@@ -61,7 +62,7 @@ module.exports = {
     hardhat: {
       forking: {
         url: arbitrumOneUrl,
-        chainId: arbitrumOneChainId,
+        chainId: arbitrumOneChainId
       },
       saveDeployments: true,
     },

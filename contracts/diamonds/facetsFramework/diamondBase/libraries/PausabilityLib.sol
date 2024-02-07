@@ -2,6 +2,8 @@
 pragma solidity ^0.8.18;
 
 library PausabilityLib {
+    error OnlyWhenNotPaused();
+    
     bytes32 constant PAUSABILITY_STORAGE_POSITION = keccak256("diamond.standard.diamond.storage.locus.pausability");
 
     struct Storage {

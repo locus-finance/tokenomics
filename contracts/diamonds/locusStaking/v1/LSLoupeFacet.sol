@@ -72,6 +72,20 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
         return p.rewardRate * p.rewardsDuration;
     }
 
+    function totalSupply() external view override delegatedOnly returns (uint256) {
+        return LSLib.get().p.totalSupply;
+    }
+
+    function balanceOf(
+        address account
+    ) external view override delegatedOnly returns (uint256) {
+        return LSLib.get().rt.balanceOf[account];
+    }
+
+    function decimals() external view override delegatedOnly returns (uint8) {
+        return LSLib.get().p.stakingToken.decimals();
+    }
+
     function getProjectedAPR(
         uint256 rewardRate,
         uint256 rewardDuration
