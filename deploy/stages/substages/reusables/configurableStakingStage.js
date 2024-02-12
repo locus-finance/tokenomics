@@ -2,14 +2,17 @@ const hre = require('hardhat');
 module.exports = (
   stakingContractName,
   isReconfigurationRequired,
-  stakingTokenAddressOrName
+  stakingTokenAddressOrNameAction,
+  locusTokenNameAction
 ) => async ({
   getNamedAccounts,
   deployments,
   network
 }) => {
-    const { diamond, get, execute } = deployments;
+    const { diamond, get, execute, log } = deployments;
     const { deployer } = await getNamedAccounts();
+
+    const stakingTokenAddressOrName = stakingTokenAddressOrNameAction();
 
     const facets = [
       "RolesManagementFacet",
@@ -33,7 +36,8 @@ module.exports = (
       'DelayedSendingsQueueLib'
     ];
 
-    const locusToken = (await get(hre.names.internal.diamonds.locusToken.proxy)).address;
+    const locusToken = (await get(locusTokenNameAction())).address;
+
     if (isReconfigurationRequired && stakingTokenAddressOrName === undefined) {
       stakingTokenAddressOrName = locusToken;
     }

@@ -10,7 +10,6 @@ module.exports.dependencies = [
   "xEthStakingWithInit",
   "xUsdStakingWithInit",
   "claim",
-  "stLOCUS",
   "tracer"
 ];
 module.exports.runAtTheEnd = true;

@@ -12,6 +12,7 @@ import "./interfaces/IWrappedStakingLocus.sol";
 contract WrappedStakingLocus is IWrappedStakingLocus, ERC20, ERC20Permit, ERC20Votes {
     event PoliticsEnabled(address indexed who);
     event PoliticsDisabled(address indexed who);
+    event PoliticsRemainedUnchanged(address indexed who);
 
     error OnlyStakingDiamond();
 
@@ -58,13 +59,25 @@ contract WrappedStakingLocus is IWrappedStakingLocus, ERC20, ERC20Permit, ERC20V
     }
 
     function _syncBalanceOnStake(address sender) internal {
-        _mint(sender, locusStakingDiamond.balanceOf(sender) - balanceOf(sender));
-        emit PoliticsEnabled(sender);
+        uint256 locusStakingBalance = locusStakingDiamond.balanceOf(sender);
+        uint256 wrappedBalance = balanceOf(sender);  
+        if (locusStakingBalance > wrappedBalance) {
+            _mint(sender, locusStakingBalance - wrappedBalance);
+            emit PoliticsEnabled(sender);
+        } else {
+            emit PoliticsRemainedUnchanged(sender);
+        }
     }
 
     function _syncBalanceOnWithdraw(address sender) internal {
-        _burn(sender, balanceOf(sender) - locusStakingDiamond.balanceOf(sender));
-        emit PoliticsDisabled(sender);
+        uint256 wrappedBalance = balanceOf(sender);
+        uint256 locusStakingBalance = locusStakingDiamond.balanceOf(sender);
+        if (wrappedBalance > locusStakingBalance) {
+            _burn(sender, wrappedBalance - locusStakingBalance);
+            emit PoliticsDisabled(sender);
+        } else {
+            emit PoliticsRemainedUnchanged(sender);
+        }
     }
 
     function _mint(address account, uint256 amount) internal override(ERC20, ERC20Votes) {
