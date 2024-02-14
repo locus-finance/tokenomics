@@ -16,6 +16,8 @@ require("./tasks/utils/accounts")(task);
 require("./tasks/utils/getAllArtifacts")(task);
 require("./tasks/manual/autocracyMintLocus")(task);
 require("./tasks/manual/autocracyBurnLocus")(task);
+require("./tasks/manual/stakeForDeployer")(task);
+require("./tasks/manual/pingProjectedAPR")(task);
 require("./tasks/manual/autocracyGrantRole")(task);
 require("./tasks/manual/autocracyProvideRewardForStaking")(task);
 require("./tasks/manual/autocracyClearSendingsQueue")(task);
