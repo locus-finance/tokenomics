@@ -5,7 +5,6 @@ import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 import "../ASLib.sol";
 
 contract ASReflectionFacet is BaseFacet {
-
     function isExcluded(address account) public view returns (bool) {
         return _isExcluded[account];
     }
