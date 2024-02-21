@@ -5,6 +5,38 @@ import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
 // look for the Diamond.sol in the hardhat-deploy/solc_0.8/Diamond.sol
 library ASLib {
+    error CannotApproveFromZeroAddress();
+    error CannotApproveToZeroAddress();
+    error CannotTransferFromZeroAddress();
+    error CannotTransferToZeroAddress();
+    error AmountCannotBeZero();
+    error AddressIsExcludedFromRewards();
+    error AlreadyExcluded(address who);
+    error AlreadyIncluded(address who);
+    error AmountIsLessThan(uint256 actual, uint256 expected);
+    error CannotRecognizeAddressesInExcludedList(address from, address to);
+
+    struct Supply {
+        uint256 rSupply;
+        uint256 tSupply;
+    }
+
+    struct Values {
+        RValues r;
+        TValues t;
+    }
+
+    struct RValues {
+        uint256 rAmount;
+        uint256 rTransferAmount;
+        uint256 rFee;
+    }
+
+    struct TValues {
+        uint256 tTransferAmount;
+        uint256 tFee;
+    }
+
     bytes32 constant AUTOREFLECTIVE_STAKING_STORAGE_POSITION =
         keccak256("diamond.standard.diamond.storage.autoreflective_staking");
 
@@ -15,7 +47,6 @@ library ASLib {
         mapping (address => uint256) rOwned;
         mapping (address => uint256) tOwned;
         mapping (address => mapping (address => uint256)) allowance;
-        mapping (address => bool) isExcluded;
         EnumerableSet.AddressSet excluded;
     }
 

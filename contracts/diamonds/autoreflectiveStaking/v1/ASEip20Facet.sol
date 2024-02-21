@@ -1,12 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
-import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
+import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
 import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
+import "./interfaces/IASReflectionFacet.sol";
+import "./interfaces/IASEip20Facet.sol";
 import "../ASLib.sol";
 
-contract ASEip20Facet is BaseFacet, IERC20Metadata {
+contract ASEip20Facet is BaseFacet, IASEip20Facet {
+    using EnumerableSet for EnumerableSet.AddressSet;
+
     function totalSupply() external view override returns (uint256) {}
 
     function balanceOf(
@@ -34,31 +38,36 @@ contract ASEip20Facet is BaseFacet, IERC20Metadata {
         uint256 amount
     ) external override returns (bool) {}
 
-    function name() external view override returns (string memory) {}
+    function name() external view override returns (string memory) {
+        return ASLib.get().p.name;
+    }
 
-    function symbol() external view override returns (string memory) {}
+    function symbol() external view override returns (string memory) {
+        return ASLib.get().p.symbol;
+    }
 
-    function decimals() external view override returns (uint8) {}
-
-    function _initialize(uint256 initialRewardAmount) external internalOnly{
-        emit Transfer(address(0), address(this), initialRewardAmount);
+    function decimals() external view override returns (uint8) {
+        return ASLib.get().p.decimals;
     }
 
     function increaseAllowance(address spender, uint256 addedValue) public virtual returns (bool) {
-        _approve(_msgSender(), spender, _allowances[_msgSender()][spender].add(addedValue));
+        _approve(msg.sender, spender, ASLib.get().rt.allowance[msg.sender][spender] + addedValue);
         return true;
     }
 
     function decreaseAllowance(address spender, uint256 subtractedValue) public virtual returns (bool) {
-        _approve(_msgSender(), spender, _allowances[_msgSender()][spender].sub(subtractedValue, "ERC20: decreased allowance below zero"));
+        _approve(msg.sender, spender, ASLib.get().rt.allowance[msg.sender][spender] - subtractedValue);
         return true;
     }
 
-    function _approve(address owner, address spender, uint256 amount) private {
-        require(owner != address(0), "ERC20: approve from the zero address");
-        require(spender != address(0), "ERC20: approve to the zero address");
+    function _emitTransferEvent(address from, address to, uint256 amount) external internalOnly {
+        emit Transfer(from, to, amount);
+    }
 
-        _allowances[owner][spender] = amount;
+    function _approve(address owner, address spender, uint256 amount) internal {
+        if (owner == address(0)) revert ASLib.CannotApproveFromZeroAddress();
+        if (spender == address(0)) revert ASLib.CannotApproveToZeroAddress();
+        ASLib.get().rt.allowance[owner][spender] = amount;
         emit Approval(owner, spender, amount);
     }
 
@@ -66,20 +75,23 @@ contract ASEip20Facet is BaseFacet, IERC20Metadata {
         address sender,
         address recipient,
         uint256 amount
-    ) private {
-        require(sender != address(0), "ERC20: transfer from the zero address");
-        require(recipient != address(0), "ERC20: transfer to the zero address");
-        require(amount > 0, "Transfer amount must be greater than zero");
-        if (_isExcluded[sender] && !_isExcluded[recipient]) {
-            _transferFromExcluded(sender, recipient, amount);
-        } else if (!_isExcluded[sender] && _isExcluded[recipient]) {
-            _transferToExcluded(sender, recipient, amount);
-        } else if (!_isExcluded[sender] && !_isExcluded[recipient]) {
-            _transferStandard(sender, recipient, amount);
-        } else if (_isExcluded[sender] && _isExcluded[recipient]) {
-            _transferBothExcluded(sender, recipient, amount);
+    ) internal {
+        if (sender == address(0)) revert ASLib.CannotTransferFromZeroAddress();
+        if (recipient == address(0)) revert ASLib.CannotTransferToZeroAddress();
+        if (amount == 0) revert ASLib.AmountCannotBeZero();
+
+        ASLib.ReferenceTypes storage rt = ASLib.get().rt;
+
+        if (rt.excluded.contains(sender) && !rt.excluded.contains(recipient)) {
+            IASReflectionFacet(address(this))._transferFromExcluded(sender, recipient, amount);
+        } else if (!rt.excluded.contains(sender) && rt.excluded.contains(recipient)) {
+            IASReflectionFacet(address(this))._transferToExcluded(sender, recipient, amount);
+        } else if (!rt.excluded.contains(sender) && !rt.excluded.contains(recipient)) {
+            IASReflectionFacet(address(this))._transferStandard(sender, recipient, amount);
+        } else if (rt.excluded.contains(sender) && rt.excluded.contains(recipient)) {
+            IASReflectionFacet(address(this))._transferBothExcluded(sender, recipient, amount);
         } else {
-            _transferStandard(sender, recipient, amount);
+            revert ASLib.CannotRecognizeAddressesInExcludedList(sender, recipient);
         }
     }
 }

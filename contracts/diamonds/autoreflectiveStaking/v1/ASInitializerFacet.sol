@@ -4,6 +4,7 @@ pragma solidity ^0.8.18;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 import "./interfaces/IASInitializerFacet.sol";
+import "./interfaces/IASEip20Facet.sol";
 import "../ASLib.sol";
 import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 
@@ -23,5 +24,6 @@ contract ASInitializerFacet is BaseFacet, IASInitializerFacet {
         p.decimals = 18;
 
         rt.rOwned[address(this)] = p.rTotal;
+        IASEip20Facet(address(this))._emitTransferEvent(address(0), address(this), initialRewardAmount);
     }
 }
