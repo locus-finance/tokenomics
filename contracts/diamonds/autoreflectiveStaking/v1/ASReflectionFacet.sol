@@ -12,17 +12,40 @@ import "../ASLib.sol";
 contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
     using EnumerableSet for EnumerableSet.AddressSet;
 
-    function mintTo(address who, uint256 amount) external override delegatedOnly {
-        RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);
+    function _mintTo(address who, uint256 tAmount) external override internalOnly {
+        ASLib.Values memory values = IASReflectionLoupeFacet(address(this))._getValues(tAmount);
+        ASLib.ReferenceTypes storage rt = ASLib.get().rt;
+        if (rt.excluded.contains(who)) {
+            rt.tOwned[who] += values.t.tTransferAmount;
+            rt.rOwned[who] += values.r.rTransferAmount;
+        } else {
+            rt.rOwned[who] += values.r.rTransferAmount;
+        }
+        _reflectFee(values.r.rFee, values.t.tFee);
+        IASEip20Facet(address(this))._emitTransferEvent(address(0), who, values.t.tTransferAmount);
+    }
+
+    function _burnFrom(address who, uint256 tAmount) external override internalOnly {
+        ASLib.Values memory values = IASReflectionLoupeFacet(address(this))._getValues(tAmount);
+        ASLib.ReferenceTypes storage rt = ASLib.get().rt;
+        if (rt.excluded.contains(who)) {
+            rt.tOwned[who] -= tAmount;
+            rt.rOwned[who] -= values.r.rAmount;
+        } else {
+            rt.rOwned[who] -= values.r.rTransferAmount;
+        }
+        _reflectFee(values.r.rFee, values.t.tFee);
+        IASEip20Facet(address(this))._emitTransferEvent(who, address(0), values.t.tTransferAmount);
     }
 
     function reflect(uint256 tAmount) external override delegatedOnly {
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
+        ASLib.Primitives storage p = ASLib.get().p;
         if (rt.excluded.contains(msg.sender)) revert ASLib.AddressIsExcludedFromRewards();
-        ASLib.Values storage values = IASReflectionLoupeFacet(address(this))._getValues(tAmount);
+        ASLib.Values memory values = IASReflectionLoupeFacet(address(this))._getValues(tAmount);
         rt.rOwned[msg.sender] -= values.r.rAmount;
-        rt.rTotal = values.r.rAmount;
-        rt.tFeeTotal += tAmount;
+        p.rTotal -= values.r.rAmount;
+        p.tFeeTotal += tAmount;
     }
 
     function excludeAccount(address account) external override delegatedOnly {
@@ -48,7 +71,6 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
     ) external override internalOnly {
         ASLib.Values memory values = IASReflectionLoupeFacet(address(this))._getValues(tAmount);
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
-        ASLib.Primitives storage p = ASLib.get().p;
         rt.rOwned[sender] -= values.r.rAmount;
         rt.rOwned[recipient] += values.r.rTransferAmount;
         _reflectFee(values.r.rFee, values.t.tFee);
@@ -62,7 +84,6 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
     ) external override internalOnly {
         ASLib.Values memory values = IASReflectionLoupeFacet(address(this))._getValues(tAmount);
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
-        ASLib.Primitives storage p = ASLib.get().p;
         rt.rOwned[sender] -= values.r.rAmount;
         rt.tOwned[recipient] += values.t.tTransferAmount;
         rt.rOwned[recipient] += values.r.rTransferAmount;
@@ -77,8 +98,7 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
     ) external override internalOnly {
         ASLib.Values memory values = IASReflectionLoupeFacet(address(this))._getValues(tAmount);
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
-        ASLib.Primitives storage p = ASLib.get().p;
-        rt.tOwned[sender] -= values.t.tAmount;
+        rt.tOwned[sender] -= tAmount;
         rt.rOwned[sender] -= values.r.rAmount;
         rt.rOwned[recipient] += values.r.rTransferAmount;
         _reflectFee(values.r.rFee, values.t.tFee);
@@ -92,7 +112,6 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
     ) external override internalOnly {
         ASLib.Values memory values = IASReflectionLoupeFacet(address(this))._getValues(tAmount);
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
-        ASLib.Primitives storage p = ASLib.get().p;
         rt.tOwned[sender] -= tAmount;
         rt.rOwned[sender] -= values.r.rAmount;
         rt.tOwned[recipient] += values.t.tTransferAmount;

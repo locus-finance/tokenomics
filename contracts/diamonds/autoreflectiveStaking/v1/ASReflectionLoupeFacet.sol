@@ -3,24 +3,25 @@ pragma solidity ^0.8.18;
 
 import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
+import "./interfaces/IASReflectionLoupeFacet.sol";
 import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 import "../ASLib.sol";
 
-contract ASReflectionFacet is BaseFacet {
+contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
     using EnumerableSet for EnumerableSet.AddressSet;
 
-    function isExcluded(address account) external view delegatedOnly returns (bool) {
+    function isExcluded(address account) external view override delegatedOnly returns (bool) {
         return ASLib.get().rt.excluded.contains(account);
     }
 
-    function totalFees() external view delegatedOnly returns (uint256) {
+    function totalFees() external view override delegatedOnly returns (uint256) {
         return ASLib.get().p.tFeeTotal;
     }
 
     function reflectionFromToken(
         uint256 tAmount,
         bool deductTransferFee
-    ) external view delegatedOnly returns (uint256) {
+    ) external view override delegatedOnly returns (uint256) {
         ASLib.Primitives storage p = ASLib.get().p;
         if (tAmount > p.tTotal) revert ASLib.AmountIsLessThan(p.tTotal, tAmount);
         if (!deductTransferFee) {
@@ -32,7 +33,7 @@ contract ASReflectionFacet is BaseFacet {
 
     function tokenFromReflection(
         uint256 rAmount
-    ) external view delegatedOnly returns (uint256) {
+    ) external view override delegatedOnly returns (uint256) {
         ASLib.Primitives storage p = ASLib.get().p;
         if (rAmount > p.rTotal) revert ASLib.AmountIsLessThan(p.rTotal, rAmount);
         uint256 currentRate = this._getRate();
@@ -64,7 +65,7 @@ contract ASReflectionFacet is BaseFacet {
 
     function _getTValues(
         uint256 tAmount
-    ) external view internalOnly returns (ASLib.TValues memory) {
+    ) external view override internalOnly returns (ASLib.TValues memory) {
         uint256 tFee = tAmount / 100;
         uint256 tTransferAmount = tAmount - tFee;
         return ASLib.TValues({
@@ -77,7 +78,7 @@ contract ASReflectionFacet is BaseFacet {
         uint256 tAmount,
         uint256 tFee,
         uint256 currentRate
-    ) external view internalOnly returns (ASLib.RValues memory) {
+    ) external view override internalOnly returns (ASLib.RValues memory) {
         uint256 rAmount = tAmount * currentRate;
         uint256 rFee = tFee * currentRate;
         uint256 rTransferAmount = rAmount - rFee;
@@ -88,12 +89,12 @@ contract ASReflectionFacet is BaseFacet {
         });
     }
 
-    function _getRate() external view delegatedOnly returns (uint256) {
+    function _getRate() external view override delegatedOnly returns (uint256) {
         ASLib.Supply memory supply = this._getCurrentSupply();
         return supply.rSupply / supply.tSupply;
     }
 
-    function _getCurrentSupply() external view delegatedOnly returns (ASLib.Supply memory) {
+    function _getCurrentSupply() external view override delegatedOnly returns (ASLib.Supply memory) {
         ASLib.Primitives storage p = ASLib.get().p;
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
         uint256 rSupply = p.rTotal;
