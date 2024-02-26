@@ -21,7 +21,7 @@ contract ASEip20Facet is BaseFacet, IASEip20Facet {
     ) external view override delegatedOnly returns (uint256) {
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
         if (rt.excluded.contains(account)) return rt.tOwned[account];
-        return IASReflectionLoupeFacet(address(this)).tokenFromReflection(rt.tOwned[account]); 
+        return IASReflectionLoupeFacet(address(this)).tokenFromReflection(rt.rOwned[account]); 
     }
 
     function transfer(

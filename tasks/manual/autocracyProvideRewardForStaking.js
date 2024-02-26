@@ -5,8 +5,8 @@ module.exports = (task) =>
     "provide",
     "Provide LOCUS' for the staking contract.",
   )
-    .addOptionalParam("amount", "Define amount to be provided.", '100000000000000000000', types.string)
-    .addOptionalParam("staking", "Define a custom name of Diamond Staking from hre.names.", 'LocusXArbTokensStaking_DiamondProxy', types.string)
+    .addOptionalParam("amount", "Define amount to be provided.", '32500000000000000000000', types.string)
+    .addOptionalParam("staking", "Define a custom name of Diamond Staking from hre.names.", '', types.string)
     .addOptionalParam("locus", "Define a name of Diamond Locus Token from hre.names.", '', types.string)
     .setAction(async ({ amount, staking, locus }, hre) => {
       const signers = await hre.ethers.getSigners();

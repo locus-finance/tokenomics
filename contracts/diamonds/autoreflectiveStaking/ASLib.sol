@@ -37,6 +37,11 @@ library ASLib {
         uint256 tFee;
     }
 
+    struct Deposit {
+        uint256 amount;
+        uint256 timestamp;
+    }
+
     bytes32 constant AUTOREFLECTIVE_STAKING_STORAGE_POSITION =
         keccak256("diamond.standard.diamond.storage.autoreflective_staking");
 
@@ -48,9 +53,13 @@ library ASLib {
         mapping (address => uint256) tOwned;
         mapping (address => mapping (address => uint256)) allowance;
         EnumerableSet.AddressSet excluded;
+        mapping (address => Deposit) depositAtStartFor;
     }
 
     struct Primitives {
+        address rewardToken;
+        address stakingToken;
+        uint256 totalReward;
         uint256 tTotal;
         uint256 rTotal;
         uint256 tFeeTotal;
