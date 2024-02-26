@@ -2,6 +2,7 @@
 pragma solidity ^0.8.18;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 import "./interfaces/IASInitializerFacet.sol";
 import "./interfaces/IASEip20Facet.sol";
@@ -9,21 +10,23 @@ import "../ASLib.sol";
 import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 
 contract ASInitializerFacet is BaseFacet, IASInitializerFacet {
-    function initialize(address owner, uint256 initialRewardAmount) external override {
+    using SafeERC20 for IERC20;
+
+    function initialize(
+        address owner, 
+        uint256 initialRewardAmount,
+        address stakingToken,
+        address rewardToken
+    ) external override {
         InitializerLib.initialize();
         RolesManagementLib.grantRole(owner, RolesManagementLib.OWNER_ROLE);
-
         ASLib.Primitives storage p = ASLib.get().p;
-        ASLib.ReferenceTypes storage rt = ASLib.get().rt;
-
-        p.tTotal = initialRewardAmount;
-        p.rTotal = type(uint256).max - (type(uint256).max % initialRewardAmount);
-
+        p.rewardToken = rewardToken;
+        p.stakingToken = stakingToken;
+        p.totalReward = initialRewardAmount;
+        IERC20(rewardToken).safeTransferFrom(owner, address(this), initialRewardAmount);
         p.name = string(abi.encodePacked(ASLib.NAME_PREFIX, " via autoreflection"));
         p.symbol = string(abi.encodePacked(ASLib.SYMBOL_PREFIX, "LOCUS"));
         p.decimals = 18;
-
-        rt.rOwned[address(this)] = p.rTotal;
-        IASEip20Facet(address(this))._emitTransferEvent(address(0), address(this), initialRewardAmount);
     }
 }
