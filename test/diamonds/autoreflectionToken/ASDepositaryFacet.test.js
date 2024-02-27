@@ -1,14 +1,11 @@
 const { expect } = require("chai");
-const networkHelpers = require("@nomicfoundation/hardhat-network-helpers");
 const hre = require("hardhat");
-const keccak256 = require('keccak256');
 const { deployments, getNamedAccounts } = hre;
 const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../../../deploy/helpers");
 
 describe("ASDepositaryFacet", () => {
   let namedAccounts;
   let user1Balance;
-  let totalReward;
 
   let autoreflectiveStaking;
   let mockToken;
@@ -31,7 +28,13 @@ describe("ASDepositaryFacet", () => {
   });
 
   it('should transfer', async () => {
-    
+    await mockToken.approve(autoreflectiveStaking.address, user1Balance);
+    await autoreflectiveStaking.stake(user1Balance);
+    console.log(`pre transfer u1: ${(await autoreflectiveStaking.balanceOf(namedAccounts.user1)).toString()}`);
+    console.log(`pre transfer d: ${(await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).toString()}`);
+    await autoreflectiveStaking.transfer(namedAccounts.user1, user1Balance);
+    console.log(`post transfer u1: ${(await autoreflectiveStaking.balanceOf(namedAccounts.user1)).toString()}`);
+    console.log(`post transfer d: ${(await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).toString()}`);
   });
 
 });
