@@ -7,11 +7,12 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 import "../ASLib.sol";
 import "./interfaces/IASReflectionFacet.sol";
+import "./interfaces/IASDepositaryFacet.sol";
 
-contract ASDepositaryFacet is BaseFacet {
+contract ASDepositaryFacet is IASDepositaryFacet, BaseFacet {
     using SafeERC20 for IERC20;
 
-    function stake(uint256 amount) external delegatedOnly {
+    function stake(uint256 amount) external override delegatedOnly {
         // transfer staking token
         IERC20(ASLib.get().p.stakingToken).safeTransferFrom(msg.sender, address(this), amount);
         // register starting balance and time
@@ -32,7 +33,7 @@ contract ASDepositaryFacet is BaseFacet {
         IASReflectionFacet(address(this))._mintTo(msg.sender, amount);
     }
 
-    function withdraw(uint256 amount) external delegatedOnly {
+    function withdraw(uint256 amount) external override delegatedOnly {
         // get starting balance
         // call reflect
         // calculate difference between starting and current balance
@@ -41,7 +42,7 @@ contract ASDepositaryFacet is BaseFacet {
         // mint amount and refresh starting balance and time
     }
 
-    function notifyRewardAmount(uint256 amount) external delegatedOnly {
+    function notifyRewardAmount(uint256 amount) external override delegatedOnly {
         RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);
         // transfer from the caller staking tokens
         // update total reward

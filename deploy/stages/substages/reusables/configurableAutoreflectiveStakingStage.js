@@ -1,7 +1,5 @@
-const hre = require('hardhat');
 module.exports = (
   initialRewardAmount,
-  stakingContractName,
   isReconfigurationRequired,
   stakingTokenAddressOrNameAction,
   rewardTokenAddressOrNameAction
@@ -10,7 +8,7 @@ module.exports = (
   deployments,
   network
 }) => {
-    const { diamond, get, execute, log } = deployments;
+    const { diamond, get } = deployments;
     const { deployer } = await getNamedAccounts();
 
     const stakingTokenAddressOrName = stakingTokenAddressOrNameAction();

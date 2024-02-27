@@ -24,7 +24,6 @@ contract ASInitializerFacet is BaseFacet, IASInitializerFacet {
         p.rewardToken = rewardToken;
         p.stakingToken = stakingToken;
         p.totalReward = initialRewardAmount;
-        IERC20(rewardToken).safeTransferFrom(owner, address(this), initialRewardAmount);
         p.name = string(abi.encodePacked(ASLib.NAME_PREFIX, " via autoreflection"));
         p.symbol = string(abi.encodePacked(ASLib.SYMBOL_PREFIX, "LOCUS"));
         p.decimals = 18;
