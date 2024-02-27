@@ -28,12 +28,10 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
 
     function reflectionFromToken(
         uint256 tAmount,
-        bool deductTransferFee
+        bool addTransferFee
     ) external view override delegatedOnly returns (uint256) {
         ASLib.Primitives storage p = ASLib.get().p;
-        if (tAmount > p.tTotal)
-            revert ASLib.AmountIsLessThan(p.tTotal, tAmount);
-        if (!deductTransferFee) {
+        if (!addTransferFee) {
             return this._getValues(tAmount).r.rAmount;
         } else {
             return this._getValues(tAmount).r.rTransferAmount;
@@ -43,11 +41,7 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
     function tokenFromReflection(
         uint256 rAmount
     ) external view override delegatedOnly returns (uint256) {
-        ASLib.Primitives storage p = ASLib.get().p;
-        if (rAmount > p.rTotal)
-            revert ASLib.AmountIsLessThan(p.rTotal, rAmount);
-        uint256 currentRate = this._getRate();
-        return rAmount / currentRate;
+        return rAmount / this._getRate();
     }
 
     function _getValues(
@@ -78,7 +72,7 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
         uint256 tAmount
     ) external view override internalOnly returns (ASLib.TValues memory) {
         uint256 tFee = tAmount / 100;
-        uint256 tTransferAmount = tAmount - tFee;
+        uint256 tTransferAmount = tAmount;
         return ASLib.TValues({tTransferAmount: tTransferAmount, tFee: tFee});
     }
 
@@ -89,7 +83,7 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
     ) external view override internalOnly returns (ASLib.RValues memory) {
         uint256 rAmount = tAmount * currentRate;
         uint256 rFee = tFee * currentRate;
-        uint256 rTransferAmount = rAmount - rFee;
+        uint256 rTransferAmount = rAmount;
         return
             ASLib.RValues({
                 rAmount: rAmount,

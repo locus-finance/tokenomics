@@ -37,8 +37,8 @@ describe("ASDepositaryFacet", () => {
     console.log(`pre transfer u1: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.user1)).toString())}`);
     console.log(`pre transfer d: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).toString())}`);
     await autoreflectiveStaking.transfer(namedAccounts.user1, user1Balance);
-    console.log(`pre transfer u1: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.user1)).toString())}`);
-    console.log(`pre transfer d: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).toString())}`);
+    console.log(`post transfer u1: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.user1)).toString())}`);
+    console.log(`post transfer d: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).toString())}`);
     
     console.log('From one pocket to another...');
     await autoreflectiveStaking.connect(user1Signer).transfer(namedAccounts.deployer, user1Balance.div(2));
@@ -50,13 +50,15 @@ describe("ASDepositaryFacet", () => {
     console.log("post increase");
     console.log(`post increase u1: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.user1)).toString())}`);
     console.log(`post increase d: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).toString())}`);
-    await autoreflectiveStaking.transfer(namedAccounts.user1, user1Balance.div(2));    
+    await autoreflectiveStaking.transfer(namedAccounts.user1, await autoreflectiveStaking.balanceOf(namedAccounts.deployer));    
     console.log(`post increase 2 transfer u1: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.user1)).toString())}`);
     console.log(`post increase 2 transfer d: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).toString())}`);
     console.log("End shuffling");
 
-    // console.log(`post transfer u1: ${(await autoreflectiveStaking.balanceOf(namedAccounts.user1)).toString()}`);
-    // console.log(`post transfer d: ${(await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).toString()}`);
+    await autoreflectiveStaking.connect(user1Signer).transfer(namedAccounts.user2, user1Balance.div(2));
+    console.log(`post increase 3 transfer u2: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.user2)).toString())}`);
+    console.log(`post increase 3 transfer u1: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.user1)).toString())}`);
+    console.log(`post increase 3 transfer d: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).toString())}`);
   });
 
 });
