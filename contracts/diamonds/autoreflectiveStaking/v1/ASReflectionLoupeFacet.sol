@@ -30,7 +30,6 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
         uint256 tAmount,
         bool addTransferFee
     ) external view override delegatedOnly returns (uint256) {
-        ASLib.Primitives storage p = ASLib.get().p;
         if (!addTransferFee) {
             return this._getValues(tAmount).r.rAmount;
         } else {
@@ -71,7 +70,7 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
     function _getTValues(
         uint256 tAmount
     ) external view override internalOnly returns (ASLib.TValues memory) {
-        uint256 tFee = tAmount / 100;
+        uint256 tFee = tAmount / 100; // TODO: make it time and totalReward dependant
         uint256 tTransferAmount = tAmount;
         return ASLib.TValues({tTransferAmount: tTransferAmount, tFee: tFee});
     }
