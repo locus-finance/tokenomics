@@ -12,16 +12,24 @@ import "../ASLib.sol";
 contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
     using EnumerableSet for EnumerableSet.AddressSet;
 
-    function _mintTo(address who, uint256 tAmount) external override internalOnly {
+    function _mintTo(
+        address who,
+        uint256 tAmount
+    ) external override internalOnly {
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
         ASLib.Primitives storage p = ASLib.get().p;
         if (p.tTotal == 0 && p.rTotal == 0) {
             p.tTotal = tAmount;
             p.rTotal = type(uint256).max - (type(uint256).max % tAmount);
             rt.rOwned[who] = p.rTotal;
-            IASEip20Facet(address(this))._emitTransferEvent(address(0), who, tAmount);
+            IASEip20Facet(address(this))._emitTransferEvent(
+                address(0),
+                who,
+                tAmount
+            );
         } else {
-            ASLib.Values memory values = IASReflectionLoupeFacet(address(this))._getValues(tAmount);
+            ASLib.Values memory values = IASReflectionLoupeFacet(address(this))
+                ._getValues(tAmount);
             if (rt.excluded.contains(who)) {
                 rt.tOwned[who] += values.t.tTransferAmount;
                 rt.rOwned[who] += values.r.rTransferAmount;
@@ -32,12 +40,20 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
                 p.rTotal += values.r.rTransferAmount;
             }
             _reflectFee(values.r.rFee, values.t.tFee);
-            IASEip20Facet(address(this))._emitTransferEvent(address(0), who, values.t.tTransferAmount);
+            IASEip20Facet(address(this))._emitTransferEvent(
+                address(0),
+                who,
+                values.t.tTransferAmount
+            );
         }
     }
 
-    function _burnFrom(address who, uint256 tAmount) external override internalOnly {
-        ASLib.Values memory values = IASReflectionLoupeFacet(address(this))._getValues(tAmount);
+    function _burnFrom(
+        address who,
+        uint256 tAmount
+    ) external override internalOnly {
+        ASLib.Values memory values = IASReflectionLoupeFacet(address(this))
+            ._getValues(tAmount);
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
         ASLib.Primitives storage p = ASLib.get().p;
         if (rt.excluded.contains(who)) {
@@ -50,14 +66,20 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
             p.rTotal -= values.r.rTransferAmount;
         }
         _reflectFee(values.r.rFee, values.t.tFee);
-        IASEip20Facet(address(this))._emitTransferEvent(who, address(0), values.t.tTransferAmount);
+        IASEip20Facet(address(this))._emitTransferEvent(
+            who,
+            address(0),
+            values.t.tTransferAmount
+        );
     }
 
     function reflect(uint256 tAmount) external override delegatedOnly {
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
         ASLib.Primitives storage p = ASLib.get().p;
-        if (rt.excluded.contains(msg.sender)) revert ASLib.AddressIsExcludedFromRewards();
-        ASLib.Values memory values = IASReflectionLoupeFacet(address(this))._getValues(tAmount);
+        if (rt.excluded.contains(msg.sender))
+            revert ASLib.AddressIsExcludedFromRewards();
+        ASLib.Values memory values = IASReflectionLoupeFacet(address(this))
+            ._getValues(tAmount);
         rt.rOwned[msg.sender] -= values.r.rAmount;
         p.rTotal -= values.r.rAmount;
         p.tFeeTotal += tAmount;
@@ -68,7 +90,8 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
         if (!rt.excluded.add(account)) revert ASLib.AlreadyExcluded(account);
         if (rt.rOwned[account] > 0) {
-            rt.tOwned[account] = IASReflectionLoupeFacet(address(this)).tokenFromReflection(rt.rOwned[account]);
+            rt.tOwned[account] = IASReflectionLoupeFacet(address(this))
+                .tokenFromReflection(rt.rOwned[account]);
         }
     }
 
@@ -84,12 +107,17 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
         address recipient,
         uint256 tAmount
     ) external override internalOnly {
-        ASLib.Values memory values = IASReflectionLoupeFacet(address(this))._getValues(tAmount);
+        ASLib.Values memory values = IASReflectionLoupeFacet(address(this))
+            ._getValues(tAmount);
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
         rt.rOwned[sender] -= values.r.rAmount;
         rt.rOwned[recipient] += values.r.rTransferAmount;
         _reflectFee(values.r.rFee, values.t.tFee);
-        IASEip20Facet(address(this))._emitTransferEvent(sender, recipient, values.t.tTransferAmount);
+        IASEip20Facet(address(this))._emitTransferEvent(
+            sender,
+            recipient,
+            values.t.tTransferAmount
+        );
     }
 
     function _transferToExcluded(
@@ -97,13 +125,18 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
         address recipient,
         uint256 tAmount
     ) external override internalOnly {
-        ASLib.Values memory values = IASReflectionLoupeFacet(address(this))._getValues(tAmount);
+        ASLib.Values memory values = IASReflectionLoupeFacet(address(this))
+            ._getValues(tAmount);
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
         rt.rOwned[sender] -= values.r.rAmount;
         rt.tOwned[recipient] += values.t.tTransferAmount;
         rt.rOwned[recipient] += values.r.rTransferAmount;
         _reflectFee(values.r.rFee, values.t.tFee);
-        IASEip20Facet(address(this))._emitTransferEvent(sender, recipient, values.t.tTransferAmount);
+        IASEip20Facet(address(this))._emitTransferEvent(
+            sender,
+            recipient,
+            values.t.tTransferAmount
+        );
     }
 
     function _transferFromExcluded(
@@ -111,13 +144,18 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
         address recipient,
         uint256 tAmount
     ) external override internalOnly {
-        ASLib.Values memory values = IASReflectionLoupeFacet(address(this))._getValues(tAmount);
+        ASLib.Values memory values = IASReflectionLoupeFacet(address(this))
+            ._getValues(tAmount);
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
         rt.tOwned[sender] -= tAmount;
         rt.rOwned[sender] -= values.r.rAmount;
         rt.rOwned[recipient] += values.r.rTransferAmount;
         _reflectFee(values.r.rFee, values.t.tFee);
-        IASEip20Facet(address(this))._emitTransferEvent(sender, recipient, values.t.tTransferAmount);
+        IASEip20Facet(address(this))._emitTransferEvent(
+            sender,
+            recipient,
+            values.t.tTransferAmount
+        );
     }
 
     function _transferBothExcluded(
@@ -125,14 +163,19 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
         address recipient,
         uint256 tAmount
     ) external override internalOnly {
-        ASLib.Values memory values = IASReflectionLoupeFacet(address(this))._getValues(tAmount);
+        ASLib.Values memory values = IASReflectionLoupeFacet(address(this))
+            ._getValues(tAmount);
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
         rt.tOwned[sender] -= tAmount;
         rt.rOwned[sender] -= values.r.rAmount;
         rt.tOwned[recipient] += values.t.tTransferAmount;
         rt.rOwned[recipient] += values.r.rTransferAmount;
         _reflectFee(values.r.rFee, values.t.tFee);
-        IASEip20Facet(address(this))._emitTransferEvent(sender, recipient, values.t.tTransferAmount);
+        IASEip20Facet(address(this))._emitTransferEvent(
+            sender,
+            recipient,
+            values.t.tTransferAmount
+        );
     }
 
     function _reflectFee(uint256 rFee, uint256 tFee) internal {

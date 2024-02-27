@@ -13,7 +13,7 @@ contract ASInitializerFacet is BaseFacet, IASInitializerFacet {
     using SafeERC20 for IERC20;
 
     function initialize(
-        address owner, 
+        address owner,
         uint256 initialRewardAmount,
         address stakingToken,
         address rewardToken
@@ -24,7 +24,9 @@ contract ASInitializerFacet is BaseFacet, IASInitializerFacet {
         p.rewardToken = rewardToken;
         p.stakingToken = stakingToken;
         p.totalReward = initialRewardAmount;
-        p.name = string(abi.encodePacked(ASLib.NAME_PREFIX, " via autoreflection"));
+        p.name = string(
+            abi.encodePacked(ASLib.NAME_PREFIX, " via autoreflection")
+        );
         p.symbol = string(abi.encodePacked(ASLib.SYMBOL_PREFIX, "LOCUS"));
         p.decimals = 18;
     }

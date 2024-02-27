@@ -12,7 +12,13 @@ import "../ASLib.sol";
 contract ASEip20Facet is BaseFacet, IASEip20Facet {
     using EnumerableSet for EnumerableSet.AddressSet;
 
-    function totalSupply() external view override delegatedOnly returns (uint256) {
+    function totalSupply()
+        external
+        view
+        override
+        delegatedOnly
+        returns (uint256)
+    {
         return ASLib.get().p.tTotal;
     }
 
@@ -21,7 +27,10 @@ contract ASEip20Facet is BaseFacet, IASEip20Facet {
     ) external view override delegatedOnly returns (uint256) {
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
         if (rt.excluded.contains(account)) return rt.tOwned[account];
-        return IASReflectionLoupeFacet(address(this)).tokenFromReflection(rt.rOwned[account]); 
+        return
+            IASReflectionLoupeFacet(address(this)).tokenFromReflection(
+                rt.rOwned[account]
+            );
     }
 
     function transfer(
@@ -35,7 +44,7 @@ contract ASEip20Facet is BaseFacet, IASEip20Facet {
     function allowance(
         address owner,
         address spender
-    ) external view delegatedOnly override returns (uint256) {
+    ) external view override delegatedOnly returns (uint256) {
         return ASLib.get().rt.allowance[owner][spender];
     }
 
@@ -54,7 +63,7 @@ contract ASEip20Facet is BaseFacet, IASEip20Facet {
     ) external override returns (bool) {
         _transfer(from, to, amount);
         _approve(
-            from, 
+            from,
             msg.sender,
             ASLib.get().rt.allowance[from][msg.sender] - amount
         );
@@ -73,17 +82,35 @@ contract ASEip20Facet is BaseFacet, IASEip20Facet {
         return ASLib.get().p.decimals;
     }
 
-    function increaseAllowance(address spender, uint256 addedValue) external override delegatedOnly returns (bool) {
-        _approve(msg.sender, spender, ASLib.get().rt.allowance[msg.sender][spender] + addedValue);
+    function increaseAllowance(
+        address spender,
+        uint256 addedValue
+    ) external override delegatedOnly returns (bool) {
+        _approve(
+            msg.sender,
+            spender,
+            ASLib.get().rt.allowance[msg.sender][spender] + addedValue
+        );
         return true;
     }
 
-    function decreaseAllowance(address spender, uint256 subtractedValue) external delegatedOnly override returns (bool) {
-        _approve(msg.sender, spender, ASLib.get().rt.allowance[msg.sender][spender] - subtractedValue);
+    function decreaseAllowance(
+        address spender,
+        uint256 subtractedValue
+    ) external override delegatedOnly returns (bool) {
+        _approve(
+            msg.sender,
+            spender,
+            ASLib.get().rt.allowance[msg.sender][spender] - subtractedValue
+        );
         return true;
     }
 
-    function _emitTransferEvent(address from, address to, uint256 amount) external internalOnly override {
+    function _emitTransferEvent(
+        address from,
+        address to,
+        uint256 amount
+    ) external override internalOnly {
         emit Transfer(from, to, amount);
     }
 
@@ -106,15 +133,40 @@ contract ASEip20Facet is BaseFacet, IASEip20Facet {
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
 
         if (rt.excluded.contains(sender) && !rt.excluded.contains(recipient)) {
-            IASReflectionFacet(address(this))._transferFromExcluded(sender, recipient, amount);
-        } else if (!rt.excluded.contains(sender) && rt.excluded.contains(recipient)) {
-            IASReflectionFacet(address(this))._transferToExcluded(sender, recipient, amount);
-        } else if (!rt.excluded.contains(sender) && !rt.excluded.contains(recipient)) {
-            IASReflectionFacet(address(this))._transferStandard(sender, recipient, amount);
-        } else if (rt.excluded.contains(sender) && rt.excluded.contains(recipient)) {
-            IASReflectionFacet(address(this))._transferBothExcluded(sender, recipient, amount);
+            IASReflectionFacet(address(this))._transferFromExcluded(
+                sender,
+                recipient,
+                amount
+            );
+        } else if (
+            !rt.excluded.contains(sender) && rt.excluded.contains(recipient)
+        ) {
+            IASReflectionFacet(address(this))._transferToExcluded(
+                sender,
+                recipient,
+                amount
+            );
+        } else if (
+            !rt.excluded.contains(sender) && !rt.excluded.contains(recipient)
+        ) {
+            IASReflectionFacet(address(this))._transferStandard(
+                sender,
+                recipient,
+                amount
+            );
+        } else if (
+            rt.excluded.contains(sender) && rt.excluded.contains(recipient)
+        ) {
+            IASReflectionFacet(address(this))._transferBothExcluded(
+                sender,
+                recipient,
+                amount
+            );
         } else {
-            revert ASLib.CannotRecognizeAddressesInExcludedList(sender, recipient);
+            revert ASLib.CannotRecognizeAddressesInExcludedList(
+                sender,
+                recipient
+            );
         }
     }
 }

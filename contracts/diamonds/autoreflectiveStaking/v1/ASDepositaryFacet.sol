@@ -14,10 +14,14 @@ contract ASDepositaryFacet is IASDepositaryFacet, BaseFacet {
 
     function stake(uint256 amount) external override delegatedOnly {
         // transfer staking token
-        IERC20(ASLib.get().p.stakingToken).safeTransferFrom(msg.sender, address(this), amount);
+        IERC20(ASLib.get().p.stakingToken).safeTransferFrom(
+            msg.sender,
+            address(this),
+            amount
+        );
         // register starting balance and time
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
-        uint256 oldAmount = rt.depositAtStartFor[msg.sender].amount; 
+        uint256 oldAmount = rt.depositAtStartFor[msg.sender].amount;
         if (oldAmount != 0) {
             rt.depositAtStartFor[msg.sender] = ASLib.Deposit({
                 amount: oldAmount + amount,
@@ -31,6 +35,7 @@ contract ASDepositaryFacet is IASDepositaryFacet, BaseFacet {
         }
         // mint
         IASReflectionFacet(address(this))._mintTo(msg.sender, amount);
+        emit Staked(amount);
     }
 
     function withdraw(uint256 amount) external override delegatedOnly {
@@ -38,13 +43,23 @@ contract ASDepositaryFacet is IASDepositaryFacet, BaseFacet {
         // call reflect
         // calculate difference between starting and current balance
         // transfer starting balance + difference of balances
+        // update totalReward
         // burn whole balance
         // mint amount and refresh starting balance and time
     }
 
-    function notifyRewardAmount(uint256 amount) external override delegatedOnly {
+    function notifyRewardAmount(
+        uint256 amount
+    ) external override delegatedOnly {
         RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);
         // transfer from the caller staking tokens
+        IERC20(ASLib.get().p.rewardToken).safeTransferFrom(
+            msg.sender,
+            address(this),
+            amount
+        );
         // update total reward
+        ASLib.get().p.totalReward += amount;
+        emit RewardAdded(amount);
     }
 }
