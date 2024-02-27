@@ -138,6 +138,6 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
     function _reflectFee(uint256 rFee, uint256 tFee) internal {
         ASLib.Primitives storage p = ASLib.get().p;
         p.rTotal -= rFee;
-        p.tFeeTotal -= tFee;
+        p.tFeeTotal += tFee;
     }
 }
