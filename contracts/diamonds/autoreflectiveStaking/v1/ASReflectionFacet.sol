@@ -73,6 +73,19 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
         );
     }
 
+    // TODO: make it unabusable - dependant on time
+    function reflect(uint256 tAmount) external override delegatedOnly {
+        ASLib.ReferenceTypes storage rt = ASLib.get().rt;
+        ASLib.Primitives storage p = ASLib.get().p;
+        if (rt.excluded.contains(msg.sender))
+            revert ASLib.AddressIsExcludedFromRewards();
+        ASLib.Values memory values = IASReflectionLoupeFacet(address(this))
+            ._getValues(tAmount);
+        rt.rOwned[msg.sender] -= values.r.rAmount;
+        p.rTotal -= values.r.rAmount;
+        p.tRewardTotal += tAmount;
+    }
+
     function excludeAccount(address account) external override delegatedOnly {
         RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;

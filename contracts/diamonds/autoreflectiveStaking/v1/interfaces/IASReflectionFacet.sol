@@ -6,6 +6,8 @@ interface IASReflectionFacet {
 
     function _mintTo(address who, uint256 tAmount) external;
 
+    function reflect(uint256 tAmount) external;
+
     function excludeAccount(address account) external;
 
     function includeAccount(address account) external;
