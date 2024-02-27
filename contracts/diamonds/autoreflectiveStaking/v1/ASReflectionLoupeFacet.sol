@@ -16,21 +16,21 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
         return ASLib.get().rt.excluded.contains(account);
     }
 
-    function totalFees()
+    function rewardsMinted()
         external
         view
         override
         delegatedOnly
         returns (uint256)
     {
-        return ASLib.get().p.tFeeTotal;
+        return ASLib.get().p.tRewardTotal;
     }
 
     function reflectionFromToken(
         uint256 tAmount,
-        bool addTransferFee
+        bool addTransferReward
     ) external view override delegatedOnly returns (uint256) {
-        if (!addTransferFee) {
+        if (!addTransferReward) {
             return this._getValues(tAmount).r.rAmount;
         } else {
             return this._getValues(tAmount).r.rTransferAmount;
@@ -50,7 +50,7 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
         uint256 currentRate = this._getRate();
         ASLib.RValues memory rValues = this._getRValues(
             tAmount,
-            tValues.tFee,
+            tValues.tReward,
             currentRate
         );
         return
@@ -58,11 +58,11 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
                 r: ASLib.RValues({
                     rAmount: rValues.rAmount,
                     rTransferAmount: rValues.rTransferAmount,
-                    rFee: rValues.rFee
+                    rReward: rValues.rReward
                 }),
                 t: ASLib.TValues({
                     tTransferAmount: tValues.tTransferAmount,
-                    tFee: tValues.tFee
+                    tReward: tValues.tReward
                 })
             });
     }
@@ -70,24 +70,24 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
     function _getTValues(
         uint256 tAmount
     ) external view override internalOnly returns (ASLib.TValues memory) {
-        uint256 tFee = tAmount / 100; // TODO: make it time and totalReward dependant
+        uint256 tReward = tAmount / 100; // TODO: make it time and totalReward dependant
         uint256 tTransferAmount = tAmount;
-        return ASLib.TValues({tTransferAmount: tTransferAmount, tFee: tFee});
+        return ASLib.TValues({tTransferAmount: tTransferAmount, tReward: tReward});
     }
 
     function _getRValues(
         uint256 tAmount,
-        uint256 tFee,
+        uint256 tReward,
         uint256 currentRate
     ) external view override internalOnly returns (ASLib.RValues memory) {
         uint256 rAmount = tAmount * currentRate;
-        uint256 rFee = tFee * currentRate;
+        uint256 rReward = tReward * currentRate;
         uint256 rTransferAmount = rAmount;
         return
             ASLib.RValues({
                 rAmount: rAmount,
                 rTransferAmount: rTransferAmount,
-                rFee: rFee
+                rReward: rReward
             });
     }
 

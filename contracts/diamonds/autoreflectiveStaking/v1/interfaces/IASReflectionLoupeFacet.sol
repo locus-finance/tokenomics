@@ -6,11 +6,11 @@ import "../../ASLib.sol";
 interface IASReflectionLoupeFacet {
     function isExcluded(address account) external view returns (bool);
 
-    function totalFees() external view returns (uint256);
+    function rewardsMinted() external view returns (uint256);
 
     function reflectionFromToken(
         uint256 tAmount,
-        bool deductTransferFee
+        bool addTransferReward
     ) external view returns (uint256);
 
     function tokenFromReflection(
@@ -27,7 +27,7 @@ interface IASReflectionLoupeFacet {
 
     function _getRValues(
         uint256 tAmount,
-        uint256 tFee,
+        uint256 tReward,
         uint256 currentRate
     ) external view returns (ASLib.RValues memory);
 

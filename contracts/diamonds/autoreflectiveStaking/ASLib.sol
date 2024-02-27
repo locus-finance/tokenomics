@@ -29,12 +29,12 @@ library ASLib {
     struct RValues {
         uint256 rAmount;
         uint256 rTransferAmount;
-        uint256 rFee;
+        uint256 rReward;
     }
 
     struct TValues {
         uint256 tTransferAmount;
-        uint256 tFee;
+        uint256 tReward;
     }
 
     struct Deposit {
@@ -62,7 +62,7 @@ library ASLib {
         uint256 totalReward;
         uint256 tTotal;
         uint256 rTotal;
-        uint256 tFeeTotal;
+        uint256 tRewardTotal;
         string name;
         string symbol;
         uint8 decimals;
