@@ -11,7 +11,7 @@ module.exports = async (deployContext) => {
   const { deploy, execute, get } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  const initialRewardAmount = hre.ethers.utils.parseEther('32500').div(30);
+  const initialRewardAmount = hre.ethers.utils.parseEther('32500');
 
   await deploy(hre.names.internal.mockLocus, {
     from: deployer,
@@ -33,14 +33,6 @@ module.exports = async (deployContext) => {
     {from: deployer, log: true},
     "mint",
     deployer,
-    initialRewardAmount
-  );
-
-  await execute(
-    hre.names.internal.mockLocus,
-    {from: deployer, log: true},
-    "mint",
-    (await get(hre.names.internal.diamonds.autoreflectiveStaking.proxy)).address,
     initialRewardAmount
   );
 }
