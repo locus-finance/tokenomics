@@ -28,6 +28,7 @@ describe("ASDepositaryFacet", () => {
       (await deployments.get(hre.names.internal.mockLocus)).address
     );
     user1Balance = hre.ethers.utils.parseEther('10');
+    await mockToken.mint(namedAccounts.deployer, user1Balance);
   });
 
   it('should transfer', async () => {
@@ -61,4 +62,18 @@ describe("ASDepositaryFacet", () => {
     console.log(`post increase 3 transfer d: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).toString())}`);
   });
 
+  it('should reflect rewards', async () => {
+    const stakeAmount = user1Balance;
+    const rewardAmount = hre.ethers.utils.parseEther('32500').div(30);
+    await mockToken.approve(autoreflectiveStaking.address, stakeAmount.add(rewardAmount));
+    await autoreflectiveStaking.stake(stakeAmount);
+    
+    await autoreflectiveStaking.transfer(namedAccounts.user1, stakeAmount.div(4));
+
+    console.log(`pre u1: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.user1)).toString())}`);
+    console.log(`pre d: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).toString())}`);
+    await autoreflectiveStaking.notifyRewardAmount(rewardAmount);
+    console.log(`post u1: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.user1)).toString())}`);
+    console.log(`post d: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).toString())}`);
+  });
 });

@@ -14,7 +14,6 @@ contract ASInitializerFacet is BaseFacet, IASInitializerFacet {
 
     function initialize(
         address owner,
-        uint256 initialRewardAmount,
         address stakingToken,
         address rewardToken
     ) external override {
@@ -23,7 +22,6 @@ contract ASInitializerFacet is BaseFacet, IASInitializerFacet {
         ASLib.Primitives storage p = ASLib.get().p;
         p.rewardToken = rewardToken;
         p.stakingToken = stakingToken;
-        p.totalReward = initialRewardAmount;
         p.name = string(
             abi.encodePacked(ASLib.NAME_PREFIX, " via autoreflection")
         );

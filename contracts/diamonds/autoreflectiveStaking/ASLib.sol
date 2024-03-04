@@ -10,7 +10,7 @@ library ASLib {
     error CannotTransferFromZeroAddress();
     error CannotTransferToZeroAddress();
     error AmountCannotBeZero();
-    error AddressIsExcludedFromRewards();
+    error AddressIsExcludedFromFees();
     error AlreadyExcluded(address who);
     error AlreadyIncluded(address who);
     error AmountIsLessThan(uint256 actual, uint256 expected);
@@ -29,12 +29,12 @@ library ASLib {
     struct RValues {
         uint256 rAmount;
         uint256 rTransferAmount;
-        uint256 rReward;
+        uint256 rFee;
     }
 
     struct TValues {
         uint256 tTransferAmount;
-        uint256 tReward;
+        uint256 tFee;
     }
 
     struct Deposit {
@@ -47,6 +47,8 @@ library ASLib {
 
     string public constant NAME_PREFIX = "Locus Staking";
     string public constant SYMBOL_PREFIX = "st";
+
+    uint256 public constant PRECISION = 10e12;
 
     struct ReferenceTypes {
         mapping (address => uint256) rOwned;
@@ -62,7 +64,7 @@ library ASLib {
         uint256 totalReward;
         uint256 tTotal;
         uint256 rTotal;
-        uint256 tRewardTotal;
+        uint256 tFeeTotal;
         string name;
         string symbol;
         uint8 decimals;

@@ -2,11 +2,12 @@
 pragma solidity ^0.8.18;
 
 interface IASReflectionFacet {
+    event FeeReflected(uint256 indexed amount);
+    event AddressStatus(address indexed who, bool indexed isExcluded);
+
     function _burnFrom(address who, uint256 tAmount) external;
 
     function _mintTo(address who, uint256 tAmount) external;
-
-    function reflect(uint256 tAmount) external;
 
     function excludeAccount(address account) external;
 

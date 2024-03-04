@@ -1,5 +1,4 @@
 module.exports = (
-  initialRewardAmount,
   isReconfigurationRequired,
   stakingTokenAddressOrNameAction,
   rewardTokenAddressOrNameAction
@@ -20,7 +19,8 @@ module.exports = (
       "ASDepositaryFacet",
       "ASEip20Facet",
       "ASReflectionFacet",
-      "ASReflectionLoupeFacet"
+      "ASReflectionLoupeFacet",
+      "ASFeeAdvisorFacet"
     ];
 
     const libraries = [
@@ -41,7 +41,6 @@ module.exports = (
         methodName: 'initialize',
         args: [
           deployer,
-          initialRewardAmount,
           stakingTokenAddressOrName.startsWith("0x") 
             ? stakingTokenAddressOrName 
             : (await get(stakingTokenAddressOrName)).address,

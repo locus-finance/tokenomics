@@ -11,7 +11,7 @@ module.exports = async (deployContext) => {
   const { deploy, execute, get } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  const initialRewardAmount = hre.ethers.utils.parseEther('32500');
+  const initialRewardAmount = hre.ethers.utils.parseEther('32500').div(30);
 
   await deploy(hre.names.internal.mockLocus, {
     from: deployer,
@@ -23,7 +23,6 @@ module.exports = async (deployContext) => {
   });
   
   await configurableAutoreflectiveStakingStage(
-    initialRewardAmount,
     true,
     () => hre.names.internal.mockLocus,
     () => hre.names.internal.mockLocus

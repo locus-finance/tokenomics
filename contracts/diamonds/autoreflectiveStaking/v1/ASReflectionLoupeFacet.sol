@@ -4,6 +4,7 @@ pragma solidity ^0.8.18;
 import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
 import "./interfaces/IASReflectionLoupeFacet.sol";
+import "./interfaces/IASFeeAdvisorFacet.sol";
 import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 import "../ASLib.sol";
 
@@ -23,14 +24,14 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
         delegatedOnly
         returns (uint256)
     {
-        return ASLib.get().p.tRewardTotal;
+        return ASLib.get().p.tFeeTotal;
     }
 
     function reflectionFromToken(
         uint256 tAmount,
-        bool addTransferReward
+        bool addTransferFee
     ) external view override delegatedOnly returns (uint256) {
-        if (!addTransferReward) {
+        if (!addTransferFee) {
             return this._getValues(tAmount).r.rAmount;
         } else {
             return this._getValues(tAmount).r.rTransferAmount;
@@ -50,7 +51,7 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
         uint256 currentRate = this._getRate();
         ASLib.RValues memory rValues = this._getRValues(
             tAmount,
-            tValues.tReward,
+            tValues.tFee,
             currentRate
         );
         return
@@ -58,11 +59,11 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
                 r: ASLib.RValues({
                     rAmount: rValues.rAmount,
                     rTransferAmount: rValues.rTransferAmount,
-                    rReward: rValues.rReward
+                    rFee: rValues.rFee
                 }),
                 t: ASLib.TValues({
                     tTransferAmount: tValues.tTransferAmount,
-                    tReward: tValues.tReward
+                    tFee: tValues.tFee
                 })
             });
     }
@@ -70,28 +71,28 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
     function _getTValues(
         uint256 tAmount
     ) external view override internalOnly returns (ASLib.TValues memory) {
-        uint256 tReward = tAmount / 100; // TODO: make it time and totalReward dependant
-        uint256 tTransferAmount = tAmount;
-        return ASLib.TValues({tTransferAmount: tTransferAmount, tReward: tReward});
+        uint256 tFee = IASFeeAdvisorFacet(address(this)).advise(tAmount);
+        uint256 tTransferAmount = tAmount - tFee;
+        return ASLib.TValues({tTransferAmount: tTransferAmount, tFee: tFee});
     }
 
     function _getRValues(
         uint256 tAmount,
-        uint256 tReward,
+        uint256 tFee,
         uint256 currentRate
     ) external view override internalOnly returns (ASLib.RValues memory) {
         uint256 rAmount = tAmount * currentRate;
-        uint256 rReward = tReward * currentRate;
-        uint256 rTransferAmount = rAmount;
+        uint256 rFee = tFee * currentRate;
+        uint256 rTransferAmount = rAmount - rFee;
         return
             ASLib.RValues({
                 rAmount: rAmount,
                 rTransferAmount: rTransferAmount,
-                rReward: rReward
+                rFee: rFee
             });
     }
 
-    function _getRate() external view override delegatedOnly returns (uint256) {
+    function _getRate() external view override internalOnly returns (uint256) {
         ASLib.Supply memory supply = this._getCurrentSupply();
         return supply.rSupply / supply.tSupply;
     }
@@ -100,7 +101,7 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
         external
         view
         override
-        delegatedOnly
+        internalOnly
         returns (ASLib.Supply memory)
     {
         ASLib.Primitives storage p = ASLib.get().p;
@@ -123,5 +124,9 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
             return ASLib.Supply({rSupply: p.rTotal, tSupply: p.tTotal});
         }
         return ASLib.Supply({rSupply: rSupply, tSupply: tSupply});
+    }
+
+    function getPrimitives() external view override delegatedOnly returns (ASLib.Primitives memory) {
+        return ASLib.get().p;
     }
 }

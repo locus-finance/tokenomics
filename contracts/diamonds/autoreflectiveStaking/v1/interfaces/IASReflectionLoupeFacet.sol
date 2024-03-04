@@ -10,7 +10,7 @@ interface IASReflectionLoupeFacet {
 
     function reflectionFromToken(
         uint256 tAmount,
-        bool addTransferReward
+        bool addTransferFee
     ) external view returns (uint256);
 
     function tokenFromReflection(
@@ -27,11 +27,13 @@ interface IASReflectionLoupeFacet {
 
     function _getRValues(
         uint256 tAmount,
-        uint256 tReward,
+        uint256 tFee,
         uint256 currentRate
     ) external view returns (ASLib.RValues memory);
 
     function _getRate() external view returns (uint256);
 
     function _getCurrentSupply() external view returns (ASLib.Supply memory);
+
+    function getPrimitives() external view returns (ASLib.Primitives memory);
 }

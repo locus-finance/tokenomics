@@ -8,6 +8,7 @@ import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 import "../ASLib.sol";
 import "./interfaces/IASReflectionFacet.sol";
 import "./interfaces/IASDepositaryFacet.sol";
+import "./interfaces/IASReflectionLoupeFacet.sol";
 
 contract ASDepositaryFacet is IASDepositaryFacet, BaseFacet {
     using SafeERC20 for IERC20;
@@ -53,13 +54,16 @@ contract ASDepositaryFacet is IASDepositaryFacet, BaseFacet {
     ) external override delegatedOnly {
         RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);
         // transfer from the caller staking tokens
-        IERC20(ASLib.get().p.rewardToken).safeTransferFrom(
+        ASLib.Primitives storage p = ASLib.get().p;
+        IERC20(p.rewardToken).safeTransferFrom(
             msg.sender,
             address(this),
             amount
         );
         // update total reward
-        ASLib.get().p.totalReward += amount;
+        p.totalReward += amount;
+        p.tTotal += amount;
+        p.rTotal = type(uint256).max - (type(uint256).max % p.tTotal);
         emit RewardAdded(amount);
     }
 }
