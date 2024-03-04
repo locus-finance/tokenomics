@@ -36,4 +36,6 @@ interface IASReflectionFacet {
         address recipient,
         uint256 tAmount
     ) external;
+
+    function _updateTotalReflection() external;
 }

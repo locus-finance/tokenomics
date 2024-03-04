@@ -19,7 +19,7 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
         ASLib.Primitives storage p = ASLib.get().p;
         p.tTotal += tAmount;
-        p.rTotal = type(uint256).max - (type(uint256).max % p.tTotal);
+        this._updateTotalReflection();
         if (p.tTotal == 0 && p.rTotal == 0) {
             rt.rOwned[who] = p.rTotal;
             IASEip20Facet(address(this))._emitTransferEvent(
@@ -52,9 +52,8 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
         ASLib.Values memory values = IASReflectionLoupeFacet(address(this))
             ._getValues(tAmount);
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
-        ASLib.Primitives storage p = ASLib.get().p;
-        p.tTotal -= tAmount;
-        p.rTotal = type(uint256).max - (type(uint256).max % p.tTotal);
+        ASLib.get().p.tTotal -= tAmount;
+        this._updateTotalReflection();
         if (rt.excluded.contains(who)) {
             rt.tOwned[who] -= tAmount;
             rt.rOwned[who] -= values.r.rAmount;
@@ -67,6 +66,11 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
             address(0),
             values.t.tTransferAmount
         );
+    }
+
+    function _updateTotalReflection() external override internalOnly {
+        ASLib.Primitives storage p = ASLib.get().p;
+        p.rTotal = type(uint256).max - (type(uint256).max % p.tTotal);
     }
 
     function excludeAccount(address account) external override delegatedOnly {
