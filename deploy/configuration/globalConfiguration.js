@@ -33,7 +33,7 @@ module.exports = async ({
 
   // Injecting xUSD Vault
   await getFakeDeployment(
-    "0x2a889E9ef10c7Bd607473Aadc8c806c4511EB26f",
+    "0x95611DCBFfC93b97Baa9C65A23AAfDEc088b7f32",
     hre.names.external.xUSD,
     save
   );
