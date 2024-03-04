@@ -43,8 +43,6 @@ library ASLib {
     string public constant NAME_PREFIX = "Locus Staking";
     string public constant SYMBOL_PREFIX = "st";
 
-    uint256 public constant PRECISION = 10e12;
-
     struct ReferenceTypes {
         mapping (address => uint256) rOwned;
         mapping (address => uint256) tOwned;
