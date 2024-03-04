@@ -6,8 +6,6 @@ import "../../ASLib.sol";
 interface IASReflectionLoupeFacet {
     function isExcluded(address account) external view returns (bool);
 
-    function rewardsMinted() external view returns (uint256);
-
     function reflectionFromToken(
         uint256 tAmount,
         bool addTransferFee
