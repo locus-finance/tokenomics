@@ -17,16 +17,6 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
         return ASLib.get().rt.excluded.contains(account);
     }
 
-    function rewardsMinted()
-        external
-        view
-        override
-        delegatedOnly
-        returns (uint256)
-    {
-        return ASLib.get().p.tFeeTotal;
-    }
-
     function reflectionFromToken(
         uint256 tAmount,
         bool addTransferFee
