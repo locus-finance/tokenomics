@@ -5,6 +5,7 @@ module.exports = (task) =>
     "provide",
     "Provide LOCUS' for the staking contract.",
   )
+    // amount for autoreflective token is 1083333333333333333334 and has to be called once a day
     .addOptionalParam("amount", "Define amount to be provided.", '32500000000000000000000', types.string)
     .addOptionalParam("staking", "Define a custom name of Diamond Staking from hre.names.", '', types.string)
     .addOptionalParam("locus", "Define a name of Diamond Locus Token from hre.names.", '', types.string)

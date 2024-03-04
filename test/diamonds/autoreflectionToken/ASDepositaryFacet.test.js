@@ -2,9 +2,12 @@ const { expect } = require("chai");
 const networkHelpers = require("@nomicfoundation/hardhat-network-helpers");
 const hre = require("hardhat");
 const { deployments, getNamedAccounts } = hre;
-const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../../../deploy/helpers");
+const { WEEK, withImpersonatedSigner, mintNativeTokens, DAY } = require("../../../deploy/helpers");
 
 describe("ASDepositaryFacet", () => {
+  const totalReward = hre.ethers.utils.parseEther('32500');
+  const dust = hre.ethers.utils.parseEther('0.001');
+  
   let namedAccounts;
   let user1Balance;
   let user1Signer;
@@ -29,6 +32,7 @@ describe("ASDepositaryFacet", () => {
     );
     user1Balance = hre.ethers.utils.parseEther('10');
     await mockToken.mint(namedAccounts.deployer, user1Balance);
+    await mockToken.mint(namedAccounts.deployer, totalReward.add(dust));
   });
 
   it('should transfer', async () => {
@@ -75,5 +79,54 @@ describe("ASDepositaryFacet", () => {
     await autoreflectiveStaking.notifyRewardAmount(rewardAmount);
     console.log(`post u1: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.user1)).toString())}`);
     console.log(`post d: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).toString())}`);
+  });
+
+  it('should stake and withdraw successfully for month', async () => {
+    const daysInMonth = 30;
+    const stakeAmount = user1Balance;
+    const rewardAmount = totalReward.div(daysInMonth).add(1);
+    const user1Stake = stakeAmount.div(4);
+    const deployerStake = stakeAmount.sub(user1Stake);
+
+    await mockToken.approve(autoreflectiveStaking.address, stakeAmount.add(totalReward).add(dust));
+    await autoreflectiveStaking.stake(stakeAmount);
+    await autoreflectiveStaking.transfer(namedAccounts.user1, user1Stake);
+
+    expect(await autoreflectiveStaking.balanceOf(namedAccounts.user1)).to.be.equal(user1Stake);
+    expect(await await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).to.be.equal(stakeAmount.sub(user1Stake));
+
+    const deployersOldBalance = (await mockToken.balanceOf(namedAccounts.deployer)).sub(totalReward).sub(dust);
+    const user1sOldBalance = await mockToken.balanceOf(namedAccounts.user1);
+
+    for (let i = 0; i < daysInMonth; i++) {
+      await autoreflectiveStaking.notifyRewardAmount(rewardAmount);
+      await networkHelpers.time.increase(DAY);
+      
+      const randomChoice = Math.floor(Math.random() * 4);
+      switch (randomChoice) {
+        case 0: // deployer and user1 decided not to do anything
+          console.log('deployer and user1 did nothing.');
+          break;
+        case 1: // deployer decided to withdraw and user1 decided to stay
+          await autoreflectiveStaking.withdraw(deployerStake.div(daysInMonth));
+          console.log(`deployer withdrawn ${hre.ethers.utils.formatEther(deployerStake.div(daysInMonth))}`);
+          break;
+        case 2: // deployer decided to stay and user1 decided to withdraw
+          await autoreflectiveStaking.connect(user1Signer).withdraw(user1Stake.div(daysInMonth));
+          console.log(`user 1 withdrawn ${hre.ethers.utils.formatEther(user1Stake.div(daysInMonth))}`);
+          break;
+        case 3: // deployer and user decided to withdraw
+          await autoreflectiveStaking.withdraw(deployerStake.div(daysInMonth));
+          await autoreflectiveStaking.connect(user1Signer).withdraw(user1Stake.div(daysInMonth));
+          console.log(`deployer and user1 withdrawn: ${hre.ethers.utils.formatEther(deployerStake.div(daysInMonth))}, ${hre.ethers.utils.formatEther(user1Stake.div(daysInMonth))}`);
+          break;
+      }
+    }
+
+    const deployersWithdrawnTokens = await mockToken.balanceOf(namedAccounts.deployer);
+    const user1sWithdrawnTokens = await mockToken.balanceOf(namedAccounts.user1);
+
+    expect(deployersOldBalance).to.be.lte(deployersWithdrawnTokens, "Deployers balance after staking is less than it should be.");
+    expect(user1sOldBalance).to.be.lte(user1sWithdrawnTokens, "User1s balance after staking is less than it should be.");
   });
 });
