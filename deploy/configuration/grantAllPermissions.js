@@ -6,6 +6,9 @@ module.exports = async ({
   deployments,
   network
 }) => {
+  if (!hre.names.isInitialized()) {
+    await hre.names.gather();
+  }
   const { log, execute, get } = deployments;
   const { deployer } = await getNamedAccounts();
   await execute(
@@ -29,6 +32,29 @@ module.exports = async ({
     deployer,
     keccak256('DELAYED_SENDINGS_QUEUE_PROCESSOR_ROLE')
   );
+
+  const xUSDStaking = await hre.ethers.getContractAt(
+    hre.names.internal.diamonds.locusXEthTokensStaking.interface,
+    (await get(hre.names.internal.diamonds.locusXEthTokensStaking.proxy)).address
+  );
+  const grantRoleTx = await xUSDStaking.grantRole(
+    (await get(hre.names.external.backendDeveloper)).address,
+    keccak256('REWARD_DISTRIBUTOR_ROLE')
+  );
+  await grantRoleTx.wait();
+  log(`Grant role: ${hre.names.internal.diamonds.locusXEthTokensStaking.interface}\n${JSON.stringify(grantRoleTx)}`);
+
+  const locusStaking = await hre.ethers.getContractAt(
+    hre.names.internal.diamonds.locusStaking.interface,
+    (await get(hre.names.internal.diamonds.locusStaking.proxy)).address
+  );
+  const grantRoleLocusStakingTx = await locusStaking.grantRole(
+    (await get(hre.names.external.backendDeveloper)).address,
+    keccak256('REWARD_DISTRIBUTOR_ROLE')
+  );
+  await grantRoleLocusStakingTx.wait();
+  log(`Grant role: ${hre.names.internal.diamonds.locusStaking.interface}\n${JSON.stringify(grantRoleLocusStakingTx)}`);
+
   log(`permissions are granted`);
 }
 module.exports.tags = ["grantAllPermissions", "permissions"];

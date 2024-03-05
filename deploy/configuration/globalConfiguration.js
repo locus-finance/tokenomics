@@ -45,6 +45,13 @@ module.exports = async ({
     save
   );
   
+  // Injecting All Fees Receiver EOA
+  await getFakeDeployment(
+    "0x609108771e65C1E736F9630497025b48E15929ab",
+    hre.names.external.backendDeployer,
+    save
+  );
+
   log(`external addresses are injected`);
 }
 module.exports.tags = ["globalConfiguration", "configure"];
