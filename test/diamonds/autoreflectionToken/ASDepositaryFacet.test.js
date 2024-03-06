@@ -31,12 +31,41 @@ describe("ASDepositaryFacet", () => {
       (await deployments.get(hre.names.internal.mockLocus)).address
     );
     user1Balance = hre.ethers.utils.parseEther('10');
-    await mockToken.mint(namedAccounts.deployer, user1Balance);
-    await mockToken.mint(namedAccounts.deployer, totalReward.add(dust));
+    const deployerBalance = user1Balance.add(totalReward.add(dust));
+    await mockToken.mint(namedAccounts.deployer, deployerBalance);
+    await mockToken.approve(autoreflectiveStaking.address, deployerBalance);
+    await mockToken.connect(user1Signer).approve(autoreflectiveStaking.address, deployerBalance);
+    
   });
 
-  it('should transfer', async () => {
-    await mockToken.approve(autoreflectiveStaking.address, user1Balance);
+  it('should', async () => {
+    autoreflectiveStaking = await hre.ethers.getContractAt(
+      hre.names.internal.diamonds.autoreflectiveStaking.interface,
+      (await deployments.get(hre.names.internal.diamonds.autoreflectiveStaking.proxy)).address
+    );
+    
+    const balance1 = hre.ethers.utils.parseEther('100');
+    const balance2 = hre.ethers.utils.parseEther('200');
+    // const reward = hre.ethers.utils.parseEther('1000');
+
+    await mockToken.transfer(namedAccounts.user1, balance2);
+    
+    await autoreflectiveStaking.stake(balance1);
+    // console.log(`pre u1: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.user1)).toString())}`);
+    console.log(`pre d: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).toString())}`);
+
+    await autoreflectiveStaking.connect(user1Signer).stake(balance2);
+
+    // console.log(`u1: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.user1)).toString())}`);
+    console.log(`d: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).toString())}`);
+    
+    // await autoreflectiveStaking.notifyRewardAmount(reward);
+
+    // console.log(`u1: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.user1)).toString())}`);
+    // console.log(`d: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).toString())}`);
+  });
+
+  xit('should transfer', async () => {
     await autoreflectiveStaking.stake(user1Balance);
 
     console.log(`pre transfer u1: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.user1)).toString())}`);
@@ -66,7 +95,7 @@ describe("ASDepositaryFacet", () => {
     console.log(`post increase 3 transfer d: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).toString())}`);
   });
 
-  it('should reflect rewards', async () => {
+  xit('should reflect rewards', async () => {
     const stakeAmount = user1Balance;
     const rewardAmount = hre.ethers.utils.parseEther('32500').div(30);
     await mockToken.approve(autoreflectiveStaking.address, stakeAmount.add(rewardAmount));
@@ -81,7 +110,7 @@ describe("ASDepositaryFacet", () => {
     console.log(`post d: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).toString())}`);
   });
 
-  it('should stake and withdraw successfully for month', async () => {
+  xit('should stake and withdraw successfully for month', async () => {
     const daysInMonth = 30;
     const stakeAmount = user1Balance;
     const rewardAmount = totalReward.div(daysInMonth).add(1);

@@ -9,6 +9,8 @@ import "./interfaces/IASReflectionLoupeFacet.sol";
 import "./interfaces/IASEip20Facet.sol";
 import "../ASLib.sol";
 
+import "hardhat/console.sol";
+
 contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
     using EnumerableSet for EnumerableSet.AddressSet;
 
@@ -18,8 +20,17 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
     ) external override internalOnly {
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
         ASLib.Primitives storage p = ASLib.get().p;
-        p.tTotal += tAmount;
-        this._updateTotalReflection();
+
+
+        // if (who != ASLib.t) {
+        //     console.log(IASEip20Facet(address(this)).balanceOf(ASLib.t));
+        // }
+        // p.tTotal += tAmount;
+        // this._updateTotalReflection();
+        // if (who != ASLib.t) {
+        //     console.log(IASEip20Facet(address(this)).balanceOf(ASLib.t));
+        // }
+        
         if (p.tTotal == 0 && p.rTotal == 0) {
             rt.rOwned[who] = p.rTotal;
             IASEip20Facet(address(this))._emitTransferEvent(
@@ -35,6 +46,7 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
                 rt.rOwned[who] += values.r.rTransferAmount;
             } else {
                 rt.rOwned[who] += values.r.rTransferAmount;
+                // console.log(rt.rOwned[who], values.r.rTransferAmount, values.t.tTransferAmount);
             }
             _reflectFee(values.r.rFee, values.t.tFee);
             IASEip20Facet(address(this))._emitTransferEvent(
