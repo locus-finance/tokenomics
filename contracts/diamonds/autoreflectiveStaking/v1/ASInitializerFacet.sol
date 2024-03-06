@@ -28,4 +28,6 @@ contract ASInitializerFacet is BaseFacet, IASInitializerFacet {
         p.symbol = string(abi.encodePacked(ASLib.SYMBOL_PREFIX, "LOCUS"));
         p.decimals = 18;
     }
+
+    // make huge premint
 }

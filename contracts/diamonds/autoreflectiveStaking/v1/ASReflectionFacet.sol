@@ -22,6 +22,8 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
         ASLib.Primitives storage p = ASLib.get().p;
 
 
+        // make it transfers 
+        
         // if (who != ASLib.t) {
         //     console.log(IASEip20Facet(address(this)).balanceOf(ASLib.t));
         // }
