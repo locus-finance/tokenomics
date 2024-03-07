@@ -9,6 +9,4 @@ interface IASInitializerFacet {
         address owner,
         address token
     ) external;
-
-    function tempInit(address token) external;
 }

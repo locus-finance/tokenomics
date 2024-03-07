@@ -8,39 +8,31 @@ module.exports = async (deployContext) => {
     deployments
   } = deployContext;
   await hre.names.gather();
-  const { deploy, execute, get } = deployments;
+  const { deploy, execute } = deployments;
   const { deployer } = await getNamedAccounts();
 
   const initialRewardAmount = hre.ethers.utils.parseEther('32500');
 
-  // await deploy(hre.names.internal.mockLocus, {
-  //   from: deployer,
-  //   skipIfAlreadyDeployed,
-  //   args: [
-  //     deployer
-  //   ],
-  //   log: true
-  // });
+  await deploy(hre.names.internal.mockLocus, {
+    from: deployer,
+    skipIfAlreadyDeployed,
+    args: [
+      deployer
+    ],
+    log: true
+  });
   
   await configurableAutoreflectiveStakingStage(
-    false,
+    true,
     () => hre.names.internal.mockLocus
   )(deployContext);
   
-  // await execute(
-  //   hre.names.internal.mockLocus,
-  //   {from: deployer, log: true},
-  //   "mint",
-  //   deployer,
-  //   initialRewardAmount
-  // );
-
-  const staking = await hre.ethers.getContractAt(
-    "DiamondAutoreflectiveStaking",
-    (await get("AutoreflectiveStaking_DiamondProxy")).address
+  await execute(
+    hre.names.internal.mockLocus,
+    {from: deployer, log: true},
+    "mint",
+    deployer,
+    initialRewardAmount
   );
-  const initTx = await staking.tempInit((await get("MockLocus")).address);
-  await initTx.wait();
-  console.log(JSON.stringify(initTx));
 }
 module.exports.tags = ["autoreflectiveStakingFixture"];

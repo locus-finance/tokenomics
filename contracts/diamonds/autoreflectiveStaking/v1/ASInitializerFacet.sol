@@ -49,18 +49,4 @@ contract ASInitializerFacet is BaseFacet, IASInitializerFacet {
 
         TDLib.get().undistributedAmountsReceiver = owner;
     }
-
-    function tempInit(address token) external override delegatedOnly {
-        RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);
-        TDLib.get().undistributedAmountsReceiver = msg.sender;
-        ASLib.get().p.token = token;
-        RolesManagementLib.grantRole(
-            msg.sender,
-            ASLib.REWARD_DISTRIBUTOR_ROLE
-        );
-        RolesManagementLib.grantRole(
-            msg.sender,
-            DelayedSendingsQueueLib.DELAYED_SENDINGS_QUEUE_PROCESSOR_ROLE
-        );
-    }
 }
