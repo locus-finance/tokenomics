@@ -21,7 +21,7 @@ require("./tasks/manual/pingProjectedAPR")(task);
 require("./tasks/manual/stakingOperations/balanceOf.js")(task);
 require("./tasks/manual/stakingOperations/getReward.js")(task);
 require("./tasks/manual/stakingOperations/withdraw.js")(task);
-require("./tasks/manual/stakingOperations/.js")(task);
+require("./tasks/manual/stakingOperations/stake.js")(task);
 require("./tasks/manual/autocracyGrantRole")(task);
 require("./tasks/manual/autocracyProvideRewardForStaking")(task);
 require("./tasks/manual/autocracyClearSendingsQueue")(task);
