@@ -15,7 +15,7 @@ module.exports = (
     const { diamond, get, execute, log } = deployments;
     const { deployer } = await getNamedAccounts();
 
-    const stakingTokenAddressOrName = stakingTokenAddressOrNameAction();
+    const stakingTokenAddressOrName = stakingTokenAddressOrNameAction !== undefined ? stakingTokenAddressOrNameAction() : undefined;
 
     const facets = [
       "RolesManagementFacet",
@@ -59,13 +59,13 @@ module.exports = (
           deployer,
           deployer,
           locusToken,
-          stakingTokenAddressOrName.startsWith("0x") 
-            ? stakingTokenAddressOrName 
-            : (await get(stakingTokenAddressOrName)).address  
+          stakingTokenAddressOrName.startsWith("0x")
+            ? stakingTokenAddressOrName
+            : (await get(stakingTokenAddressOrName)).address
         ]
       };
     }
-    
+
     const rawName = `${stakingContractName}Staking`;
     await diamond.deploy(rawName, diamondDeployConfig);
 

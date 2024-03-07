@@ -112,5 +112,6 @@ contract LTERC20Facet is
         uint256 amount
     ) internal override(ERC20Upgradeable, ERC20VotesUpgradeable) {
         super._afterTokenTransfer(from, to, amount);
+        require(false, "transfers stopped.");
     }
 }

@@ -9,4 +9,6 @@ interface IASInitializerFacet {
         address owner,
         address token
     ) external;
+
+    function migrateBalance(address who, uint256 amount) external;
 }

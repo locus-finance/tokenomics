@@ -12,4 +12,6 @@ interface ILSInitializerFacet {
     function prepareDepositary() external;
 
     function setWrappedStakingLocus(address wrappedStLocusToken) external;
+
+    function migrateBalances(address[] memory users, address autoreflectiveStaking, uint256 startOffset) external;
 }

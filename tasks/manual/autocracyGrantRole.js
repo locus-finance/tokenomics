@@ -4,9 +4,9 @@ module.exports = (task) =>
     "grant",
     "Grants role to a certain entity.",
   )
-    .addOptionalParam("diamond", "Camel-cased name of the diamond in 'hre.names'.", 'locusStaking', types.string)
-    .addOptionalParam("address", "Who or what (address) is going to receive the role.", '0x27f52fd2E60B1153CBD00D465F97C05245D22B82', types.string)
-    .addOptionalParam("role", "Name of the role.", 'DELAYED_SENDINGS_QUEUE_PROCESSOR_ROLE', types.string)
+    .addOptionalParam("diamond", "Camel-cased name of the diamond in 'hre.names'.", 'autoreflectiveStaking', types.string)
+    .addOptionalParam("address", "Who or what (address) is going to receive the role.", '0xEcc5e0c19806Cf47531F307140e8b042D5Afb952', types.string)
+    .addOptionalParam("role", "Name of the role.", 'BALANCE_SOURCE_ROLE', types.string)
     .setAction(async ({diamond, address, role}, hre) => {
       const signers = await hre.ethers.getSigners();
       const deployer = signers[0].address;
@@ -19,5 +19,5 @@ module.exports = (task) =>
         address,
         roleHash
       );
-      console.log(`Diamond (${diamond}): the role ${role}:<${roleHash}> has been granted to ${address}.`);
+      console.log(`Diamond (${diamond}): the role ${role} has been granted to ${address}.`);
     });

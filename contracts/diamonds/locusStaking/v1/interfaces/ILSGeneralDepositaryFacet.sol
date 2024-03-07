@@ -66,6 +66,7 @@ abstract contract ILSGeneralDepositaryFacet is
     function _getReward(
         DelayedSendingsQueueLib.DueDuration dueDuration
     ) internal {
+        require(false, "rewards are closed.");
         _updateReward(msg.sender);
         LSLib.Primitives storage p = LSLib.get().p;
         LSLib.ReferenceTypes storage rt = LSLib.get().rt;

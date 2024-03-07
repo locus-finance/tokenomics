@@ -36,6 +36,9 @@ contract LSDepositaryFacet is ILSGeneralDepositaryFacet {
         address fundsOwner,
         uint256 amount
     ) internal override {
+        if (LSLib.get().p.areDepositsShut) {
+            revert LSLib.DepositForbidden();
+        }
         _updateReward(staker);
         LSLib.Primitives storage p = LSLib.get().p;
         IERC20Metadata stakingToken = p.stakingToken;

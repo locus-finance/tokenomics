@@ -13,6 +13,7 @@ library LSLib {
     error CannotRecoverToken(address token, uint256 amount);
     error ChangingRewardsDurationTooEarly(uint256 deltaInSeconds);
     error NotImplemented();
+    error DepositForbidden();
 
     event RewardAdded(uint256 indexed reward);
     event Staked(address indexed user, uint256 indexed amount);
@@ -24,6 +25,7 @@ library LSLib {
     );
     event RewardsDurationUpdated(uint256 indexed newDuration);
     event Recovered(address indexed token, uint256 indexed amount);
+    event MigrationComplete(address indexed who, uint256 indexed index);
 
     bytes32 constant LOCUS_STAKING_STORAGE_POSITION =
         keccak256("diamond.standard.diamond.storage.locus_staking");
@@ -52,6 +54,7 @@ library LSLib {
         uint256 totalSupply;
         uint256 totalReward;
         address wrappedStLocusToken;
+        bool areDepositsShut;
     }
 
     struct Storage {

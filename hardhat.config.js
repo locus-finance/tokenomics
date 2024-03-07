@@ -22,6 +22,7 @@ require("./tasks/manual/stakingOperations/getReward.js")(task);
 require("./tasks/manual/stakingOperations/withdraw.js")(task);
 require("./tasks/manual/stakingOperations/stake.js")(task);
 require("./tasks/manual/autocracyGrantRole")(task);
+require("./tasks/manual/autocracyMigrateBalances")(task);
 require("./tasks/manual/autocracyProvideRewardForStaking")(task);
 require("./tasks/manual/autocracyClearSendingsQueue")(task);
 require("./tasks/manual/autocracyPrintSendingsQueue")(task);
@@ -62,7 +63,7 @@ module.exports = {
     compilers,
   },
   mocha: {
-    timeout: "100000",
+    timeout: "900000",
   },
   networks: {
     hardhat: {
@@ -71,6 +72,7 @@ module.exports = {
         chainId: arbitrumOneChainId
       },
       saveDeployments: true,
+      accounts: [{ privateKey: `0x${process.env.ARBITRUM_DEPLOYER_PRIVATE_KEY}`, balance: "10000000000000000000000" }],
     },
     arbitrumOne: {
       url: arbitrumOneUrl,

@@ -8,16 +8,25 @@ const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/he
 // ALLOWED TO SMELL AND BE LITTERED
 describe("AnyFixture", () => {
 
-  xit('should', async () => {
-    const staking = await hre.ethers.getContractAt(
-      "DiamondAutoreflectiveStaking",
-      "0x9e3b9caed1ed5a838dd04b35a16333c631ea94a7"
+  it('Successful migrate from old to new staking', async () => {
+    hre.tracer.nameTags = {};
+    await hre.run('migrateBalances', {
+      old: "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952",
+      latest: "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684"
+    });
+    const newLocusStaking = await hre.ethers.getContractAt(
+      hre.names.internal.diamonds.autoreflectiveStaking.interface,
+      "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684"
     );
-    console.log((await staking.balanceOf("0x729f2222aacd99619b8b660b412bae9fcea3d90f")).toString());
-  });
-
-  xit('should test fixture', async () => {
-    await deployments.fixture(['autoreflectiveStakingFixture']);
+    const parsed = await parseCSV(["address", "balance"], "./resources/csv/oldStakingDepositHolders.csv");
+    
+    const parsedSum = parsed.reduce((a, b) => hre.ethers.BigNumber.from(a.balance).add(hre.ethers.BigNumber.from(b.balance)));
+ 
+    // for (let i = 0; i < parsed.length; i++) {
+    //   const holder = parsed[i];
+    //   expect(await newLocusStaking.balanceOf(holder.address)).to.be.gt(0);
+    //   console.log(`expect - ${holder.address} #${i} of ${parsed.length}`);
+    // }
   });
 
   // xit('should', async () => {
