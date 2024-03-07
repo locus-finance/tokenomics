@@ -8,7 +8,7 @@ const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/he
 // ALLOWED TO SMELL AND BE LITTERED
 describe("AnyFixture", () => {
 
-  it('should', async () => {
+  xit('should', async () => {
     const staking = await hre.ethers.getContractAt(
       "DiamondAutoreflectiveStaking",
       "0x9e3b9caed1ed5a838dd04b35a16333c631ea94a7"
@@ -16,9 +16,9 @@ describe("AnyFixture", () => {
     console.log((await staking.balanceOf("0x729f2222aacd99619b8b660b412bae9fcea3d90f")).toString());
   });
 
-  // xit('should test fixture', async () => {
-  //   await deployments.fixture(['deploy']);
-  // });
+  xit('should test fixture', async () => {
+    await deployments.fixture(['autoreflectiveStakingFixture']);
+  });
 
   // xit('should', async () => {
   //   const locusStaking = await hre.ethers.getContractAt(

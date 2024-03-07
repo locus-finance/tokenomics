@@ -19,13 +19,13 @@ contract ASEip20Facet is BaseFacet, IASEip20Facet {
         delegatedOnly
         returns (uint256)
     {
-        return ASLib.get().p.tTotal; // sub real ts
+        return ASLib.get().p.totalStaked;
     }
 
     function balanceOf(
         address account
     ) external view override delegatedOnly returns (uint256) {
-        // if account == this: return 0
+        if (account == address(this)) return 0;
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
         if (rt.excluded.contains(account)) return rt.tOwned[account];
         return

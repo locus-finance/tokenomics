@@ -9,8 +9,6 @@ import "./interfaces/IASReflectionLoupeFacet.sol";
 import "./interfaces/IASEip20Facet.sol";
 import "../ASLib.sol";
 
-import "hardhat/console.sol";
-
 contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
     using EnumerableSet for EnumerableSet.AddressSet;
 
@@ -19,44 +17,24 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
         uint256 tAmount
     ) external override internalOnly {
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
-        ASLib.Primitives storage p = ASLib.get().p;
+        ASLib.Values memory values = IASReflectionLoupeFacet(address(this))
+            ._getValues(tAmount);
 
-
-        // make it transfers 
-        
-        // if (who != ASLib.t) {
-        //     console.log(IASEip20Facet(address(this)).balanceOf(ASLib.t));
-        // }
-        // p.tTotal += tAmount;
-        // this._updateTotalReflection();
-        // if (who != ASLib.t) {
-        //     console.log(IASEip20Facet(address(this)).balanceOf(ASLib.t));
-        // }
-        
-        if (p.tTotal == 0 && p.rTotal == 0) {
-            rt.rOwned[who] = p.rTotal;
-            IASEip20Facet(address(this))._emitTransferEvent(
-                address(0),
-                who,
-                tAmount
-            );
+        rt.tOwned[address(this)] -= tAmount;
+        rt.rOwned[address(this)] -= values.r.rAmount;
+        if (rt.excluded.contains(who)) {
+            rt.tOwned[who] += values.t.tTransferAmount;
+            rt.rOwned[who] += values.r.rTransferAmount;
         } else {
-            ASLib.Values memory values = IASReflectionLoupeFacet(address(this))
-                ._getValues(tAmount);
-            if (rt.excluded.contains(who)) {
-                rt.tOwned[who] += values.t.tTransferAmount;
-                rt.rOwned[who] += values.r.rTransferAmount;
-            } else {
-                rt.rOwned[who] += values.r.rTransferAmount;
-                // console.log(rt.rOwned[who], values.r.rTransferAmount, values.t.tTransferAmount);
-            }
-            _reflectFee(values.r.rFee, values.t.tFee);
-            IASEip20Facet(address(this))._emitTransferEvent(
-                address(0),
-                who,
-                values.t.tTransferAmount
-            );
+            rt.rOwned[who] += values.r.rTransferAmount;
         }
+        _reflectFee(values.r.rFee, values.t.tFee);
+        ASLib.get().p.totalStaked += values.t.tTransferAmount;
+        IASEip20Facet(address(this))._emitTransferEvent(
+            address(0),
+            who,
+            values.t.tTransferAmount
+        );
     }
 
     function _burnFrom(
@@ -66,15 +44,20 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
         ASLib.Values memory values = IASReflectionLoupeFacet(address(this))
             ._getValues(tAmount);
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
-        ASLib.get().p.tTotal -= tAmount;
-        this._updateTotalReflection();
         if (rt.excluded.contains(who)) {
             rt.tOwned[who] -= tAmount;
             rt.rOwned[who] -= values.r.rAmount;
+            rt.tOwned[address(this)] += tAmount;
+            rt.rOwned[address(this)] += values.r.rAmount;
         } else {
             rt.rOwned[who] -= values.r.rTransferAmount;
+            rt.rOwned[address(this)] += values.r.rAmount;
+            rt.tOwned[address(this)] += values.t.tTransferAmount;
         }
         _reflectFee(values.r.rFee, values.t.tFee);
+        
+        ASLib.get().p.totalStaked -= values.t.tTransferAmount;
+        
         IASEip20Facet(address(this))._emitTransferEvent(
             who,
             address(0),

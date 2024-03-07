@@ -1,7 +1,6 @@
 module.exports = (
   isReconfigurationRequired,
-  stakingTokenAddressOrNameAction,
-  rewardTokenAddressOrNameAction
+  tokenAddressOrNameAction,
 ) => async ({
   getNamedAccounts,
   deployments,
@@ -13,11 +12,15 @@ module.exports = (
     const { diamond, get } = deployments;
     const { deployer } = await getNamedAccounts();
 
-    const stakingTokenAddressOrName = stakingTokenAddressOrNameAction();
-    const rewardTokenAddressOrName = rewardTokenAddressOrNameAction();
+    const tokenAddressOrName = tokenAddressOrNameAction();
 
     const facets = [
       "RolesManagementFacet",
+      "TDLoupeFacet",
+      "TDManagementFacet",
+      "TDProcessFacet",
+      "LSSendingsDequeFacet",
+      "LSSendingsDequeLoupeFacet",
       "ASInitializerFacet",
       "ASDepositaryFacet",
       "ASEip20Facet",
@@ -29,7 +32,9 @@ module.exports = (
     const libraries = [
       'ASLib',
       'InitializerLib',
-      'RolesManagementLib'
+      'RolesManagementLib',
+      'TDLib',
+      'DelayedSendingsQueueLib'
     ];
 
     let diamondDeployConfig = {
@@ -44,12 +49,9 @@ module.exports = (
         methodName: 'initialize',
         args: [
           deployer,
-          stakingTokenAddressOrName.startsWith("0x") 
-            ? stakingTokenAddressOrName 
-            : (await get(stakingTokenAddressOrName)).address,
-          rewardTokenAddressOrName.startsWith("0x") 
-            ? rewardTokenAddressOrName 
-            : (await get(rewardTokenAddressOrName)).address
+          tokenAddressOrName.startsWith("0x") 
+            ? tokenAddressOrName 
+            : (await get(tokenAddressOrName)).address
         ]
       };
     }

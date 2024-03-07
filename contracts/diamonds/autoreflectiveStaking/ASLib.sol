@@ -37,8 +37,11 @@ library ASLib {
         uint256 tFee;
     }
 
+
     bytes32 constant AUTOREFLECTIVE_STAKING_STORAGE_POSITION =
         keccak256("diamond.standard.diamond.storage.autoreflective_staking");
+    
+    bytes32 public constant REWARD_DISTRIBUTOR_ROLE = keccak256("REWARD_DISTRIBUTOR_ROLE"); 
 
     string public constant NAME_PREFIX = "Locus Staking";
     string public constant SYMBOL_PREFIX = "st";
@@ -51,15 +54,14 @@ library ASLib {
     }
 
     struct Primitives {
-        address rewardToken;
-        address stakingToken;
-        uint256 totalReward;
+        address token;
         uint256 tTotal;
         uint256 rTotal;
         uint256 tFeeTotal;
         string name;
         string symbol;
         uint8 decimals;
+        uint256 totalStaked;
     }
 
     struct Storage {
@@ -73,6 +75,4 @@ library ASLib {
             s.slot := position
         }
     }
-
-    address public constant t = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;
 }
