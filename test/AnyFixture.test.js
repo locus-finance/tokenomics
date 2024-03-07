@@ -8,26 +8,29 @@ const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/he
 // ALLOWED TO SMELL AND BE LITTERED
 describe("AnyFixture", () => {
 
-  it('Successful migrate from old to new staking', async () => {
-    hre.tracer.nameTags = {};
-    await hre.run('migrateBalances', {
-      old: "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952",
-      latest: "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684"
-    });
-    const newLocusStaking = await hre.ethers.getContractAt(
-      hre.names.internal.diamonds.autoreflectiveStaking.interface,
-      "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684"
-    );
-    const parsed = await parseCSV(["address", "balance"], "./resources/csv/oldStakingDepositHolders.csv");
-    
-    const parsedSum = parsed.reduce((a, b) => hre.ethers.BigNumber.from(a.balance).add(hre.ethers.BigNumber.from(b.balance)));
- 
-    // for (let i = 0; i < parsed.length; i++) {
-    //   const holder = parsed[i];
-    //   expect(await newLocusStaking.balanceOf(holder.address)).to.be.gt(0);
-    //   console.log(`expect - ${holder.address} #${i} of ${parsed.length}`);
-    // }
-  });
+  // it('Successful collection of stLOCUS holders.', async () => {
+  //   await hre.run('collect', {
+  //     staking: "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952",
+  //   });
+  // });
+
+  // xit('Successful migrate from old to new staking', async () => {
+  //   hre.tracer.nameTags = {};
+  //   await hre.run('migrateBalances', {
+  //     old: "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952",
+  //     latest: "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684"
+  //   });
+  //   const newLocusStaking = await hre.ethers.getContractAt(
+  //     hre.names.internal.diamonds.autoreflectiveStaking.interface,
+  //     "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684"
+  //   );
+  //   const parsed = await parseCSV(["address", "balance"], "./resources/csv/oldStakingDepositHolders.csv");
+  //   for (let i = 0; i < parsed.length; i++) {
+  //     const holder = parsed[i];
+  //     expect(await newLocusStaking.balanceOf(holder.address)).to.be.gt(0);
+  //     console.log(`expect - ${holder.address} #${i} of ${parsed.length}`);
+  //   }
+  // });
 
   // xit('should', async () => {
   //   const locusStaking = await hre.ethers.getContractAt(

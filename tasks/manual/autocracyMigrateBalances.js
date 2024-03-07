@@ -13,7 +13,7 @@ module.exports = (task) =>
       await hre.names.gather();
 
       const oldStakingAddress = old === '' ? (await hre.deployments.get(hre.names.internal.diamonds.locusStaking.proxy)).address : old;
-      // const latestStakingAddress = latest === '' ? (await hre.deployments.get(hre.names.internal.diamonds.autoreflectionStaking.proxy)).address : latest;
+      const latestStakingAddress = latest === '' ? (await hre.deployments.get(hre.names.internal.diamonds.autoreflectionStaking.proxy)).address : latest;
 
       const oldStakingInstance = await hre.ethers.getContractAt(
         hre.names.internal.diamonds.locusStaking.interface,
@@ -42,14 +42,14 @@ module.exports = (task) =>
       }
       await fsExtra.outputFile(filtered, csvString);
 
-      // const listOfAddressesForCalldata = holdersWithBalanceInOldStaking.map(e => e.address);
+      const listOfAddressesForCalldata = holdersWithBalanceInOldStaking.map(e => e.address);
 
-      // const migrationTx = await oldStakingInstance.migrateBalances(
-      //   listOfAddressesForCalldata,
-      //   latestStakingAddress,
-      //   0
-      // );
-      // await migrationTx.wait();
+      const migrationTx = await oldStakingInstance.migrateBalances(
+        listOfAddressesForCalldata,
+        latestStakingAddress,
+        0
+      );
+      await migrationTx.wait();
 
-      // console.log(`Migration was complete:\n${JSON.stringify(migrationTx)}`);
+      console.log(`Migration was complete:\n${JSON.stringify(migrationTx)}`);
     });

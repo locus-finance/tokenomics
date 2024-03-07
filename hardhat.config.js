@@ -17,10 +17,12 @@ require("./tasks/utils/getAllArtifacts")(task);
 require("./tasks/manual/autocracyMintLocus")(task);
 require("./tasks/manual/autocracyBurnLocus")(task);
 require("./tasks/manual/pingProjectedAPR")(task);
-require("./tasks/manual/stakingOperations/balanceOf.js")(task);
-require("./tasks/manual/stakingOperations/getReward.js")(task);
-require("./tasks/manual/stakingOperations/withdraw.js")(task);
-require("./tasks/manual/stakingOperations/stake.js")(task);
+require("./tasks/manual/pingPrimitives")(task);
+require("./tasks/manual/collectStLocusBalances")(task);
+require("./tasks/manual/stakingOperations/balanceOf")(task);
+require("./tasks/manual/stakingOperations/getReward")(task);
+require("./tasks/manual/stakingOperations/withdraw")(task);
+require("./tasks/manual/stakingOperations/stake")(task);
 require("./tasks/manual/autocracyGrantRole")(task);
 require("./tasks/manual/autocracyMigrateBalances")(task);
 require("./tasks/manual/autocracyProvideRewardForStaking")(task);
@@ -31,7 +33,7 @@ require("./tasks/manual/midasClaim/getMerkleTreeInfo")(task);
 require("./tasks/manual/midasClaim/updateMerkleTree")(task);
 require("./tasks/manual/midasClaim/generateJsonOfMerkleTreeBody")(task);
 
-const arbitrumOneUrl = 'https://arb1.arbitrum.io/rpc';
+const arbitrumOneUrl = 'https://arb-mainnet.g.alchemy.com/v2/evCDJ3gjt8Ktyaj4tCaMwAdbOO0cIeq7'//'https://arb1.arbitrum.io/rpc';
 
 const arbitrumOneChainId = 42161;
 
@@ -69,7 +71,8 @@ module.exports = {
     hardhat: {
       forking: {
         url: arbitrumOneUrl,
-        chainId: arbitrumOneChainId
+        chainId: arbitrumOneChainId,
+        blockNumber: 188049894 - 10
       },
       saveDeployments: true,
       accounts: [{ privateKey: `0x${process.env.ARBITRUM_DEPLOYER_PRIVATE_KEY}`, balance: "10000000000000000000000" }],
