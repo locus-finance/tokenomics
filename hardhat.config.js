@@ -33,7 +33,7 @@ require("./tasks/manual/midasClaim/getMerkleTreeInfo")(task);
 require("./tasks/manual/midasClaim/updateMerkleTree")(task);
 require("./tasks/manual/midasClaim/generateJsonOfMerkleTreeBody")(task);
 
-const arbitrumOneUrl = 'https://arb-mainnet.g.alchemy.com/v2/evCDJ3gjt8Ktyaj4tCaMwAdbOO0cIeq7'//'https://arb1.arbitrum.io/rpc';
+const arbitrumOneUrl = process.env.ALCHEMY_ARBITRUM_URL;
 
 const arbitrumOneChainId = 42161;
 
