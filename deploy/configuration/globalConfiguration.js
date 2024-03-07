@@ -33,7 +33,7 @@ module.exports = async ({
 
   // Injecting xUSD Vault
   await getFakeDeployment(
-    "0x2a889E9ef10c7Bd607473Aadc8c806c4511EB26f",
+    "0x95611DCBFfC93b97Baa9C65A23AAfDEc088b7f32",
     hre.names.external.xUSD,
     save
   );
@@ -45,6 +45,13 @@ module.exports = async ({
     save
   );
   
+  // Injecting All Fees Receiver EOA
+  await getFakeDeployment(
+    "0x609108771e65C1E736F9630497025b48E15929ab",
+    hre.names.external.backendDeployer,
+    save
+  );
+
   log(`external addresses are injected`);
 }
 module.exports.tags = ["globalConfiguration", "configure"];

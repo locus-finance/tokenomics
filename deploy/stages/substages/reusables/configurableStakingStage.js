@@ -9,6 +9,9 @@ module.exports = (
   deployments,
   network
 }) => {
+    if (!hre.names.isInitialized()) {
+      await hre.names.gather();
+    }
     const { diamond, get, execute, log } = deployments;
     const { deployer } = await getNamedAccounts();
 

@@ -3,5 +3,6 @@
     "xETH": "xETH",
     "xUSD": "xUSD",
     "xARB": "xARB",
-    "allFeesReceiver": "AllFeesReceiverEOA"
+    "allFeesReceiver": "AllFeesReceiverEOA",
+    "backendDeployer": "BackendDeployer"
 }
