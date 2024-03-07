@@ -38,7 +38,7 @@ describe("ASDepositaryFacet", () => {
     
   });
 
-  xit('should', async () => {
+  it('should process main use case', async () => {
     autoreflectiveStaking = await hre.ethers.getContractAt(
       hre.names.internal.diamonds.autoreflectiveStaking.interface,
       (await deployments.get(hre.names.internal.diamonds.autoreflectiveStaking.proxy)).address
@@ -114,10 +114,10 @@ describe("ASDepositaryFacet", () => {
     console.log(`post 2 d: ${hre.ethers.utils.formatEther((await autoreflectiveStaking.balanceOf(namedAccounts.deployer)).toString())}`);
 
     await autoreflectiveStaking.withdraw(stakeAmount, 4);
-    console.log(JSON.stringify(await autoreflectiveStaking.getSendingsDeque()))
+    console.log(JSON.stringify(await autoreflectiveStaking.getSendingsDeque()));
   });
 
-  it('should stake and withdraw successfully for month', async () => {
+  xit('should stake and withdraw successfully for month', async () => {
     const daysInMonth = 30;
     const stakeAmount = user1Balance;
     const rewardAmount = totalReward.div(daysInMonth).add(1);
