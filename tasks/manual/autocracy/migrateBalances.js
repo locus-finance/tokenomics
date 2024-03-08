@@ -1,4 +1,4 @@
-const { parseCSV } = require("../../deploy/helpers");
+const { parseCSV } = require("../../../deploy/helpers");
 const fsExtra = require("fs-extra");
 module.exports = (task) =>
   task(

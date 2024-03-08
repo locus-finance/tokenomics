@@ -1,5 +1,5 @@
 const { types } = require("hardhat/config");
-const { parseCSV } = require("../../deploy/helpers");
+const { parseCSV } = require("../../../deploy/helpers");
 const fsExtra = require("fs-extra");
 
 module.exports = (task) =>
@@ -18,21 +18,23 @@ module.exports = (task) =>
         staking
       );
       const parsed = await parseCSV(["HolderAddress"], csv);
-      let holdersWithBalanceInOldStaking = [];
+      let holdersWithBalanceAndEarned = [];
       for (let i = 0; i < parsed.length; i++) {
         const holder = parsed[i];
-        const oldBalance = await stakingInstance.balanceOf(holder.HolderAddress);
-        holdersWithBalanceInOldStaking.push({
+        const balance = await stakingInstance.balanceOf(holder.HolderAddress);
+        const earned = await stakingInstance.earned(holder.HolderAddress);
+        holdersWithBalanceAndEarned.push({
             address: holder.HolderAddress,
-            balance: hre.ethers.utils.formatEther(oldBalance)
+            balance: hre.ethers.utils.formatEther(balance),
+            earned: hre.ethers.utils.formatEther(earned)
         });
         console.log(`Collecting account: ${holder.HolderAddress} - ${i} of ${parsed.length}`);
       }
-      console.log(`Gathered ${holdersWithBalanceInOldStaking.length} addresses with stake deposit. Saving...`);
+      console.log(`Gathered ${holdersWithBalanceAndEarned.length} addresses with stake deposit and earned position. Saving...`);
 
-      let csvString = "\"address\",\"balance\"\n";
-      for (const filteredHolder of holdersWithBalanceInOldStaking) {
-        csvString += `${filteredHolder.address},${filteredHolder.balance.toString()}\n`;
+      let csvString = "\"address\",\"balance\",\"earned\"\n";
+      for (const filteredHolder of holdersWithBalanceAndEarned) {
+        csvString += `${filteredHolder.address},${filteredHolder.balance.toString()},${filteredHolder.earned.toString()}\n`;
       }
       await fsExtra.outputFile(collected, csvString);
       console.log('Saved.')
