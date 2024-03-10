@@ -18,7 +18,8 @@ require("./tasks/manual/autocracy/mintLocus.js")(task);
 require("./tasks/manual/autocracy/burnLocus.js")(task);
 require("./tasks/manual/observe/pingProjectedAPR.js")(task);
 require("./tasks/manual/observe/pingPrimitives.js")(task);
-require("./tasks/manual/observe/collectStLocusBalancesAndEarned.js")(task);
+require("./tasks/manual/observe/errorIncident/collectStLocusBalancesAndEarned.js")(task);
+require("./tasks/utils/errorIncident/collectStHoldersDataForIncident.js")(task);
 require("./tasks/manual/observe/printSendingsQueue.js")(task);
 require("./tasks/manual/stakingOperations/balanceOf")(task);
 require("./tasks/manual/stakingOperations/getReward")(task);
@@ -72,7 +73,7 @@ module.exports = {
       forking: {
         url: arbitrumOneUrl,
         chainId: arbitrumOneChainId,
-        blockNumber: 188049894 - 10
+        blockNumber: 188021861
       },
       saveDeployments: true,
       accounts: [{ privateKey: `0x${process.env.ARBITRUM_DEPLOYER_PRIVATE_KEY}`, balance: "10000000000000000000000" }],

@@ -8,10 +8,15 @@ const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/he
 // ALLOWED TO SMELL AND BE LITTERED
 describe("AnyFixture", () => {
 
-  // it('Successful collection of stLOCUS holders.', async () => {
-  //   await hre.run('collect', {
-  //     staking: "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952",
-  //   });
+  it('Successful collection of stLOCUS holders.', async () => {
+    await hre.run('collectIncident', {
+      staking: "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952",
+      locus: "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E"
+    });
+  });
+
+  // it('should perform healing', async () => {
+
   // });
 
   // xit('Successful migrate from old to new staking', async () => {
