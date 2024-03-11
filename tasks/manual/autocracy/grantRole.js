@@ -1,3 +1,4 @@
+const { types } = require("hardhat/config");
 const keccak256 = require('keccak256');
 module.exports = (task) =>
   task(

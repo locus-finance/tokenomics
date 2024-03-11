@@ -1,17 +1,20 @@
 const fsExtra = require("fs-extra");
 const { parseCSV } = require('../../../deploy/helpers');
+const { types } = require("hardhat/config");
+
 module.exports = (task) =>
   task(
     "collectIncident",
     "Collects full list of holders of stLOCUS\' that interacted with old staking at least once and their statistics.",
   )
+    .addOptionalParam("includeLuckies", "A flag which decides if lucky sons of a guns should be included into statistics.", false, types.boolean)
     .addOptionalParam("midasCsv", "A csv table of Midas Claimers for cross referencing.", './resources/csv/midasHoldersSnapshot.csv', types.string)
     .addOptionalParam("stakingDeployBlock", "A block number from which events should be analyzed.", 154691110, types.int)
     .addOptionalParam("preErrorBlock", "A block number up to which events should be analyzed.", 188021861, types.int)
     .addOptionalParam("staking", "A file name that should be used when caching users with balances in old staking contract.", '', types.string)
     .addOptionalParam("locus", "Define a name or address of LOCUS token contract in hre.names.", '', types.string)
     .addOptionalParam("json", "A json full filename for collected data.", './resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysis.json', types.string)
-    .setAction(async ({ staking, stakingDeployBlock, preErrorBlock, json, midasCsv, locus }, hre) => {
+    .setAction(async ({ staking, stakingDeployBlock, preErrorBlock, json, midasCsv, locus, includeLuckies }, hre) => {
       if (!hre.names.isInitialized()) {
         await hre.names.gather();
       }
@@ -76,29 +79,30 @@ module.exports = (task) =>
       let totalStaked = hre.ethers.constants.Zero;
 
       for (const stakedEvent of decodedStakedEvents) {
-        if (luckies.includes(stakedEvent.args.user.toLowerCase())) continue;
-        if (stakedEvent.args.user in users) {
-          users[stakedEvent.args.user] = {
-            address: stakedEvent.args.user,
-            totalStaked: users[stakedEvent.args.user].totalStaked.add(stakedEvent.args.amount),
+        const formattedUserAddress = stakedEvent.args.user.toLowerCase(); 
+        if (!includeLuckies && luckies.includes(formattedUserAddress)) continue;
+        if (formattedUserAddress in users) {
+          users[formattedUserAddress] = {
+            address: formattedUserAddress,
+            totalStaked: users[formattedUserAddress].totalStaked.add(stakedEvent.args.amount),
             totalSentOut: hre.ethers.constants.Zero,
-            totalBalance: users[stakedEvent.args.user].totalBalance.add(stakedEvent.args.amount),
+            totalBalance: users[formattedUserAddress].totalBalance.add(stakedEvent.args.amount),
             sentOut: [],
-            staked: users[stakedEvent.args.user].staked,
-            isInMidasClaimers: users[stakedEvent.args.user].isInMidasClaimers,
-            actualBalanceAtPreErrorBlock: users[stakedEvent.args.user].actualBalanceAtPreErrorBlock,
-            actualEarnedAtPreErrorBlock: users[stakedEvent.args.user].actualEarnedAtPreErrorBlock
+            staked: users[formattedUserAddress].staked,
+            isInMidasClaimers: users[formattedUserAddress].isInMidasClaimers,
+            actualBalanceAtPreErrorBlock: users[formattedUserAddress].actualBalanceAtPreErrorBlock,
+            actualEarnedAtPreErrorBlock: users[formattedUserAddress].actualEarnedAtPreErrorBlock
           };
-          users[stakedEvent.args.user].staked.push(hre.ethers.utils.formatEther(stakedEvent.args.amount));
+          users[formattedUserAddress].staked.push(hre.ethers.utils.formatEther(stakedEvent.args.amount));
         } else {
-          const isInMidasClaimers = parsedMidasClaimers.includes(stakedEvent.args.user.toLowerCase());
+          const isInMidasClaimers = parsedMidasClaimers.includes(formattedUserAddress.toLowerCase());
           if (isInMidasClaimers) {
             totalUsersThatWereMidasClaimers++;
           }
-          const actualBalanceAtPreErrorBlock = await stakingInstance.balanceOf(stakedEvent.args.user);
-          const actualEarnedAtPreErrorBlock = await stakingInstance.earned(stakedEvent.args.user);
-          users[stakedEvent.args.user] = {
-            address: stakedEvent.args.user,
+          const actualBalanceAtPreErrorBlock = await stakingInstance.balanceOf(formattedUserAddress);
+          const actualEarnedAtPreErrorBlock = await stakingInstance.earned(formattedUserAddress);
+          users[formattedUserAddress] = {
+            address: formattedUserAddress,
             totalStaked: stakedEvent.args.amount,
             totalSentOut: hre.ethers.constants.Zero,
             totalBalance: stakedEvent.args.amount,
@@ -114,13 +118,36 @@ module.exports = (task) =>
       }
 
       for (const sentOutEvent of decodedSentOutEvents) {
-        if (luckies.includes(sentOutEvent.args.user.toLowerCase())) continue;
-        if (sentOutEvent.args.user in users) {
-          users[sentOutEvent.args.user].totalSentOut = users[sentOutEvent.args.user].totalSentOut.add(sentOutEvent.args.amount);
-          users[sentOutEvent.args.user].totalBalance = users[sentOutEvent.args.user].totalBalance.sub(sentOutEvent.args.amount);
-          users[sentOutEvent.args.user].sentOut.push(hre.ethers.utils.formatEther(sentOutEvent.args.amount));
+        const formattedUserAddress = sentOutEvent.args.user.toLowerCase(); 
+        if (!includeLuckies && luckies.includes(formattedUserAddress)) continue;
+        if (formattedUserAddress in users) {
+          users[formattedUserAddress].totalSentOut = users[formattedUserAddress].totalSentOut.add(sentOutEvent.args.amount);
+          users[formattedUserAddress].totalBalance = users[formattedUserAddress].totalBalance.sub(sentOutEvent.args.amount);
+          users[formattedUserAddress].sentOut.push(hre.ethers.utils.formatEther(sentOutEvent.args.amount));
         } else {
-          throw new RuntimeError(`User have never staked: ${sentOutEvent.args.user}`);
+          throw new RuntimeError(`User have never staked: ${formattedUserAddress}`);
+        }
+      }
+
+      for (const midasClaimer of parsedMidasClaimers) {
+        if (!includeLuckies && luckies.includes(midasClaimer)) continue;
+        if (!(midasClaimer in users)) {
+          const actualBalanceAtPreErrorBlock = await stakingInstance.balanceOf(midasClaimer);
+          const actualEarnedAtPreErrorBlock = await stakingInstance.earned(midasClaimer);
+          totalEarned = totalEarned.add(actualEarnedAtPreErrorBlock);
+          totalStaked = totalStaked.add(actualBalanceAtPreErrorBlock);
+          users[midasClaimer] = {
+            address: midasClaimer,
+            totalStaked: hre.ethers.constants.Zero,
+            totalSentOut: hre.ethers.constants.Zero,
+            totalBalance: hre.ethers.constants.Zero,
+            sentOut: [],
+            staked: [],
+            isInMidasClaimers: true,
+            actualBalanceAtPreErrorBlock: hre.ethers.utils.formatEther(actualBalanceAtPreErrorBlock),
+            actualEarnedAtPreErrorBlock: hre.ethers.utils.formatEther(actualEarnedAtPreErrorBlock)
+          }
+          totalUsersThatWereMidasClaimers++;
         }
       }
 
@@ -142,8 +169,8 @@ module.exports = (task) =>
           totalRewardAtPreError: hre.ethers.utils.formatEther(totalRewardAtPreError),
           totalStakedAtPreError: hre.ethers.utils.formatEther(totalStaked),
           totalEarnedAtPreError: hre.ethers.utils.formatEther(totalEarned),
-          totalEarnedAndStakedAtPreError: hre.ethers.utils.formatEther(totalEarned.add(totalStaked)),
-          difference: hre.ethers.utils.formatEther(balanceOfStakingContractInLocusAtPreError.sub(totalEarned.add(totalStaked).add(totalRewardAtPreError)))
+          totalStakedAndRewardAtPreError: hre.ethers.utils.formatEther(totalRewardAtPreError.add(totalStaked)),
+          difference: hre.ethers.utils.formatEther(balanceOfStakingContractInLocusAtPreError.sub(totalStaked.add(totalRewardAtPreError)))
         }
       }
       await fsExtra.outputFile(json, JSON.stringify(result));
