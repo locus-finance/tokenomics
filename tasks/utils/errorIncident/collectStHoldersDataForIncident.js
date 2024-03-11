@@ -16,7 +16,21 @@ module.exports = (task) =>
         await hre.names.gather();
       }
 
-      const actualBlockNumber = (await hre.ethers.provider.getBlock()).number; 
+      const luckies = [
+        "0x9b65dF1ADB9Ed083A9707F750f4D4211eDa92314",
+        "0x80b26Ea44bAB3d39516094b479B9565D9E80d4C6",
+        "0xD43f974FA5f9F3Ab8Aedb3121Dc614366D8fD24B",
+        "0x633f8aA64990C4f67a904b5Dd6bF5f03e49a5bAA",
+        "0x91CCA8cF03FDF510dAde6649a25cC5eA6FC9BFB0",
+        "0xAD8da72fB6c0Bc3b27A67dBe0Daf8AD1476c8D20",
+        "0x9Ca627DE8E06213671B6166717C8Cf876C1D7808",
+        "0x9345f4AC4288c921b0F6ceA1cc9f7112baa2d71c",
+        "0x58f791ade0e72334238677060E469d7b85456358",
+        "0x05Be8D9FcB36647032fE5aee73fE0407f29aBAa8",
+        "0x4afffa8f9ba82330daC0108825b9D4ce2Bd00aa6"
+      ].map(e => e.toLowerCase());
+
+      const actualBlockNumber = (await hre.ethers.provider.getBlock()).number;
       if (actualBlockNumber !== preErrorBlock) {
         console.log(`WARNING: pre error balance would be calculated at block ${actualBlockNumber} nor than at pre error block ${preErrorBlock}!`);
       }
@@ -62,6 +76,7 @@ module.exports = (task) =>
       let totalStaked = hre.ethers.constants.Zero;
 
       for (const stakedEvent of decodedStakedEvents) {
+        if (luckies.includes(stakedEvent.args.user.toLowerCase())) continue;
         if (stakedEvent.args.user in users) {
           users[stakedEvent.args.user] = {
             address: stakedEvent.args.user,
@@ -99,6 +114,7 @@ module.exports = (task) =>
       }
 
       for (const sentOutEvent of decodedSentOutEvents) {
+        if (luckies.includes(sentOutEvent.args.user.toLowerCase())) continue;
         if (sentOutEvent.args.user in users) {
           users[sentOutEvent.args.user].totalSentOut = users[sentOutEvent.args.user].totalSentOut.add(sentOutEvent.args.amount);
           users[sentOutEvent.args.user].totalBalance = users[sentOutEvent.args.user].totalBalance.sub(sentOutEvent.args.amount);
