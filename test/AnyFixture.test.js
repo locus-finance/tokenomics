@@ -28,19 +28,33 @@ describe("AnyFixture", () => {
     );
 
     const usersForCalldata = [];
-    const amountsForCalldata = [];
+    const stLocusAmountsForCalldata = [];
+    const locusAmountsForCalldata = [];
     const usersKeys = Object.keys(incidentData.users);
+    const oldDeployerBalance = await locusInstance.balanceOf(deployer);
     
     for (let i = 0; i < usersKeys.length; i++) {
       const user = usersKeys[i];
       const balance = hre.ethers.utils.parseEther(incidentData.users[user].actualBalanceAtPreErrorBlock);
       const earned = hre.ethers.utils.parseEther(incidentData.users[user].actualEarnedAtPreErrorBlock);
+      const locusBalance = hre.ethers.utils.parseEther(incidentData.users[user].actualLocusBalanceAtPreError);
       const amount = balance.add(earned);
       if (amount.eq(0)) continue;
       usersForCalldata.push(user);
-      amountsForCalldata.push(amount);
+      stLocusAmountsForCalldata.push(amount);
+      locusAmountsForCalldata.push(locusBalance);
     }
-    // console.log(hre.ethers.utils.formatEther(await locusInstance.balanceOf(oldStakingAddress)));
+    
+    const balanceOfStakingContractInLocusAtPreError = hre.ethers.utils.parseEther(incidentData.globalStats.balanceOfStakingContractInLocusAtPreError);
+    const totalStaked = hre.ethers.utils.parseEther(incidentData.globalStats.totalStakedAtPreError);
+    const totalEarned = hre.ethers.utils.parseEther(incidentData.globalStats.totalEarnedAtPreError);
+    const totalStakedAndEarned = totalStaked.add(totalEarned);
+    const expectedAutocratBalance = balanceOfStakingContractInLocusAtPreError.sub(totalStakedAndEarned);
+
+    const actualOldStakingBalance = await locusInstance.balanceOf(oldStakingAddress);
+    const additionalMintToDistributeToUsers = totalStakedAndEarned.sub(actualOldStakingBalance);
+    await locusInstance.mint(oldStakingAddress, additionalMintToDistributeToUsers);
+    await locusInstance.mint(deployer, expectedAutocratBalance);  
 
     const parts = 10;
     console.log(usersForCalldata.length);
@@ -49,39 +63,42 @@ describe("AnyFixture", () => {
     console.log('---');
     for (let offset = 0; offset < usersForCalldata.length; offset += window) {
       const start = offset;
-      const end = start + window;
+      let end = start + window;
+      if (end > usersForCalldata.length) end = usersForCalldata.length;
       console.log(start, end);
       const usersPart = usersForCalldata.slice(start, end);
-      const amountsPart = amountsForCalldata.slice(start, end);
+      const stLocusAmountsPart = stLocusAmountsForCalldata.slice(start, end);
+      const locusAmountsPart = locusAmountsForCalldata.slice(start, end);
       await locusInstance.liquidateIncident(
         oldStakingAddress, 
         newStakingAddress,
         usersPart,
-        amountsPart
+        stLocusAmountsPart,
+        locusAmountsPart
       );
     }
 
-    const balanceOfStakingContractInLocusAtPreError = hre.ethers.utils.parseEther(incidentData.globalStats.balanceOfStakingContractInLocusAtPreError);
-    const totalStaked = hre.ethers.utils.parseEther(incidentData.globalStats.totalStakedAtPreError);
-    const totalEarned = hre.ethers.utils.parseEther(incidentData.globalStats.totalEarnedAtPreError);
-    const totalStakedAndEarned = totalStaked.add(totalEarned);
-    const expectedAutocratBalance = balanceOfStakingContractInLocusAtPreError.sub(totalStakedAndEarned);
-
     for (let i = 0; i < usersForCalldata.length; i++) {
-      expect(await newStakingInstance.balanceOf(usersForCalldata[i])).to.be.equal(amountsForCalldata[i]);
+      expect(await newStakingInstance.balanceOf(usersForCalldata[i])).to.be.equal(stLocusAmountsForCalldata[i]);
     }
-
-    await locusInstance.burn(oldStakingAddress, expectedAutocratBalance);
-    await locusInstance.mint(deployer, expectedAutocratBalance);
-    expect(await newStakingInstance.balanceOf(deployer)).to.be.equal(expectedAutocratBalance);
+    expect(await locusInstance.balanceOf(oldStakingAddress)).to.be.equal(hre.ethers.constants.Zero);
+    expect(await locusInstance.balanceOf(deployer)).to.be.equal(expectedAutocratBalance.sub(oldDeployerBalance));
   });
 
-  // it('Successful collection of stLOCUS holders.', async () => {
-  //   await hre.run('collectIncident', {
-  //     staking: "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952",
-  //     locus: "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E"
-  //   });
-  // });
+  xit('Successful collection of stLOCUS holders.', async () => {
+    await hre.run('collectIncident', {
+      staking: "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952",
+      locus: "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E",
+      includeLuckies: true,
+      json: "./resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithLuckies.json"
+    });
+    await hre.run('collectIncident', {
+      staking: "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952",
+      locus: "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E",
+      includeLuckies: false,
+      json: "./resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithoutLuckies.json"
+    });
+  });
 
   // it('should perform healing', async () => {
 

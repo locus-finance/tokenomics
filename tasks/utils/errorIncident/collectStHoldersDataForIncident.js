@@ -18,6 +18,18 @@ module.exports = (task) =>
       if (!hre.names.isInitialized()) {
         await hre.names.gather();
       }
+      const actualBlockNumber = (await hre.ethers.provider.getBlock()).number;
+      if (actualBlockNumber !== preErrorBlock) {
+        console.log(`WARNING: pre error balance would be calculated at block ${actualBlockNumber} nor than at pre error block ${preErrorBlock}!`);
+      }
+
+      const luckiesWhoSold = [
+        "0x80b26ea44bab3d39516094b479b9565d9e80d4c6",
+        "0x633f8aA64990C4f67a904b5Dd6bF5f03e49a5bAA",
+        "0x91cca8cf03fdf510dade6649a25cc5ea6fc9bfb0",
+        "0xad8da72fb6c0bc3b27a67dbe0daf8ad1476c8d20",
+        "0x9345f4ac4288c921b0f6cea1cc9f7112baa2d71c"
+      ].map(e => e.toLowerCase());
 
       const luckies = [
         "0x9b65dF1ADB9Ed083A9707F750f4D4211eDa92314",
@@ -33,9 +45,8 @@ module.exports = (task) =>
         "0x4afffa8f9ba82330daC0108825b9D4ce2Bd00aa6"
       ].map(e => e.toLowerCase());
 
-      const actualBlockNumber = (await hre.ethers.provider.getBlock()).number;
-      if (actualBlockNumber !== preErrorBlock) {
-        console.log(`WARNING: pre error balance would be calculated at block ${actualBlockNumber} nor than at pre error block ${preErrorBlock}!`);
+      if (!luckiesWhoSold.every(e => luckies.includes(e))) {
+        throw RuntimeError('Some of luckies who sold are not in the main list of luckies!');
       }
 
       const stakingAddress = staking === '' ? (await hre.deployments.get(hre.names.internal.diamonds.locusStaking.proxy)).address : staking;
@@ -50,6 +61,14 @@ module.exports = (task) =>
         locusAddress
       );
 
+      const luckiesInfo = {};
+      for (const lucky of luckies) {
+        luckiesInfo[lucky] = {
+          address: lucky,
+          expectedBalance: hre.ethers.utils.formatEther(await locusInstance.balanceOf(lucky)),
+          soldAmount: luckiesWhoSold.includes(lucky) ? "HAS TO BE SPECIFIED MANUALLY" : hre.ethers.constants.Zero.toString()
+        };
+      }
       const users = {};
 
       const eventsAbi = [
@@ -91,7 +110,8 @@ module.exports = (task) =>
             staked: users[formattedUserAddress].staked,
             isInMidasClaimers: users[formattedUserAddress].isInMidasClaimers,
             actualBalanceAtPreErrorBlock: users[formattedUserAddress].actualBalanceAtPreErrorBlock,
-            actualEarnedAtPreErrorBlock: users[formattedUserAddress].actualEarnedAtPreErrorBlock
+            actualEarnedAtPreErrorBlock: users[formattedUserAddress].actualEarnedAtPreErrorBlock,
+            actualLocusBalanceAtPreError: users[formattedUserAddress].actualLocusBalanceAtPreError
           };
           users[formattedUserAddress].staked.push(hre.ethers.utils.formatEther(stakedEvent.args.amount));
         } else {
@@ -101,6 +121,7 @@ module.exports = (task) =>
           }
           const actualBalanceAtPreErrorBlock = await stakingInstance.balanceOf(formattedUserAddress);
           const actualEarnedAtPreErrorBlock = await stakingInstance.earned(formattedUserAddress);
+          const actualLocusBalanceAtPreError = await locusInstance.balanceOf(formattedUserAddress);
           users[formattedUserAddress] = {
             address: formattedUserAddress,
             totalStaked: stakedEvent.args.amount,
@@ -110,7 +131,8 @@ module.exports = (task) =>
             staked: [hre.ethers.utils.formatEther(stakedEvent.args.amount)],
             isInMidasClaimers,
             actualBalanceAtPreErrorBlock: hre.ethers.utils.formatEther(actualBalanceAtPreErrorBlock),
-            actualEarnedAtPreErrorBlock: hre.ethers.utils.formatEther(actualEarnedAtPreErrorBlock)
+            actualEarnedAtPreErrorBlock: hre.ethers.utils.formatEther(actualEarnedAtPreErrorBlock),
+            actualLocusBalanceAtPreError: hre.ethers.utils.formatEther(actualLocusBalanceAtPreError)
           };
           totalEarned = totalEarned.add(actualEarnedAtPreErrorBlock);
           totalStaked = totalStaked.add(actualBalanceAtPreErrorBlock);
@@ -134,6 +156,8 @@ module.exports = (task) =>
         if (!(midasClaimer in users)) {
           const actualBalanceAtPreErrorBlock = await stakingInstance.balanceOf(midasClaimer);
           const actualEarnedAtPreErrorBlock = await stakingInstance.earned(midasClaimer);
+          const actualLocusBalanceAtPreError = await locusInstance.balanceOf(midasClaimer);
+          
           totalEarned = totalEarned.add(actualEarnedAtPreErrorBlock);
           totalStaked = totalStaked.add(actualBalanceAtPreErrorBlock);
           users[midasClaimer] = {
@@ -145,7 +169,8 @@ module.exports = (task) =>
             staked: [],
             isInMidasClaimers: true,
             actualBalanceAtPreErrorBlock: hre.ethers.utils.formatEther(actualBalanceAtPreErrorBlock),
-            actualEarnedAtPreErrorBlock: hre.ethers.utils.formatEther(actualEarnedAtPreErrorBlock)
+            actualEarnedAtPreErrorBlock: hre.ethers.utils.formatEther(actualEarnedAtPreErrorBlock),
+            actualLocusBalanceAtPreError: hre.ethers.utils.formatEther(actualLocusBalanceAtPreError)
           }
           totalUsersThatWereMidasClaimers++;
         }
@@ -161,6 +186,7 @@ module.exports = (task) =>
       const balanceOfStakingContractInLocusAtPreError = await locusInstance.balanceOf(stakingAddress);
       const totalRewardAtPreError = await stakingInstance.getTotalReward();
       const result = {
+        luckiesInfo,
         users,
         globalStats: {
           totalUsers: usersKeys.length,

@@ -66,14 +66,14 @@ module.exports = {
     compilers,
   },
   mocha: {
-    timeout: "900000",
+    timeout: (900000 * 3).toString(),
   },
   networks: {
     hardhat: {
       forking: {
         url: arbitrumOneUrl,
         chainId: arbitrumOneChainId,
-        // blockNumber: 188049440//188021861
+        // blockNumber: 188049440
       },
       gas: 30_000_000,
       saveDeployments: true,
