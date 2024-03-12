@@ -37,7 +37,6 @@ library ASLib {
         uint256 tFee;
     }
 
-
     bytes32 constant AUTOREFLECTIVE_STAKING_STORAGE_POSITION =
         keccak256("diamond.standard.diamond.storage.autoreflective_staking");
     
