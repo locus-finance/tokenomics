@@ -48,13 +48,4 @@ contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
         RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);
         LSLib.get().p.wrappedStLocusToken = wrappedStLocusToken;
     }
-
-    /// FUNCTION TO BE DELETED
-    function liquidateIncidentForUser(address user) external override delegatedOnly {
-        RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);
-        LSLib.ReferenceTypes storage rt = LSLib.get().rt;
-        rt.rewards[user] = 0;
-        rt.balanceOf[user] = 0;
-        rt.userRewardPerTokenPaid[user] = 0;
-    }
 }

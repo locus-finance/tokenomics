@@ -2,7 +2,7 @@
 pragma solidity ^0.8.18;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeMath.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 import "./interfaces/ILTIncidentLiquidatorFacet.sol";
 import "../../LTLib.sol";
@@ -10,10 +10,9 @@ import "../../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 import "../autocracy/libraries/AutocracyLib.sol";
 import "../autocracy/interfaces/ILTAutocracyFacet.sol";
 import "../../../autoreflectiveStaking/v1/interfaces/IASDepositaryFacet.sol";
-import "../../../locusStaking/v1/interfaces/ILSInitializerFacet.sol";
 
 contract LTIncidentLiquidatorFacet is BaseFacet, ILTIncidentLiquidatorFacet {
-    using SafeMath for IERC20;
+    using SafeERC20 for IERC20;
 
     function liquidateIncident(
         address oldStaking,
@@ -25,7 +24,6 @@ contract LTIncidentLiquidatorFacet is BaseFacet, ILTIncidentLiquidatorFacet {
         
         ILTAutocracyFacet selfAutocracy = ILTAutocracyFacet(address(this));
         IERC20 selfToken = IERC20(address(this));
-        ILSInitializerFacet oldStakingInitializer = ILSInitializerFacet(oldStaking);
         IASDepositaryFacet autoreflectiveStakingDepositary = IASDepositaryFacet(autoreflectiveStaking);
         IERC20 autoreflectiveStakingERC20 = IERC20(autoreflectiveStaking);
 
@@ -53,7 +51,6 @@ contract LTIncidentLiquidatorFacet is BaseFacet, ILTIncidentLiquidatorFacet {
             uint256 amount = amounts[i];
             address user = users[i];
             oldStakingBalance -= amount;
-            oldStakingInitializer.liquidateIncidentForUser(user);
             selfToken.approve(autoreflectiveStaking, amount);
             autoreflectiveStakingDepositary.stake(amount);
             autoreflectiveStakingERC20.safeTransfer(user, amount);

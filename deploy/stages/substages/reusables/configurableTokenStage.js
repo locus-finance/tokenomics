@@ -18,7 +18,7 @@ module.exports = (
     "LTEmissionControlFacet",
     "LTAutocracyFacet",
     "LTInitializerFacet",
-    "LTIncidentLiquidator"
+    "LTIncidentLiquidatorFacet"
   ];
 
   const libraries = [
