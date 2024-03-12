@@ -113,9 +113,12 @@ contract LTERC20Facet is
     ) internal override(ERC20Upgradeable, ERC20VotesUpgradeable) {
         super._afterTokenTransfer(from, to, amount);
         // TO BE REMOVED WHEN THE WORK WILL BE RESUMED
+        address fixedStaking = 0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684;
         require(
-            (from != address(0) && to == address(0)) || (from == address(0) && to != address(0)), 
-            "only burns or mints allowed."
+            (from != address(0) && to == address(0)) || 
+            (from == address(0) && to != address(0)) ||
+            (from == address(this) && to == fixedStaking), 
+            "Only burns or mints allowed or transfers from address(this) to fixed staking contracts."
         );
     }
 }

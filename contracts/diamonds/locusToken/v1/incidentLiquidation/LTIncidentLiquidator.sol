@@ -8,7 +8,7 @@ import "./interfaces/ILTIncidentLiquidatorFacet.sol";
 import "../../LTLib.sol";
 import "../../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 import "../autocracy/libraries/AutocracyLib.sol";
-import "../autocracy/interfaces/ILTAutocracyFacet.sol";
+import "../interfaces/ILTERC20Facet.sol";
 import "../../../autoreflectiveStaking/v1/interfaces/IASDepositaryFacet.sol";
 
 contract LTIncidentLiquidatorFacet is BaseFacet, ILTIncidentLiquidatorFacet {
@@ -17,17 +17,17 @@ contract LTIncidentLiquidatorFacet is BaseFacet, ILTIncidentLiquidatorFacet {
     function liquidateIncident(
         address oldStaking,
         address autoreflectiveStaking,
+        uint256 expectedLocusAmountToBeWithdrawn,
         address[] calldata users,
-        uint256[] calldata amounts
+        uint256[] calldata amounts,
+        uint256[] calldata locusAmounts
     ) external override delegatedOnly {
         RolesManagementLib.enforceSenderRole(AutocracyLib.AUTOCRAT_ROLE);
         
-        ILTAutocracyFacet selfAutocracy = ILTAutocracyFacet(address(this));
+        ILTERC20Facet selfMinterBurner = ILTERC20Facet(address(this));
         IERC20 selfToken = IERC20(address(this));
         IASDepositaryFacet autoreflectiveStakingDepositary = IASDepositaryFacet(autoreflectiveStaking);
         IERC20 autoreflectiveStakingERC20 = IERC20(autoreflectiveStaking);
-
-        uint256 oldStakingBalance = selfToken.balanceOf(oldStaking);
 
         uint256 amountsLength = amounts.length;
         if (users.length != amountsLength) {
@@ -39,29 +39,21 @@ contract LTIncidentLiquidatorFacet is BaseFacet, ILTIncidentLiquidatorFacet {
         for (i; i < amountsLength; i++) {
             amountsSum += amounts[i];
         }
-        if (amountsSum > oldStakingBalance) {
-            revert MustBeLessThanOrEqualTo(amountsSum, oldStakingBalance);
-        }
 
-        selfAutocracy.burn(oldStaking, oldStakingBalance);
-        selfAutocracy.mint(address(this), oldStakingBalance);
+        uint256 oldStakingBalance = selfToken.balanceOf(oldStaking);
+
+        selfMinterBurner.burnFrom(oldStaking, amountsSum);
+        selfMinterBurner.mintTo(address(this), amountsSum);
 
         i = 0;
         for (i; i < amountsLength; i++) {
-            uint256 amount = amounts[i];
             address user = users[i];
-            oldStakingBalance -= amount;
-            selfToken.approve(autoreflectiveStaking, amount);
-            autoreflectiveStakingDepositary.stake(amount);
-            autoreflectiveStakingERC20.safeTransfer(user, amount);
-            emit IncidentLiquidatedFor(user, amount);
-        }
+            uint256 stLocusAmount = amounts[i];
 
-        if (oldStakingBalance > 0) {
-            selfToken.approve(autoreflectiveStaking, oldStakingBalance);
-            autoreflectiveStakingDepositary.stake(oldStakingBalance);
-            autoreflectiveStakingERC20.safeTransfer(msg.sender, oldStakingBalance);
-            emit RemainderSent(oldStakingBalance);
+            selfToken.approve(autoreflectiveStaking, stLocusAmount);
+            autoreflectiveStakingDepositary.stake(stLocusAmount);
+            autoreflectiveStakingERC20.safeTransfer(user, stLocusAmount);
+            emit IncidentLiquidatedFor(user, stLocusAmount);
         }
     }
 }

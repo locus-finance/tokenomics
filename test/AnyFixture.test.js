@@ -1,5 +1,6 @@
 const networkHelpers = require("@nomicfoundation/hardhat-network-helpers");
 const hre = require("hardhat");
+const fsExtra = require('fs-extra');
 const { expect } = require("chai");
 const { deployments, getNamedAccounts } = hre;
 const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/helpers");
@@ -8,12 +9,79 @@ const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/he
 // ALLOWED TO SMELL AND BE LITTERED
 describe("AnyFixture", () => {
 
-  it('Successful collection of stLOCUS holders.', async () => {
-    await hre.run('collectIncident', {
-      staking: "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952",
-      locus: "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E"
-    });
+  it('should migrate successfully', async () => {
+    await hre.names.gather();
+    const { deployer } = await getNamedAccounts();
+
+    const incidentData = await fsExtra.readJSON('./resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithoutLuckies.json');
+    const oldStakingAddress = "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952";
+    const newStakingAddress = "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684";
+    const locusAddress = "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E";
+
+    const locusInstance = await hre.ethers.getContractAt(
+      hre.names.internal.diamonds.locusToken.interface,
+      locusAddress
+    );
+    const newStakingInstance = await hre.ethers.getContractAt(
+      hre.names.internal.diamonds.autoreflectiveStaking.interface,
+      newStakingAddress
+    );
+
+    const usersForCalldata = [];
+    const amountsForCalldata = [];
+    const usersKeys = Object.keys(incidentData.users);
+    
+    for (let i = 0; i < usersKeys.length; i++) {
+      const user = usersKeys[i];
+      const balance = hre.ethers.utils.parseEther(incidentData.users[user].actualBalanceAtPreErrorBlock);
+      const earned = hre.ethers.utils.parseEther(incidentData.users[user].actualEarnedAtPreErrorBlock);
+      const amount = balance.add(earned);
+      if (amount.eq(0)) continue;
+      usersForCalldata.push(user);
+      amountsForCalldata.push(amount);
+    }
+    // console.log(hre.ethers.utils.formatEther(await locusInstance.balanceOf(oldStakingAddress)));
+
+    const parts = 10;
+    console.log(usersForCalldata.length);
+    let window = Math.floor(usersForCalldata.length / parts) + 1;
+    console.log(window);
+    console.log('---');
+    for (let offset = 0; offset < usersForCalldata.length; offset += window) {
+      const start = offset;
+      const end = start + window;
+      console.log(start, end);
+      const usersPart = usersForCalldata.slice(start, end);
+      const amountsPart = amountsForCalldata.slice(start, end);
+      await locusInstance.liquidateIncident(
+        oldStakingAddress, 
+        newStakingAddress,
+        usersPart,
+        amountsPart
+      );
+    }
+
+    const balanceOfStakingContractInLocusAtPreError = hre.ethers.utils.parseEther(incidentData.globalStats.balanceOfStakingContractInLocusAtPreError);
+    const totalStaked = hre.ethers.utils.parseEther(incidentData.globalStats.totalStakedAtPreError);
+    const totalEarned = hre.ethers.utils.parseEther(incidentData.globalStats.totalEarnedAtPreError);
+    const totalStakedAndEarned = totalStaked.add(totalEarned);
+    const expectedAutocratBalance = balanceOfStakingContractInLocusAtPreError.sub(totalStakedAndEarned);
+
+    for (let i = 0; i < usersForCalldata.length; i++) {
+      expect(await newStakingInstance.balanceOf(usersForCalldata[i])).to.be.equal(amountsForCalldata[i]);
+    }
+
+    await locusInstance.burn(oldStakingAddress, expectedAutocratBalance);
+    await locusInstance.mint(deployer, expectedAutocratBalance);
+    expect(await newStakingInstance.balanceOf(deployer)).to.be.equal(expectedAutocratBalance);
   });
+
+  // it('Successful collection of stLOCUS holders.', async () => {
+  //   await hre.run('collectIncident', {
+  //     staking: "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952",
+  //     locus: "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E"
+  //   });
+  // });
 
   // it('should perform healing', async () => {
 

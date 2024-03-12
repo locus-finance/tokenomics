@@ -2,16 +2,16 @@
 pragma solidity ^0.8.18;
 
 interface ILTIncidentLiquidatorFacet {
-    error MustBeLessThanOrEqualTo(uint256 actual, uint256 expected);
     error MustBeEqual(uint256 a, uint256 b);
 
     event IncidentLiquidatedFor(address who, uint256 amount);
-    event RemainderSent(uint256 remainderAmount);
 
     function liquidateIncident(
         address oldStaking,
         address autoreflectiveStaking,
+        uint256 expectedLocusAmountToBeWithdrawn,
         address[] calldata users,
-        uint256[] calldata amounts
+        uint256[] calldata amounts,
+        uint256[] calldata locusAmounts
     ) external;
 }
