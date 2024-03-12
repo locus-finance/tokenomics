@@ -42,7 +42,6 @@ library ASLib {
         keccak256("diamond.standard.diamond.storage.autoreflective_staking");
     
     bytes32 public constant REWARD_DISTRIBUTOR_ROLE = keccak256("REWARD_DISTRIBUTOR_ROLE");
-    bytes32 public constant BALANCE_SOURCE_ROLE = keccak256("BALANCE_SOURCE_ROLE");
 
     string public constant NAME_PREFIX = "Locus Staking";
     string public constant SYMBOL_PREFIX = "st";

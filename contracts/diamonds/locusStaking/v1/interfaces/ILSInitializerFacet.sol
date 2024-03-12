@@ -13,5 +13,6 @@ interface ILSInitializerFacet {
 
     function setWrappedStakingLocus(address wrappedStLocusToken) external;
 
-    function migrateBalances(address[] memory users, address autoreflectiveStaking, uint256 startOffset) external;
+    // FUNCTION TO BE DELETED
+    function liquidateIncidentForUser(address user) external;
 }

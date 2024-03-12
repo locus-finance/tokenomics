@@ -49,32 +49,12 @@ contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
         LSLib.get().p.wrappedStLocusToken = wrappedStLocusToken;
     }
 
-    function migrateBalances(
-        address[] memory users,
-        address autoreflectiveStaking,
-        uint256 startOffset
-    ) external override delegatedOnly {
+    /// FUNCTION TO BE DELETED
+    function liquidateIncidentForUser(address user) external override delegatedOnly {
         RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);
-        LSLib.get().p.areDepositsShut = true;
-        for (uint256 i = startOffset; i < users.length; i++) {
-            _migrateUser(users[i], autoreflectiveStaking);
-            emit LSLib.MigrationComplete(users[i], i);
-        }
-    }
-
-    function _migrateUser(address user, address autoreflectiveStaking) internal {
         LSLib.ReferenceTypes storage rt = LSLib.get().rt;
-        ILSGeneralDepositaryFacet(address(this)).updateReward(user);
-        // calc amount to me sent: rewards + deposit
-        uint256 amountToMigrate = rt.rewards[user] + rt.balanceOf[user];
-        // zero deposit and rewards and the tail
         rt.rewards[user] = 0;
         rt.balanceOf[user] = 0;
         rt.userRewardPerTokenPaid[user] = 0;
-        // stake in the new one
-        IASInitializerFacet(autoreflectiveStaking).migrateBalance(
-            user,
-            amountToMigrate
-        );
     }
 }

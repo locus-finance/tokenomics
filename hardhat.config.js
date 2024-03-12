@@ -73,7 +73,7 @@ module.exports = {
       forking: {
         url: arbitrumOneUrl,
         chainId: arbitrumOneChainId,
-        blockNumber: 188021861
+        blockNumber: 188049440//188021861
       },
       saveDeployments: true,
       accounts: [{ privateKey: `0x${process.env.ARBITRUM_DEPLOYER_PRIVATE_KEY}`, balance: "10000000000000000000000" }],

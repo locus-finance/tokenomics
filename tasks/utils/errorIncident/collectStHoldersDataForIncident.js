@@ -10,7 +10,7 @@ module.exports = (task) =>
     .addOptionalParam("includeLuckies", "A flag which decides if lucky sons of a guns should be included into statistics.", false, types.boolean)
     .addOptionalParam("midasCsv", "A csv table of Midas Claimers for cross referencing.", './resources/csv/midasHoldersSnapshot.csv', types.string)
     .addOptionalParam("stakingDeployBlock", "A block number from which events should be analyzed.", 154691110, types.int)
-    .addOptionalParam("preErrorBlock", "A block number up to which events should be analyzed.", 188021861, types.int)
+    .addOptionalParam("preErrorBlock", "A block number up to which events should be analyzed.", 188049440, types.int)
     .addOptionalParam("staking", "A file name that should be used when caching users with balances in old staking contract.", '', types.string)
     .addOptionalParam("locus", "Define a name or address of LOCUS token contract in hre.names.", '', types.string)
     .addOptionalParam("json", "A json full filename for collected data.", './resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysis.json', types.string)

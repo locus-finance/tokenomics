@@ -113,6 +113,9 @@ contract LTERC20Facet is
     ) internal override(ERC20Upgradeable, ERC20VotesUpgradeable) {
         super._afterTokenTransfer(from, to, amount);
         // TO BE REMOVED WHEN THE WORK WILL BE RESUMED
-        require(from == address(0) || to == address(0), "only burns or mints allowed.");
+        require(
+            (from != address(0) && to == address(0)) || (from == address(0) && to != address(0)), 
+            "only burns or mints allowed."
+        );
     }
 }

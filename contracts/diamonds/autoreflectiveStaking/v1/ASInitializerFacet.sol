@@ -49,14 +49,4 @@ contract ASInitializerFacet is BaseFacet, IASInitializerFacet {
 
         TDLib.get().undistributedAmountsReceiver = owner;
     }
-
-    function migrateBalance(address who, uint256 amount) external override delegatedOnly {
-        RolesManagementLib.enforceSenderRole(ASLib.BALANCE_SOURCE_ROLE);
-        IERC20(ASLib.get().p.token).safeTransferFrom(
-            msg.sender,
-            address(this),
-            amount
-        );
-        IASReflectionFacet(address(this))._mintTo(who, amount);
-    }
 }
