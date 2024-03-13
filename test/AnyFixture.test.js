@@ -82,7 +82,7 @@ describe("AnyFixture", () => {
       expect(await newStakingInstance.balanceOf(usersForCalldata[i])).to.be.equal(stLocusAmountsForCalldata[i]);
     }
     expect(await locusInstance.balanceOf(oldStakingAddress)).to.be.equal(hre.ethers.constants.Zero);
-    expect(await locusInstance.balanceOf(deployer)).to.be.equal(expectedAutocratBalance.sub(oldDeployerBalance));
+    expect(await locusInstance.balanceOf(deployer)).to.be.equal(expectedAutocratBalance.add(oldDeployerBalance));
   });
 
   xit('Successful collection of stLOCUS holders.', async () => {
