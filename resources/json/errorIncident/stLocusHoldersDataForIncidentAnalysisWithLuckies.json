@@ -3,57 +3,68 @@
         "0x9b65df1adb9ed083a9707f750f4d4211eda92314": {
             "address": "0x9b65df1adb9ed083a9707f750f4d4211eda92314",
             "expectedBalance": "0.005857158794346047",
-            "soldAmount": "0"
+            "soldAmount": "0",
+            "resolved": true
         },
         "0x80b26ea44bab3d39516094b479b9565d9e80d4c6": {
             "address": "0x80b26ea44bab3d39516094b479b9565d9e80d4c6",
             "expectedBalance": "1.564244195226275013",
-            "soldAmount": "49567.56149"
+            "soldAmount": "49567.56149",
+            "resolved": true
         },
         "0xd43f974fa5f9f3ab8aedb3121dc614366d8fd24b": {
             "address": "0xd43f974fa5f9f3ab8aedb3121dc614366d8fd24b",
             "expectedBalance": "0.004641975605133312",
-            "soldAmount": "0"
+            "soldAmount": "0",
+            "resolved": true
         },
         "0x633f8aa64990c4f67a904b5dd6bf5f03e49a5baa": {
             "address": "0x633f8aa64990c4f67a904b5dd6bf5f03e49a5baa",
             "expectedBalance": "2254.306194863887333581",
-            "soldAmount": "27123.33626"
+            "soldAmount": "27123.33626",
+            "resolved": true
         },
         "0x91cca8cf03fdf510dade6649a25cc5ea6fc9bfb0": {
             "address": "0x91cca8cf03fdf510dade6649a25cc5ea6fc9bfb0",
             "expectedBalance": "3.685754025740311701",
-            "soldAmount": "359.1512123"
+            "soldAmount": "359.1512123",
+            "resolved": true
         },
         "0xad8da72fb6c0bc3b27a67dbe0daf8ad1476c8d20": {
             "address": "0xad8da72fb6c0bc3b27a67dbe0daf8ad1476c8d20",
             "expectedBalance": "0.001746067269425223",
-            "soldAmount": "10000"
+            "soldAmount": "10000",
+            "resolved": true
         },
         "0x9ca627de8e06213671b6166717c8cf876c1d7808": {
             "address": "0x9ca627de8e06213671b6166717c8cf876c1d7808",
             "expectedBalance": "0.002319426812349557",
-            "soldAmount": "0"
+            "soldAmount": "0",
+            "resolved": true
         },
         "0x9345f4ac4288c921b0f6cea1cc9f7112baa2d71c": {
             "address": "0x9345f4ac4288c921b0f6cea1cc9f7112baa2d71c",
             "expectedBalance": "0.0",
-            "soldAmount": "919.7239481"
+            "soldAmount": "919.7239481",
+            "resolved": true
         },
         "0x58f791ade0e72334238677060e469d7b85456358": {
             "address": "0x58f791ade0e72334238677060e469d7b85456358",
             "expectedBalance": "11089.628990416116279802",
-            "soldAmount": "0"
+            "soldAmount": "0",
+            "resolved": true
         },
         "0x05be8d9fcb36647032fe5aee73fe0407f29abaa8": {
             "address": "0x05be8d9fcb36647032fe5aee73fe0407f29abaa8",
             "expectedBalance": "0.0",
-            "soldAmount": "0"
+            "soldAmount": "0",
+            "resolved": true
         },
         "0x4afffa8f9ba82330dac0108825b9d4ce2bd00aa6": {
             "address": "0x4afffa8f9ba82330dac0108825b9d4ce2bd00aa6",
             "expectedBalance": "0.000531380500849774",
-            "soldAmount": "0"
+            "soldAmount": "0",
+            "resolved": true
         }
     },
     "users": {

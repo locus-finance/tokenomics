@@ -10,7 +10,7 @@ module.exports = (task) =>
     .addOptionalParam("lucky", "An address of the lucky one.", '', types.string)
     .addOptionalParam("jsonWithLuckies", "A json data piece of users to migrate balances for.", './resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithLuckies.json', types.string)
     .addOptionalParam("confirmations", "An amount of confirmations to wait each iteration of incident liquidation.", 10, types.int)
-    .addOptionalParam("lessThenTimes", "Times for how many the users sold amount should be less then to burn their locuses.", 100, types.int)
+    .addOptionalParam("lessThenTimes", "Times for how many the users sold amount should be less then to burn their locuses.", 1, types.int)
     .setAction(async ({ locus, jsonWithLuckies, confirmations, lucky, lessThenTimes }, hre) => {
       await hre.names.gather();
       const locusAddress = locus !== '' ? locus : (await hre.deployments.get(hre.names.internal.diamonds.locusToken.proxy)).address
@@ -23,6 +23,7 @@ module.exports = (task) =>
       const personalTreatmentTx = await locusInstance.personalTreatment(
         lucky,
         hre.ethers.utils.parseEther(incidentDataWithLuckies.luckiesInfo[lucky].expectedBalance),
+        hre.ethers.utils.parseEther(incidentDataWithLuckies.users[lucky].actualBalanceAtPreErrorBlock),
         hre.ethers.utils.parseEther(incidentDataWithLuckies.luckiesInfo[lucky].soldAmount),
         lessThenTimes
       );
