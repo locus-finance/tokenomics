@@ -13,7 +13,9 @@ describe("AnyFixture", () => {
     await hre.names.gather();
     const { deployer } = await getNamedAccounts();
 
+    const incidentDataWithLuckies = await fsExtra.readJSON('./resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithLuckies.json');
     const incidentData = await fsExtra.readJSON('./resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithoutLuckies.json');
+    
     const oldStakingAddress = "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952";
     const newStakingAddress = "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684";
     const locusAddress = "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E";
@@ -46,15 +48,24 @@ describe("AnyFixture", () => {
     }
     
     const balanceOfStakingContractInLocusAtPreError = hre.ethers.utils.parseEther(incidentData.globalStats.balanceOfStakingContractInLocusAtPreError);
+    const totalReward = hre.ethers.utils.parseEther(incidentData.globalStats.totalRewardAtPreError);
     const totalStaked = hre.ethers.utils.parseEther(incidentData.globalStats.totalStakedAtPreError);
     const totalEarned = hre.ethers.utils.parseEther(incidentData.globalStats.totalEarnedAtPreError);
+    const differenceInIncidentDataWithLuckies = hre.ethers.utils.parseEther(incidentDataWithLuckies.globalStats.difference);
+    const differenceInIncidentDataWithoutLuckies = hre.ethers.utils.parseEther(incidentData.globalStats.difference);
+    
     const totalStakedAndEarned = totalStaked.add(totalEarned);
-    const expectedAutocratBalance = balanceOfStakingContractInLocusAtPreError.sub(totalStakedAndEarned);
+    const luckiesBalances = differenceInIncidentDataWithoutLuckies.sub(differenceInIncidentDataWithLuckies);
 
+    const expectedAutocratBalance = balanceOfStakingContractInLocusAtPreError.sub(totalStakedAndEarned).sub(luckiesBalances);
+    const unassignedAndUndistributedRewards = totalReward.sub(totalEarned);
     const actualOldStakingBalance = await locusInstance.balanceOf(oldStakingAddress);
     const additionalMintToDistributeToUsers = totalStakedAndEarned.sub(actualOldStakingBalance);
+
+    expect(differenceInIncidentDataWithLuckies).to.be.equal(expectedAutocratBalance.sub(unassignedAndUndistributedRewards));
+
     await locusInstance.mint(oldStakingAddress, additionalMintToDistributeToUsers);
-    await locusInstance.mint(deployer, expectedAutocratBalance);  
+    await locusInstance.mint(deployer, expectedAutocratBalance);
 
     const parts = 10;
     console.log(usersForCalldata.length);
@@ -82,7 +93,7 @@ describe("AnyFixture", () => {
       expect(await newStakingInstance.balanceOf(usersForCalldata[i])).to.be.equal(stLocusAmountsForCalldata[i]);
     }
     expect(await locusInstance.balanceOf(oldStakingAddress)).to.be.equal(hre.ethers.constants.Zero);
-    expect(await locusInstance.balanceOf(deployer)).to.be.equal(expectedAutocratBalance.add(oldDeployerBalance));
+    expect((await locusInstance.balanceOf(deployer)).sub(oldDeployerBalance)).to.be.equal(expectedAutocratBalance);
   });
 
   xit('Successful collection of stLOCUS holders.', async () => {
