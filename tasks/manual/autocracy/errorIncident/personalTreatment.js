@@ -22,8 +22,8 @@ module.exports = (task) =>
       
       const personalTreatmentTx = await locusInstance.personalTreatment(
         lucky,
-        incidentDataWithLuckies.luckiesInfo[lucky].expectedBalance,
-        incidentDataWithLuckies.luckiesInfo[lucky].soldAmount,
+        hre.ethers.utils.parseEther(incidentDataWithLuckies.luckiesInfo[lucky].expectedBalance),
+        hre.ethers.utils.parseEther(incidentDataWithLuckies.luckiesInfo[lucky].soldAmount),
         lessThenTimes
       );
       await personalTreatmentTx.wait(confirmations);
