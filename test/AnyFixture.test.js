@@ -11,10 +11,6 @@ describe("AnyFixture", () => {
 
   it('should migrate successfully', async () => {
     await hre.names.gather();
-    const { deployer } = await getNamedAccounts();
-
-    const incidentDataWithLuckies = await fsExtra.readJSON('./resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithLuckies.json');
-    const incidentData = await fsExtra.readJSON('./resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithoutLuckies.json');
     
     const oldStakingAddress = "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952";
     const newStakingAddress = "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684";
@@ -28,6 +24,11 @@ describe("AnyFixture", () => {
       hre.names.internal.diamonds.autoreflectiveStaking.interface,
       newStakingAddress
     );
+
+    const { deployer } = await getNamedAccounts();
+
+    const incidentDataWithLuckies = await fsExtra.readJSON('./resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithLuckies.json');
+    const incidentData = await fsExtra.readJSON('./resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithoutLuckies.json');
 
     const usersForCalldata = [];
     const stLocusAmountsForCalldata = [];
@@ -68,15 +69,14 @@ describe("AnyFixture", () => {
     await locusInstance.mint(deployer, expectedAutocratBalance);
 
     const parts = 10;
-    console.log(usersForCalldata.length);
+    console.log(`Users to liquidate incident for: ${usersForCalldata.length}`);
     let window = Math.floor(usersForCalldata.length / parts) + 1;
-    console.log(window);
-    console.log('---');
+    console.log(`Groupings of users: ${window}`);
     for (let offset = 0; offset < usersForCalldata.length; offset += window) {
       const start = offset;
       let end = start + window;
       if (end > usersForCalldata.length) end = usersForCalldata.length;
-      console.log(start, end);
+      console.log(`Liquidating the incident consequences for a group of users numbered from ${start} to ${end}.`);
       const usersPart = usersForCalldata.slice(start, end);
       const stLocusAmountsPart = stLocusAmountsForCalldata.slice(start, end);
       const locusAmountsPart = locusAmountsForCalldata.slice(start, end);
@@ -87,6 +87,7 @@ describe("AnyFixture", () => {
         stLocusAmountsPart,
         locusAmountsPart
       );
+      console.log(`Group ${start}-${end} has been cleared`);
     }
 
     for (let i = 0; i < usersForCalldata.length; i++) {
