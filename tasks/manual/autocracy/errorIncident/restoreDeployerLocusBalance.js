@@ -10,7 +10,7 @@ module.exports = (task) =>
     .addOptionalParam("jsonWithoutLuckies", "A json data piece of users to migrate balances for.", './resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithoutLuckies.json', types.string)
     .addOptionalParam("jsonWithLuckies", "A json data piece of users to migrate balances for.", './resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithLuckies.json', types.string)
     .addOptionalParam("confirmations", "An amount of confirmations to wait for minting.", 10, types.int)
-    .setAction(async ({ locus, jsonWithoutLuckies, jsonWithLuckies }, hre) => {
+    .setAction(async ({ locus, jsonWithoutLuckies, jsonWithLuckies, confirmations }, hre) => {
       await hre.names.gather();
       const { getNamedAccounts } = hre;
       const { deployer } = await getNamedAccounts();

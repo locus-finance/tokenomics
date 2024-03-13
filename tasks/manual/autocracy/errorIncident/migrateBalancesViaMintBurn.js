@@ -22,7 +22,7 @@ module.exports = (task) =>
 
       const oldStakingAddress = old === '' ? (await hre.deployments.get(hre.names.internal.diamonds.locusStaking.proxy)).address : old;
       const locusAddress = locus !== '' ? locus : (await hre.deployments.get(hre.names.internal.diamonds.locusToken.proxy)).address
-      const newStakingAddress = latest === '' ? (await hre.deployments.get(hre.names.internal.diamonds.autoreflectionStaking.proxy)).address : latest;
+      const newStakingAddress = latest === '' ? (await hre.deployments.get(hre.names.internal.diamonds.autoreflectiveStaking.proxy)).address : latest;
 
       const locusInstance = await hre.ethers.getContractAt(
         hre.names.internal.diamonds.locusToken.interface,
