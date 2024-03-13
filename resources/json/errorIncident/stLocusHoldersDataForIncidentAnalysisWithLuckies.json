@@ -28,7 +28,7 @@
         "0xad8da72fb6c0bc3b27a67dbe0daf8ad1476c8d20": {
             "address": "0xad8da72fb6c0bc3b27a67dbe0daf8ad1476c8d20",
             "expectedBalance": "0.001746067269425223",
-            "soldAmount": "9999.998254"
+            "soldAmount": "10000"
         },
         "0x9ca627de8e06213671b6166717c8cf876c1d7808": {
             "address": "0x9ca627de8e06213671b6166717c8cf876c1d7808",

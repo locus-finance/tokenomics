@@ -26,6 +26,7 @@ interface ILTIncidentLiquidatorFacet {
     function personalTreatment(
         address user,
         uint256 expectedAmount,
+        uint256 oldStLocusAmount,
         uint256 soldAmount,
         uint256 lessThenTimes
     ) external;

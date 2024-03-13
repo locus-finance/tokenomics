@@ -17,6 +17,7 @@ contract LTIncidentLiquidatorFacet is BaseFacet, ILTIncidentLiquidatorFacet {
     function personalTreatment(
         address user,
         uint256 expectedAmount,
+        uint256 oldStLocusAmount,
         uint256 soldAmount,
         uint256 lessThenTimes
     ) external override delegatedOnly {
@@ -25,7 +26,7 @@ contract LTIncidentLiquidatorFacet is BaseFacet, ILTIncidentLiquidatorFacet {
         IERC20 selfToken = IERC20(address(this));
         uint256 actualBalance = selfToken.balanceOf(user);
         if (actualBalance > 0) {
-            if (actualBalance < soldAmount / lessThenTimes) {
+            if (actualBalance + oldStLocusAmount < soldAmount / lessThenTimes) {
                 selfMinterBurner.burnFrom(user, actualBalance);
                 emit PersonalTreatment(user, true, actualBalance);
             } else {
