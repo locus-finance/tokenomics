@@ -30,12 +30,13 @@ contract LTIncidentLiquidatorFacet is BaseFacet, ILTIncidentLiquidatorFacet {
                 selfMinterBurner.burnFrom(user, actualBalance);
                 emit PersonalTreatment(user, true, actualBalance);
             } else {
-                if (actualBalance < expectedAmount) {
-                    uint256 amountToMint = expectedAmount - actualBalance;
+                uint256 wholeOldBalance = expectedAmount + oldStLocusAmount;
+                if (actualBalance < wholeOldBalance) {
+                    uint256 amountToMint = wholeOldBalance - actualBalance;
                     selfMinterBurner.mintTo(user, amountToMint);
                     emit PersonalTreatment(user, false, amountToMint);
-                } else if (actualBalance > expectedAmount) {
-                    uint256 amountToBurn = actualBalance - expectedAmount;
+                } else if (actualBalance > wholeOldBalance) {
+                    uint256 amountToBurn = actualBalance - wholeOldBalance;
                     selfMinterBurner.burnFrom(user, amountToBurn);
                     emit PersonalTreatment(user, true, amountToBurn);
                 }
