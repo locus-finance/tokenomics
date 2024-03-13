@@ -8,7 +8,7 @@
         "0x80b26ea44bab3d39516094b479b9565d9e80d4c6": {
             "address": "0x80b26ea44bab3d39516094b479b9565d9e80d4c6",
             "expectedBalance": "1.564244195226275013",
-            "soldAmount": "HAS TO BE SPECIFIED MANUALLY"
+            "soldAmount": "49567.56149"
         },
         "0xd43f974fa5f9f3ab8aedb3121dc614366d8fd24b": {
             "address": "0xd43f974fa5f9f3ab8aedb3121dc614366d8fd24b",
@@ -18,17 +18,17 @@
         "0x633f8aa64990c4f67a904b5dd6bf5f03e49a5baa": {
             "address": "0x633f8aa64990c4f67a904b5dd6bf5f03e49a5baa",
             "expectedBalance": "2254.306194863887333581",
-            "soldAmount": "HAS TO BE SPECIFIED MANUALLY"
+            "soldAmount": "27123.33626"
         },
         "0x91cca8cf03fdf510dade6649a25cc5ea6fc9bfb0": {
             "address": "0x91cca8cf03fdf510dade6649a25cc5ea6fc9bfb0",
             "expectedBalance": "3.685754025740311701",
-            "soldAmount": "HAS TO BE SPECIFIED MANUALLY"
+            "soldAmount": "359.1512123"
         },
         "0xad8da72fb6c0bc3b27a67dbe0daf8ad1476c8d20": {
             "address": "0xad8da72fb6c0bc3b27a67dbe0daf8ad1476c8d20",
             "expectedBalance": "0.001746067269425223",
-            "soldAmount": "HAS TO BE SPECIFIED MANUALLY"
+            "soldAmount": "9999.998254"
         },
         "0x9ca627de8e06213671b6166717c8cf876c1d7808": {
             "address": "0x9ca627de8e06213671b6166717c8cf876c1d7808",
@@ -38,7 +38,7 @@
         "0x9345f4ac4288c921b0f6cea1cc9f7112baa2d71c": {
             "address": "0x9345f4ac4288c921b0f6cea1cc9f7112baa2d71c",
             "expectedBalance": "0.0",
-            "soldAmount": "HAS TO BE SPECIFIED MANUALLY"
+            "soldAmount": "919.7239481"
         },
         "0x58f791ade0e72334238677060e469d7b85456358": {
             "address": "0x58f791ade0e72334238677060e469d7b85456358",
