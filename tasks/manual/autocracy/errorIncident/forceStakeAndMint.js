@@ -11,7 +11,7 @@ module.exports = (task) =>
     .addOptionalParam("user", "An address of the lucky one.", '', types.string)
     .addOptionalParam("confirmations", "An amount of confirmations to wait each iteration of incident liquidation.", 10, types.int)
     .addOptionalParam("stake", "An amount to force stake for user.", '', types.string)
-    .addOptionalParam("mint", "An amount to force stake for user.", '', types.string)
+    .addOptionalParam("mint", "An amount to force stake for user.", '0', types.string)
     .setAction(async ({ locus, confirmations, user, stake, mint, latest }, hre) => {
       await hre.names.gather();
       const locusAddress = locus !== '' ? locus : (await hre.deployments.get(hre.names.internal.diamonds.locusToken.proxy)).address
@@ -40,7 +40,7 @@ module.exports = (task) =>
           newStakingAddress
         );
         await forceStakeForTx.wait(confirmations);
-        console.log(`Force staked of ${stake} LOCUS\' has been made for user ${user}.`);
+        console.log(`Force staked of ${stake} LOCUS\' has been made for user ${user}.\nTx info:\n${JSON.stringify(forceStakeForTx)}`);
       } else {
         console.log('Nothing to force stake for the user.');
       }
