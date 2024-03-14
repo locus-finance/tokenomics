@@ -14,6 +14,7 @@ interface ILTIncidentLiquidatorFacet {
         uint256 indexed stLocusAmount,
         uint256 indexed locusAmount
     );
+    event ForceStaked(address indexed who, uint256 indexed stLocusAmount);
 
     function liquidateIncident(
         address oldStaking,
@@ -29,5 +30,11 @@ interface ILTIncidentLiquidatorFacet {
         uint256 oldStLocusAmount,
         uint256 soldAmount,
         uint256 lessThenTimes
+    ) external;
+
+    function forceStakeFor(
+        address user,
+        uint256 amount,
+        address autoreflectiveStaking
     ) external;
 }

@@ -14,6 +14,26 @@ import "../../../autoreflectiveStaking/v1/interfaces/IASDepositaryFacet.sol";
 contract LTIncidentLiquidatorFacet is BaseFacet, ILTIncidentLiquidatorFacet {
     using SafeERC20 for IERC20;
 
+    function forceStakeFor(address user, uint256 amount, address autoreflectiveStaking) 
+        external
+        override
+        delegatedOnly
+    {
+        RolesManagementLib.enforceSenderRole(AutocracyLib.AUTOCRAT_ROLE);
+        ILTERC20Facet selfMinterBurner = ILTERC20Facet(address(this));
+        IERC20 selfToken = IERC20(address(this));
+        IASDepositaryFacet autoreflectiveStakingDepositary = IASDepositaryFacet(
+            autoreflectiveStaking
+        );
+        IERC20 autoreflectiveStakingERC20 = IERC20(autoreflectiveStaking);
+        selfMinterBurner.burnFrom(user, amount);
+        selfMinterBurner.mintTo(address(this), amount);
+        selfToken.approve(autoreflectiveStaking, amount);
+        autoreflectiveStakingDepositary.stake(amount);
+        autoreflectiveStakingERC20.safeTransfer(user, amount);
+        emit ForceStaked(user, amount);
+    }
+
     function personalTreatment(
         address user,
         uint256 expectedAmount,

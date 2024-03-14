@@ -9,111 +9,122 @@ const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/he
 // ALLOWED TO SMELL AND BE LITTERED
 describe("AnyFixture", () => {
 
-  it('should migrate successfully', async () => {
+  it('should gather withdraws deque at the time before the incident', async () => {
     await hre.names.gather();
-    
-    const oldStakingAddress = "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952";
-    const newStakingAddress = "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684";
-    const locusAddress = "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E";
-
-    const locusInstance = await hre.ethers.getContractAt(
-      hre.names.internal.diamonds.locusToken.interface,
-      locusAddress
+    const oldStakingInstance = await hre.ethers.getContractAt(
+      hre.names.internal.diamonds.locusStaking.interface,
+      "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952"
     );
-    const newStakingInstance = await hre.ethers.getContractAt(
-      hre.names.internal.diamonds.autoreflectiveStaking.interface,
-      newStakingAddress
-    );
+    const deque = (await oldStakingInstance.getSendingsDeque()).map(e => {
+      e[1] = hre.ethers.utils.formatEther(e[1]);
+      e[2] = hre.ethers.utils.formatEther(e[2]);
+      return e;
+    });
 
-    const { deployer } = await getNamedAccounts();
-
-    const incidentDataWithLuckies = await fsExtra.readJSON('./resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithLuckies.json');
-    const incidentData = await fsExtra.readJSON('./resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithoutLuckies.json');
-
-    const usersForCalldata = [];
-    const stLocusAmountsForCalldata = [];
-    const locusAmountsForCalldata = [];
-    const usersKeys = Object.keys(incidentData.users);
-    const oldDeployerBalance = await locusInstance.balanceOf(deployer);
-    
-    for (let i = 0; i < usersKeys.length; i++) {
-      const user = usersKeys[i];
-      const balance = hre.ethers.utils.parseEther(incidentData.users[user].actualBalanceAtPreErrorBlock);
-      const earned = hre.ethers.utils.parseEther(incidentData.users[user].actualEarnedAtPreErrorBlock);
-      const locusBalance = hre.ethers.utils.parseEther(incidentData.users[user].actualLocusBalanceAtPreError);
-      const amount = balance.add(earned);
-      if (amount.eq(0)) continue;
-      usersForCalldata.push(user);
-      stLocusAmountsForCalldata.push(amount);
-      locusAmountsForCalldata.push(locusBalance);
-    }
-    
-    const balanceOfStakingContractInLocusAtPreError = hre.ethers.utils.parseEther(incidentData.globalStats.balanceOfStakingContractInLocusAtPreError);
-    const totalReward = hre.ethers.utils.parseEther(incidentData.globalStats.totalRewardAtPreError);
-    const totalStaked = hre.ethers.utils.parseEther(incidentData.globalStats.totalStakedAtPreError);
-    const totalEarned = hre.ethers.utils.parseEther(incidentData.globalStats.totalEarnedAtPreError);
-    const differenceInIncidentDataWithLuckies = hre.ethers.utils.parseEther(incidentDataWithLuckies.globalStats.difference);
-    const differenceInIncidentDataWithoutLuckies = hre.ethers.utils.parseEther(incidentData.globalStats.difference);
-    
-    const totalStakedAndEarned = totalStaked.add(totalEarned);
-    const luckiesBalances = differenceInIncidentDataWithoutLuckies.sub(differenceInIncidentDataWithLuckies);
-
-    const expectedAutocratBalance = balanceOfStakingContractInLocusAtPreError.sub(totalStakedAndEarned).sub(luckiesBalances);
-    const unassignedAndUndistributedRewards = totalReward.sub(totalEarned);
-    const actualOldStakingBalance = await locusInstance.balanceOf(oldStakingAddress);
-    const additionalMintToDistributeToUsers = totalStakedAndEarned.sub(actualOldStakingBalance);
-
-    expect(differenceInIncidentDataWithLuckies).to.be.equal(expectedAutocratBalance.sub(unassignedAndUndistributedRewards));
-
-    await locusInstance.mint(oldStakingAddress, additionalMintToDistributeToUsers);
-    await locusInstance.mint(deployer, expectedAutocratBalance);
-
-    const parts = 10;
-    console.log(`Users to liquidate incident for: ${usersForCalldata.length}`);
-    let window = Math.floor(usersForCalldata.length / parts) + 1;
-    console.log(`Groupings of users: ${window}`);
-    for (let offset = 0; offset < usersForCalldata.length; offset += window) {
-      const start = offset;
-      let end = start + window;
-      if (end > usersForCalldata.length) end = usersForCalldata.length;
-      console.log(`Liquidating the incident consequences for a group of users numbered from ${start} to ${end}.`);
-      const usersPart = usersForCalldata.slice(start, end);
-      const stLocusAmountsPart = stLocusAmountsForCalldata.slice(start, end);
-      const locusAmountsPart = locusAmountsForCalldata.slice(start, end);
-      await locusInstance.liquidateIncident(
-        oldStakingAddress, 
-        newStakingAddress,
-        usersPart,
-        stLocusAmountsPart,
-        locusAmountsPart
-      );
-      console.log(`Group ${start}-${end} has been cleared`);
-    }
-
-    for (let i = 0; i < usersForCalldata.length; i++) {
-      expect(await newStakingInstance.balanceOf(usersForCalldata[i])).to.be.equal(stLocusAmountsForCalldata[i]);
-    }
-    expect(await locusInstance.balanceOf(oldStakingAddress)).to.be.equal(hre.ethers.constants.Zero);
-    expect((await locusInstance.balanceOf(deployer)).sub(oldDeployerBalance)).to.be.equal(expectedAutocratBalance);
+    fsExtra.writeJSON("./resources/json/errorIncident/withdrawsDequePreError.json", deque);
   });
 
-  xit('Successful collection of stLOCUS holders.', async () => {
-    await hre.run('collectIncident', {
-      staking: "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952",
-      locus: "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E",
-      includeLuckies: true,
-      json: "./resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithLuckies.json"
-    });
-    await hre.run('collectIncident', {
-      staking: "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952",
-      locus: "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E",
-      includeLuckies: false,
-      json: "./resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithoutLuckies.json"
-    });
-  });
+  // xit('should migrate successfully', async () => {
+  //   await hre.names.gather();
+    
+  //   const oldStakingAddress = "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952";
+  //   const newStakingAddress = "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684";
+  //   const locusAddress = "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E";
 
-  // it('should perform healing', async () => {
+  //   const locusInstance = await hre.ethers.getContractAt(
+  //     hre.names.internal.diamonds.locusToken.interface,
+  //     locusAddress
+  //   );
+  //   const newStakingInstance = await hre.ethers.getContractAt(
+  //     hre.names.internal.diamonds.autoreflectiveStaking.interface,
+  //     newStakingAddress
+  //   );
 
+  //   const { deployer } = await getNamedAccounts();
+
+  //   const incidentDataWithLuckies = await fsExtra.readJSON('./resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithLuckies.json');
+  //   const incidentData = await fsExtra.readJSON('./resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithoutLuckies.json');
+
+  //   const usersForCalldata = [];
+  //   const stLocusAmountsForCalldata = [];
+  //   const locusAmountsForCalldata = [];
+  //   const usersKeys = Object.keys(incidentData.users);
+  //   const oldDeployerBalance = await locusInstance.balanceOf(deployer);
+    
+  //   for (let i = 0; i < usersKeys.length; i++) {
+  //     const user = usersKeys[i];
+  //     const balance = hre.ethers.utils.parseEther(incidentData.users[user].actualBalanceAtPreErrorBlock);
+  //     const earned = hre.ethers.utils.parseEther(incidentData.users[user].actualEarnedAtPreErrorBlock);
+  //     const locusBalance = hre.ethers.utils.parseEther(incidentData.users[user].actualLocusBalanceAtPreError);
+  //     const amount = balance.add(earned);
+  //     if (amount.eq(0)) continue;
+  //     usersForCalldata.push(user);
+  //     stLocusAmountsForCalldata.push(amount);
+  //     locusAmountsForCalldata.push(locusBalance);
+  //   }
+    
+  //   const balanceOfStakingContractInLocusAtPreError = hre.ethers.utils.parseEther(incidentData.globalStats.balanceOfStakingContractInLocusAtPreError);
+  //   const totalReward = hre.ethers.utils.parseEther(incidentData.globalStats.totalRewardAtPreError);
+  //   const totalStaked = hre.ethers.utils.parseEther(incidentData.globalStats.totalStakedAtPreError);
+  //   const totalEarned = hre.ethers.utils.parseEther(incidentData.globalStats.totalEarnedAtPreError);
+  //   const differenceInIncidentDataWithLuckies = hre.ethers.utils.parseEther(incidentDataWithLuckies.globalStats.difference);
+  //   const differenceInIncidentDataWithoutLuckies = hre.ethers.utils.parseEther(incidentData.globalStats.difference);
+    
+  //   const totalStakedAndEarned = totalStaked.add(totalEarned);
+  //   const luckiesBalances = differenceInIncidentDataWithoutLuckies.sub(differenceInIncidentDataWithLuckies);
+
+  //   const expectedAutocratBalance = balanceOfStakingContractInLocusAtPreError.sub(totalStakedAndEarned).sub(luckiesBalances);
+  //   const unassignedAndUndistributedRewards = totalReward.sub(totalEarned);
+  //   const actualOldStakingBalance = await locusInstance.balanceOf(oldStakingAddress);
+  //   const additionalMintToDistributeToUsers = totalStakedAndEarned.sub(actualOldStakingBalance);
+
+  //   expect(differenceInIncidentDataWithLuckies).to.be.equal(expectedAutocratBalance.sub(unassignedAndUndistributedRewards));
+
+  //   await locusInstance.mint(oldStakingAddress, additionalMintToDistributeToUsers);
+  //   await locusInstance.mint(deployer, expectedAutocratBalance);
+
+  //   const parts = 10;
+  //   console.log(`Users to liquidate incident for: ${usersForCalldata.length}`);
+  //   let window = Math.floor(usersForCalldata.length / parts) + 1;
+  //   console.log(`Groupings of users: ${window}`);
+  //   for (let offset = 0; offset < usersForCalldata.length; offset += window) {
+  //     const start = offset;
+  //     let end = start + window;
+  //     if (end > usersForCalldata.length) end = usersForCalldata.length;
+  //     console.log(`Liquidating the incident consequences for a group of users numbered from ${start} to ${end}.`);
+  //     const usersPart = usersForCalldata.slice(start, end);
+  //     const stLocusAmountsPart = stLocusAmountsForCalldata.slice(start, end);
+  //     const locusAmountsPart = locusAmountsForCalldata.slice(start, end);
+  //     await locusInstance.liquidateIncident(
+  //       oldStakingAddress, 
+  //       newStakingAddress,
+  //       usersPart,
+  //       stLocusAmountsPart,
+  //       locusAmountsPart
+  //     );
+  //     console.log(`Group ${start}-${end} has been cleared`);
+  //   }
+
+  //   for (let i = 0; i < usersForCalldata.length; i++) {
+  //     expect(await newStakingInstance.balanceOf(usersForCalldata[i])).to.be.equal(stLocusAmountsForCalldata[i]);
+  //   }
+  //   expect(await locusInstance.balanceOf(oldStakingAddress)).to.be.equal(hre.ethers.constants.Zero);
+  //   expect((await locusInstance.balanceOf(deployer)).sub(oldDeployerBalance)).to.be.equal(expectedAutocratBalance);
+  // });
+
+  // xit('Successful collection of stLOCUS holders.', async () => {
+  //   await hre.run('collectIncident', {
+  //     staking: "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952",
+  //     locus: "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E",
+  //     includeLuckies: true,
+  //     json: "./resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithLuckies.json"
+  //   });
+  //   await hre.run('collectIncident', {
+  //     staking: "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952",
+  //     locus: "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E",
+  //     includeLuckies: false,
+  //     json: "./resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithoutLuckies.json"
+  //   });
   // });
 
   // xit('Successful migrate from old to new staking', async () => {
