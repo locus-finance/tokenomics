@@ -9,20 +9,24 @@ const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/he
 // ALLOWED TO SMELL AND BE LITTERED
 describe("AnyFixture", () => {
 
-  it('should gather withdraws deque at the time before the incident', async () => {
-    await hre.names.gather();
-    const oldStakingInstance = await hre.ethers.getContractAt(
-      hre.names.internal.diamonds.locusStaking.interface,
-      "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952"
-    );
-    const deque = (await oldStakingInstance.getSendingsDeque()).map(e => {
-      e[1] = hre.ethers.utils.formatEther(e[1]);
-      e[2] = hre.ethers.utils.formatEther(e[2]);
-      return e;
-    });
+  // it('should gather withdraws deque at the time before the incident', async () => {
+  //   await hre.names.gather();
+  //   const oldStakingInstance = await hre.ethers.getContractAt(
+  //     hre.names.internal.diamonds.locusStaking.interface,
+  //     "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952"
+  //   );
+  //   const deque = (await oldStakingInstance.getSendingsDeque()).map(e => {
+  //     return {
+  //       receiver: e.receiver,
+  //       sendingToken: e.sendingToken,
+  //       amount: hre.ethers.utils.formatEther(e.amount),
+  //       dueToTimestamp: e.dueToTimestamp.toString(),
+  //       dueToDuration: e.dueToDuration
+  //     };
+  //   });
 
-    fsExtra.writeJSON("./resources/json/errorIncident/withdrawsDequePreError.json", deque);
-  });
+  //   fsExtra.writeJSON("./resources/json/errorIncident/withdrawsDequePreError.json", deque);
+  // });
 
   // xit('should migrate successfully', async () => {
   //   await hre.names.gather();

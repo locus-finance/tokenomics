@@ -7,8 +7,8 @@ module.exports = (task) =>
     "Migrates the balances both of classic LOCUS\' and of the old Locus Staking to the new Autoreflective Locus Staking via force burn and mint of LOCUS\'.",
   )
     .addOptionalParam("locus", "Define a name or address of LOCUS token contract in hre.names.", '', types.string)
-    .addOptionalParam("old", "A file name that should be used when caching users with balances in old staking contract.", '', types.string)
-    .addOptionalParam("latest", "A file name that should be used when caching users with balances in old staking contract.", '', types.string)
+    .addOptionalParam("old", "An address of the old staking contract.", '', types.string)
+    .addOptionalParam("latest", "An address of the new staking contract.", '', types.string)
     .addOptionalParam("jsonWithoutLuckies", "A json data piece of users to migrate balances for.", './resources/json/errorIncident/stLocusHoldersDataForIncidentAnalysisWithoutLuckies.json', types.string)
     .addOptionalParam("confirmations", "An amount of confirmations to wait each iteration of incident liquidation.", 10, types.int)
     .addOptionalParam("initialOffset", "An offset for realigning the group processing.", 0, types.int)

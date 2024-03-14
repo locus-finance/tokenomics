@@ -15,7 +15,9 @@ extendEnvironment(require("./plugins/disync.plugin.js"));
 require("./tasks/utils/accounts")(task);
 require("./tasks/utils/getAllArtifacts")(task);
 require("./tasks/utils/errorIncident/collectStHoldersDataForIncident")(task);
+require("./tasks/utils/errorIncident/collectWithdrawSendingsDequeIntoCSV")(task);
 
+require("./tasks/manual/observe/locusBalance")(task);
 require("./tasks/manual/observe/pingProjectedAPR")(task);
 require("./tasks/manual/observe/pingPrimitives")(task);
 require("./tasks/manual/observe/errorIncident/collectStLocusBalancesAndEarned")(task);
