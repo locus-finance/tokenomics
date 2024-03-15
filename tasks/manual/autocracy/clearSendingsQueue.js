@@ -10,8 +10,8 @@ module.exports = (task) =>
       await hre.names.gather();
 
       const locusStakingInstance = await hre.ethers.getContractAt(
-        hre.names.internal.diamonds.locusStaking.interface,
-        (await hre.deployments.get(hre.names.internal.diamonds.locusStaking.proxy)).address
+        hre.names.internal.diamonds.autoreflectiveStaking.interface,
+        (await hre.deployments.get(hre.names.internal.diamonds.autoreflectiveStaking.proxy)).address
       );
       let processQueueTx;
       if ((await locusStakingInstance.getDequeSize()).gt(0)) {
