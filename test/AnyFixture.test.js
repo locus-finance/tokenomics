@@ -9,6 +9,28 @@ const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/he
 // ALLOWED TO SMELL AND BE LITTERED
 describe("AnyFixture", () => {
 
+  // it('should calc apy', async () => {
+  //   await hre.names.gather();
+  //   const newLocusStaking = await hre.ethers.getContractAt(
+  //     hre.names.internal.diamonds.autoreflectiveStaking.interface,
+  //     "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684"
+  //   );
+  //   const c = 32500;
+  //   const rewardAdded = c / 30;
+    
+  //   const b = 1;
+  //   const ts = parseFloat(hre.ethers.utils.formatEther(await newLocusStaking.totalSupply()));
+  //   const yearlyRewardAdded = rewardAdded * 365;
+  //   const newB = b + (b / ts) * yearlyRewardAdded;
+    
+  //   console.log(`b: ${b}`);
+  //   console.log(`newB: ${newB}`);
+  //   const apr = (newB - b) / ((b + newB) / 2);
+  //   console.log(`nominal rate: ${apr}`);
+  //   const apy = 100 * (((1 + apr / 365) ** 365) - 1);
+  //   console.log(`APY: ${apy}`);
+  // });
+
   // it('should gather withdraws deque at the time before the incident', async () => {
   //   await hre.names.gather();
   //   const oldStakingInstance = await hre.ethers.getContractAt(
@@ -30,7 +52,7 @@ describe("AnyFixture", () => {
 
   // xit('should migrate successfully', async () => {
   //   await hre.names.gather();
-    
+
   //   const oldStakingAddress = "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952";
   //   const newStakingAddress = "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684";
   //   const locusAddress = "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E";
@@ -54,7 +76,7 @@ describe("AnyFixture", () => {
   //   const locusAmountsForCalldata = [];
   //   const usersKeys = Object.keys(incidentData.users);
   //   const oldDeployerBalance = await locusInstance.balanceOf(deployer);
-    
+
   //   for (let i = 0; i < usersKeys.length; i++) {
   //     const user = usersKeys[i];
   //     const balance = hre.ethers.utils.parseEther(incidentData.users[user].actualBalanceAtPreErrorBlock);
@@ -66,14 +88,14 @@ describe("AnyFixture", () => {
   //     stLocusAmountsForCalldata.push(amount);
   //     locusAmountsForCalldata.push(locusBalance);
   //   }
-    
+
   //   const balanceOfStakingContractInLocusAtPreError = hre.ethers.utils.parseEther(incidentData.globalStats.balanceOfStakingContractInLocusAtPreError);
   //   const totalReward = hre.ethers.utils.parseEther(incidentData.globalStats.totalRewardAtPreError);
   //   const totalStaked = hre.ethers.utils.parseEther(incidentData.globalStats.totalStakedAtPreError);
   //   const totalEarned = hre.ethers.utils.parseEther(incidentData.globalStats.totalEarnedAtPreError);
   //   const differenceInIncidentDataWithLuckies = hre.ethers.utils.parseEther(incidentDataWithLuckies.globalStats.difference);
   //   const differenceInIncidentDataWithoutLuckies = hre.ethers.utils.parseEther(incidentData.globalStats.difference);
-    
+
   //   const totalStakedAndEarned = totalStaked.add(totalEarned);
   //   const luckiesBalances = differenceInIncidentDataWithoutLuckies.sub(differenceInIncidentDataWithLuckies);
 
@@ -276,7 +298,7 @@ describe("AnyFixture", () => {
   //   await locusStaking.withdraw(amount);
   //   console.log('***');
   //   console.log((await locusToken.balanceOf(deployer)).toString());
-    
+
   //   // await networkHelpers.time.increase(WEEK + 1);
   //   // console.log((await locusStaking.getCurrentFeeBps(deployer)).toString());
   //   // await networkHelpers.time.increase(WEEK * 2);

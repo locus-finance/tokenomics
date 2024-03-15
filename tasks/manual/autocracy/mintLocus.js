@@ -5,20 +5,17 @@ module.exports = (task) =>
     "Mint LOCUS being an autocrat to the fundraising address.",
   )
     .addOptionalParam("locus", "Define a name of Locus token in hre.names.", '', types.string)
-    .addOptionalParam("amount", "Define amount to be minted.", '3300000000000000000000000', types.string)
+    .addOptionalParam("amount", "Define amount to be minted.", '0', types.string)
     .addOptionalParam("address", "Define address to be minted to.", '0x729F2222aaCD99619B8B660b412baE9fCEa3d90F', types.string)
-    .setAction(async ({ amount, address, locus }, hre) => {
-      const signers = await hre.ethers.getSigners();
-      const deployer = signers[0].address;
+    .addOptionalParam("confirmations", "An amount of confirmations to wait.", 10, types.int)
+    .setAction(async ({ amount, address, locus, confirmations }, hre) => {
       await hre.names.gather();
-      await hre.deployments.execute(
-        locus === '' 
-          ? hre.names.internal.diamonds.locusToken.proxy
-          : locus,
-        { from: deployer, log: true },
-        'mint',
-        address,
-        amount
+      const locusTokenInstance = await hre.ethers.getContractAt(
+        hre.names.internal.diamonds.locusToken.interface,
+        (await hre.deployments.get(hre.names.internal.diamonds.locusToken.proxy)).address
       );
-      console.log(`${locus}: Minted LOCUS' amount ${hre.ethers.utils.formatUnits(amount)} to address - ${address}`);
+      const mintTx = await locusTokenInstance.mint(address, hre.ethers.utils.parseEther(amount)); 
+      await mintTx.wait(confirmations);
+      console.log(`${locus}: Minted LOCUS' amount ${amount} to address - ${address}`);
+      console.log(`Tx info:\n${JSON.stringify(mintTx)}`);
     });

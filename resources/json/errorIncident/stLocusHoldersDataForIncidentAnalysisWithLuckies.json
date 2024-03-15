@@ -5,7 +5,8 @@
             "expectedBalance": "0.005857158794346047",
             "soldAmount": "0",
             "resolved": true,
-            "toForceStakeAndMint": true
+            "toForceStakeAndMint": true,
+            "oldEarnedMinted": true
         },
         "0x80b26ea44bab3d39516094b479b9565d9e80d4c6": {
             "address": "0x80b26ea44bab3d39516094b479b9565d9e80d4c6",
@@ -19,7 +20,8 @@
             "expectedBalance": "0.004641975605133312",
             "soldAmount": "0",
             "resolved": true,
-            "toForceStakeAndMint": true
+            "toForceStakeAndMint": true,
+            "oldEarnedMinted": true 
         },
         "0x633f8aa64990c4f67a904b5dd6bf5f03e49a5baa": {
             "address": "0x633f8aa64990c4f67a904b5dd6bf5f03e49a5baa",
@@ -47,7 +49,8 @@
             "expectedBalance": "0.002319426812349557",
             "soldAmount": "0",
             "resolved": true,
-            "toForceStakeAndMint": true
+            "toForceStakeAndMint": true,
+            "oldEarnedMinted": true
         },
         "0x9345f4ac4288c921b0f6cea1cc9f7112baa2d71c": {
             "address": "0x9345f4ac4288c921b0f6cea1cc9f7112baa2d71c",
@@ -61,21 +64,24 @@
             "expectedBalance": "11089.628990416116279802",
             "soldAmount": "0",
             "resolved": true,
-            "toForceStakeAndMint": true
+            "toForceStakeAndMint": true,
+            "oldEarnedMinted": true
         },
         "0x05be8d9fcb36647032fe5aee73fe0407f29abaa8": {
             "address": "0x05be8d9fcb36647032fe5aee73fe0407f29abaa8",
             "expectedBalance": "0.0",
             "soldAmount": "0",
             "resolved": true,
-            "toForceStakeAndMint": true
+            "toForceStakeAndMint": true,
+            "oldEarnedMinted": true
         },
         "0x4afffa8f9ba82330dac0108825b9d4ce2bd00aa6": {
             "address": "0x4afffa8f9ba82330dac0108825b9d4ce2bd00aa6",
             "expectedBalance": "0.000531380500849774",
             "soldAmount": "0",
             "resolved": true,
-            "toForceStakeAndMint": true
+            "toForceStakeAndMint": true,
+            "oldEarnedMinted": true
         }
     },
     "users": {
