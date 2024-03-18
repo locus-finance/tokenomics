@@ -14,6 +14,15 @@ import "../../../autoreflectiveStaking/v1/interfaces/IASDepositaryFacet.sol";
 contract LTIncidentLiquidatorFacet is BaseFacet, ILTIncidentLiquidatorFacet {
     using SafeERC20 for IERC20;
 
+    function massMint(address[] calldata users, uint256[] calldata amounts) external override delegatedOnly returns(uint256 totalMinted) {
+        ILTERC20Facet selfMinterBurner = ILTERC20Facet(address(this));
+        for (uint256 i; i < users.length; i++) {
+            selfMinterBurner.mintTo(users[i], amounts[i]);
+            selfMinterBurner.burnFrom(msg.sender, amounts[i]);
+            totalMinted += amounts[i];
+        }
+    }
+
     function forceStakeFor(address user, uint256 amount, address autoreflectiveStaking) 
         external
         override

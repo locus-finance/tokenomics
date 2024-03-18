@@ -37,4 +37,6 @@ interface ILTIncidentLiquidatorFacet {
         uint256 amount,
         address autoreflectiveStaking
     ) external;
+
+    function massMint(address[] calldata users, uint256[] calldata amounts) external returns(uint256 totalMinted);
 }
