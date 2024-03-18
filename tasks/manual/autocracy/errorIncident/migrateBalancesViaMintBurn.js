@@ -15,7 +15,7 @@ module.exports = (task) =>
     .setAction(async ({ locus, jsonWithoutLuckies, old, confirmations, initialOffset, latest }, hre) => {
       await hre.names.gather();
       if (initialOffset > 0) {
-        console.log('WARNING: group numeration would be from 0!');
+        console.log('WARNING: groups numeration would be from 0!');
       }
 
       const incidentData = await fsExtra.readJSON(jsonWithoutLuckies);

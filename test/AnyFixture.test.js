@@ -17,12 +17,12 @@ describe("AnyFixture", () => {
   //   );
   //   const c = 32500;
   //   const rewardAdded = c / 30;
-    
+
   //   const b = 1;
   //   const ts = parseFloat(hre.ethers.utils.formatEther(await newLocusStaking.totalSupply()));
   //   const yearlyRewardAdded = rewardAdded * 365;
   //   const newB = b + (b / ts) * yearlyRewardAdded;
-    
+
   //   console.log(`b: ${b}`);
   //   console.log(`newB: ${newB}`);
   //   const apr = (newB - b) / ((b + newB) / 2);

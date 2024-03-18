@@ -15,6 +15,7 @@ interface ILTIncidentLiquidatorFacet {
         uint256 indexed locusAmount
     );
     event ForceStaked(address indexed who, uint256 indexed stLocusAmount);
+    event TotalMinted(uint256 indexed amount);
 
     function liquidateIncident(
         address oldStaking,
@@ -38,5 +39,5 @@ interface ILTIncidentLiquidatorFacet {
         address autoreflectiveStaking
     ) external;
 
-    function massMint(address[] calldata users, uint256[] calldata amounts) external returns(uint256 totalMinted);
+    function massMint(address[] calldata users, uint256[] calldata amounts) external;
 }

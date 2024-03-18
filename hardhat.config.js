@@ -38,6 +38,7 @@ require("./tasks/manual/autocracy/errorIncident/migrateBalancesViaMintBurn")(tas
 require("./tasks/manual/autocracy/errorIncident/restoreDeployerLocusBalance")(task);
 require("./tasks/manual/autocracy/errorIncident/personalTreatment")(task);
 require("./tasks/manual/autocracy/errorIncident/forceStakeAndMint")(task);
+require("./tasks/manual/autocracy/errorIncident/distributeRemainingRewards")(task);
 
 require("./tasks/manual/midasClaim/getMerkleTreeInfo")(task);
 require("./tasks/manual/midasClaim/updateMerkleTree")(task);
