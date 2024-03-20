@@ -31,24 +31,32 @@ describe("AnyFixture", () => {
   //   console.log(`APY: ${apy}`);
   // });
 
-  // it('should gather withdraws deque at the time before the incident', async () => {
-  //   await hre.names.gather();
-  //   const oldStakingInstance = await hre.ethers.getContractAt(
-  //     hre.names.internal.diamonds.locusStaking.interface,
-  //     "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952"
-  //   );
-  //   const deque = (await oldStakingInstance.getSendingsDeque()).map(e => {
-  //     return {
-  //       receiver: e.receiver,
-  //       sendingToken: e.sendingToken,
-  //       amount: hre.ethers.utils.formatEther(e.amount),
-  //       dueToTimestamp: e.dueToTimestamp.toString(),
-  //       dueToDuration: e.dueToDuration
-  //     };
-  //   });
+  it('should gather withdraws deque at the time before the incident', async () => {
+    await hre.names.gather();
+    const oldStakingAddress = "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952";
+    const newStakingAddress = "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684";
+    
+    const stakingInstance = await hre.ethers.getContractAt(
+      hre.names.internal.diamonds.locusStaking.interface,
+      newStakingAddress
+    );
 
-  //   fsExtra.writeJSON("./resources/json/errorIncident/withdrawsDequePreError.json", deque);
-  // });
+    console.log((await stakingInstance.getDequeSize()).toString());
+    const deque = (await stakingInstance.getSendingsDeque())
+      .map(e => {
+        return {
+          receiver: e.receiver,
+          sendingToken: e.sendingToken,
+          amount: hre.ethers.utils.formatEther(e.amount),
+          dueToTimestamp: e.dueToTimestamp.toString(),
+          dueToDuration: e.dueToDuration,
+          dueToDate: (new Date(parseInt(e.dueToTimestamp) * 1000)).toUTCString()
+        };
+      })
+      .sort((a, b) => parseInt(a.dueToTimestamp) - parseInt(b.dueToTimestamp));
+
+    fsExtra.writeJSON("./resources/json/errorIncident/withdrawsDequePostErrorInNewStaking.json", deque);
+  });
 
   // xit('should migrate successfully', async () => {
   //   await hre.names.gather();

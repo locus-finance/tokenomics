@@ -46,12 +46,12 @@ contract LSSendingsDequeLoupeFacet is BaseFacet, ILSSendingsDequeLoupeFacet {
         delegatedOnly
         returns (DelayedSendingsQueueLib.DelayedSending[] memory result)
     {
-        uint256 dequeSize = ILSSendingsDequeLoupeFacet(address(this))
-            .getDequeSize();
+        DoubleEndedQueue.Bytes32Deque storage deque = DelayedSendingsQueueLib.get().sendingsDeque;
+        uint256 dequeSize = deque.length();
         result = new DelayedSendingsQueueLib.DelayedSending[](dequeSize);
         for (uint256 i; i < dequeSize; i++) {
             result[i] = ILSSendingsDequeLoupeFacet(address(this))
-                .getDelayedSending(i);
+                .getDelayedSending(uint256(deque.at(i)));
         }
     }
 }
