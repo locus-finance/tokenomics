@@ -31,32 +31,54 @@ describe("AnyFixture", () => {
   //   console.log(`APY: ${apy}`);
   // });
 
-  it('should gather withdraws deque at the time before the incident', async () => {
-    await hre.names.gather();
-    const oldStakingAddress = "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952";
-    const newStakingAddress = "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684";
+  // it('should calc stakingrewards apy', async () => {
+  //   await hre.names.gather();
+  //   const staking = await hre.ethers.getContractAt(
+  //     hre.names.internal.diamonds.locusXUsdTokensStaking.interface,
+  //     "0x6390743ccb7928581F61427652330a1aEfD885c2"
+  //   );
+
+  //   const rewardAdded = 7000;
+  //   const b = 1;
+  //   const ts = parseFloat(hre.ethers.utils.formatEther(await staking.totalSupply()));
+  //   const yearlyRewardAdded = rewardAdded * 12;
+  //   const newB = b + (b / ts) * yearlyRewardAdded;
+
+  //   console.log(`ts: ${ts}`);
+  //   console.log(`b: ${b}`);
+  //   console.log(`newB: ${newB}`);
+  //   const apr = (newB - b) / ((b + newB) / 2);
+  //   console.log(`nominal rate: ${apr}`);
+  //   const apy = 100 * (((1 + apr / 12) ** 12) - 1);
+  //   console.log(`APY: ${apy}`);
+  // });
+
+  // it('should gather withdraws deque at the time before the incident', async () => {
+  //   await hre.names.gather();
+  //   const oldStakingAddress = "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952";
+  //   const newStakingAddress = "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684";
     
-    const stakingInstance = await hre.ethers.getContractAt(
-      hre.names.internal.diamonds.locusStaking.interface,
-      newStakingAddress
-    );
+  //   const stakingInstance = await hre.ethers.getContractAt(
+  //     hre.names.internal.diamonds.locusStaking.interface,
+  //     newStakingAddress
+  //   );
 
-    console.log((await stakingInstance.getDequeSize()).toString());
-    const deque = (await stakingInstance.getSendingsDeque())
-      .map(e => {
-        return {
-          receiver: e.receiver,
-          sendingToken: e.sendingToken,
-          amount: hre.ethers.utils.formatEther(e.amount),
-          dueToTimestamp: e.dueToTimestamp.toString(),
-          dueToDuration: e.dueToDuration,
-          dueToDate: (new Date(parseInt(e.dueToTimestamp) * 1000)).toUTCString()
-        };
-      })
-      .sort((a, b) => parseInt(a.dueToTimestamp) - parseInt(b.dueToTimestamp));
+  //   console.log((await stakingInstance.getDequeSize()).toString());
+  //   const deque = (await stakingInstance.getSendingsDeque())
+  //     .map(e => {
+  //       return {
+  //         receiver: e.receiver,
+  //         sendingToken: e.sendingToken,
+  //         amount: hre.ethers.utils.formatEther(e.amount),
+  //         dueToTimestamp: e.dueToTimestamp.toString(),
+  //         dueToDuration: e.dueToDuration,
+  //         dueToDate: (new Date(parseInt(e.dueToTimestamp) * 1000)).toUTCString()
+  //       };
+  //     })
+  //     .sort((a, b) => parseInt(a.dueToTimestamp) - parseInt(b.dueToTimestamp));
 
-    fsExtra.writeJSON("./resources/json/errorIncident/withdrawsDequePostErrorInNewStaking.json", deque);
-  });
+  //   fsExtra.writeJSON("./resources/json/errorIncident/withdrawsDequePostErrorInNewStaking.json", deque);
+  // });
 
   // xit('should migrate successfully', async () => {
   //   await hre.names.gather();
