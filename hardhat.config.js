@@ -14,14 +14,16 @@ extendEnvironment(require("./plugins/disync.plugin.js"));
 
 require("./tasks/utils/accounts")(task);
 require("./tasks/utils/getAllArtifacts")(task);
+
 require("./tasks/utils/errorIncident/collectStHoldersDataForIncident")(task);
 require("./tasks/utils/errorIncident/collectWithdrawSendingsDequeIntoCSV")(task);
 
 require("./tasks/manual/observe/locusBalance")(task);
 require("./tasks/manual/observe/pingProjectedAPR")(task);
 require("./tasks/manual/observe/pingPrimitives")(task);
-require("./tasks/manual/observe/errorIncident/collectStLocusBalancesAndEarned")(task);
 require("./tasks/manual/observe/printSendingsQueue")(task);
+
+require("./tasks/manual/observe/errorIncident/collectStLocusBalancesAndEarned")(task);
 
 require("./tasks/manual/stakingOperations/balanceOf")(task);
 require("./tasks/manual/stakingOperations/getReward")(task);
@@ -34,11 +36,13 @@ require("./tasks/manual/autocracy/grantRole")(task);
 require("./tasks/manual/autocracy/provideRewardForStaking")(task);
 require("./tasks/manual/autocracy/clearSendingsQueue")(task);
 require("./tasks/manual/autocracy/renounceAndGrantOwnership")(task);
+
 require("./tasks/manual/autocracy/errorIncident/migrateBalancesViaMintBurn")(task);
 require("./tasks/manual/autocracy/errorIncident/restoreDeployerLocusBalance")(task);
 require("./tasks/manual/autocracy/errorIncident/personalTreatment")(task);
 require("./tasks/manual/autocracy/errorIncident/forceStakeAndMint")(task);
 require("./tasks/manual/autocracy/errorIncident/distributeRemainingRewards")(task);
+require("./tasks/manual/autocracy/errorIncident/clearRemainingWithdrawalsQueue")(task);
 
 require("./tasks/manual/midasClaim/getMerkleTreeInfo")(task);
 require("./tasks/manual/midasClaim/updateMerkleTree")(task);
