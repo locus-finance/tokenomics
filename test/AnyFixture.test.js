@@ -29,10 +29,10 @@ describe("AnyFixture", () => {
 
   // it('should calc apy', async () => {
   //   await hre.names.gather();
-    // const newLocusStaking = await hre.ethers.getContractAt(
-    //   hre.names.internal.diamonds.autoreflectiveStaking.interface,
-    //   "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684"
-    // );
+  //   const newLocusStaking = await hre.ethers.getContractAt(
+  //     hre.names.internal.diamonds.autoreflectiveStaking.interface,
+  //     "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684"
+  //   );
   //   const c = 32500;
   //   const rewardAdded = c / 30;
 
@@ -58,8 +58,9 @@ describe("AnyFixture", () => {
 
   //   const rewardAdded = 7000;
   //   const b = 1;
-  //   const ts = parseFloat(hre.ethers.utils.formatEther(await staking.totalSupply()));
+  //   const ts = parseFloat(hre.ethers.utils.formatUnits(await staking.totalSupply(), 6));
   //   const yearlyRewardAdded = rewardAdded * 12;
+  //   console.log(`yearly reward: ${yearlyRewardAdded}`);
   //   const newB = b + (b / ts) * yearlyRewardAdded;
 
   //   console.log(`ts: ${ts}`);
