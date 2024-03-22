@@ -9,12 +9,30 @@ const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/he
 // ALLOWED TO SMELL AND BE LITTERED
 describe("AnyFixture", () => {
 
-  // it('should calc apy', async () => {
+  // it('should change balances', async () => {
   //   await hre.names.gather();
+  //   const firstUser = "0x43eB6fE17D7CC599AaC8b095B5CA412f4C72a2DD";
+  //   const secondUser = "0x9b65dF1ADB9Ed083A9707F750f4D4211eDa92314";
+
   //   const newLocusStaking = await hre.ethers.getContractAt(
   //     hre.names.internal.diamonds.autoreflectiveStaking.interface,
   //     "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684"
   //   );
+  //   const balanceUser1 = await newLocusStaking.balanceOf(firstUser);
+  //   const balanceUser2 = await newLocusStaking.balanceOf(secondUser);
+
+  //   console.log(
+  //     hre.ethers.utils.formatEther(balanceUser1),
+  //     hre.ethers.utils.formatEther(balanceUser2),
+  //   );
+  // });
+
+  // it('should calc apy', async () => {
+  //   await hre.names.gather();
+    // const newLocusStaking = await hre.ethers.getContractAt(
+    //   hre.names.internal.diamonds.autoreflectiveStaking.interface,
+    //   "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684"
+    // );
   //   const c = 32500;
   //   const rewardAdded = c / 30;
 
