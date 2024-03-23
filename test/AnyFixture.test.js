@@ -11,20 +11,15 @@ describe("AnyFixture", () => {
 
   // it('should change balances', async () => {
   //   await hre.names.gather();
-  //   const firstUser = "0x43eB6fE17D7CC599AaC8b095B5CA412f4C72a2DD";
-  //   const secondUser = "0x9b65dF1ADB9Ed083A9707F750f4D4211eDa92314";
-
+  //   const firstUser = "0xD43f974FA5f9F3Ab8Aedb3121Dc614366D8fD24B";
+    
   //   const newLocusStaking = await hre.ethers.getContractAt(
   //     hre.names.internal.diamonds.autoreflectiveStaking.interface,
   //     "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684"
   //   );
   //   const balanceUser1 = await newLocusStaking.balanceOf(firstUser);
-  //   const balanceUser2 = await newLocusStaking.balanceOf(secondUser);
-
-  //   console.log(
-  //     hre.ethers.utils.formatEther(balanceUser1),
-  //     hre.ethers.utils.formatEther(balanceUser2),
-  //   );
+    
+  //   console.log(hre.ethers.utils.formatEther(balanceUser1));
   // });
 
   // it('should calc apy', async () => {
