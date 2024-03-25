@@ -9,16 +9,25 @@ const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/he
 // ALLOWED TO SMELL AND BE LITTERED
 describe("AnyFixture", () => {
 
+  // it('should test', async () => {
+  //   await hre.names.gather();
+  //   const staking = await hre.ethers.getContractAt(
+  //     hre.names.internal.diamonds.locusXUsdTokensStaking.interface,
+  //     "0x6C447230F098CDdB62f6AEaeEc25C27E8b90B25e"
+  //   );
+  //   console.log(await staking.getPrimitives());
+  // });
+
   // it('should change balances', async () => {
   //   await hre.names.gather();
   //   const firstUser = "0xD43f974FA5f9F3Ab8Aedb3121Dc614366D8fD24B";
-    
+
   //   const newLocusStaking = await hre.ethers.getContractAt(
   //     hre.names.internal.diamonds.autoreflectiveStaking.interface,
   //     "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684"
   //   );
   //   const balanceUser1 = await newLocusStaking.balanceOf(firstUser);
-    
+
   //   console.log(hre.ethers.utils.formatEther(balanceUser1));
   // });
 
@@ -71,7 +80,7 @@ describe("AnyFixture", () => {
   //   await hre.names.gather();
   //   const oldStakingAddress = "0xEcc5e0c19806Cf47531F307140e8b042D5Afb952";
   //   const newStakingAddress = "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684";
-    
+
   //   const stakingInstance = await hre.ethers.getContractAt(
   //     hre.names.internal.diamonds.locusStaking.interface,
   //     newStakingAddress
