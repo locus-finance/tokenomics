@@ -8,7 +8,7 @@ module.exports = (hre) => {
   if (hre.names === undefined || !hre.names.isInitialized) {
     throw new HardhatPluginError(
       "disync", 
-      "A plugin `names` MUST be plugged in and initialized so the `disync` could be dependant on that.");
+      "The plugin `names` MUST be plugged in and initialized so the `disync` could be dependant on that.");
   }
 
   hre.disync = {};

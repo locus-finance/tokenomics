@@ -17,6 +17,7 @@ require("./tasks/utils/getAllArtifacts")(task);
 
 require("./tasks/utils/errorIncident/collectStHoldersDataForIncident")(task);
 require("./tasks/utils/errorIncident/collectWithdrawSendingsDequeIntoCSV")(task);
+require("./tasks/utils/errorIncident/collectUsersPreErrorIntoCSV")(task);
 
 require("./tasks/manual/observe/locusBalance")(task);
 require("./tasks/manual/observe/pingProjectedAPR")(task);
