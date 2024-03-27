@@ -31,7 +31,7 @@ describe("AnyFixture", () => {
   //   console.log(hre.ethers.utils.formatEther(balanceUser1));
   // });
 
-  // it('should calc apy', async () => {
+  // it('should calc apy - locus', async () => {
   //   await hre.names.gather();
   //   const newLocusStaking = await hre.ethers.getContractAt(
   //     hre.names.internal.diamonds.autoreflectiveStaking.interface,
@@ -53,26 +53,65 @@ describe("AnyFixture", () => {
   //   console.log(`APY: ${apy}`);
   // });
 
-  // it('should calc stakingrewards apy', async () => {
+  // it('should calc stakingrewards apy - xARB', async () => {
   //   await hre.names.gather();
   //   const staking = await hre.ethers.getContractAt(
-  //     hre.names.internal.diamonds.locusXUsdTokensStaking.interface,
+  //     hre.names.internal.diamonds.locusXArbTokensStaking.interface,
+  //     "0x6C447230F098CDdB62f6AEaeEc25C27E8b90B25e"
+  //   );
+
+  //   const xUsdToUsd = 1.03;
+  //   const locusToUsdPrice = 1.02;
+  //   const rewardAdded = 3000;
+  //   const ts = parseFloat(hre.ethers.utils.formatUnits(await staking.totalSupply(), 6));
+
+  //   const yearlyRewardAdded = rewardAdded * 12;
+  //   const yearlyRewardAddedEquivalentInUsd = yearlyRewardAdded * locusToUsdPrice;
+
+  //   const b = 1;
+  //   const share = b / ts;
+    
+  //   console.log(`yearly reward in usd: ${yearlyRewardAddedEquivalentInUsd}`);
+
+  //   const bUsd = b * xUsdToUsd;
+  //   const newBUsd = bUsd + share * yearlyRewardAddedEquivalentInUsd;
+
+  //   console.log(`total supply: ${ts}`);
+  //   console.log(`share: ${share}`);
+  //   console.log(`balance in usd: ${bUsd}`);
+  //   console.log(`new balance in usd: ${newBUsd}`);
+  //   const apy = 100 * ((newBUsd - bUsd) / bUsd);
+  //   console.log(`APY: ${apy}`);
+  // });
+
+  // it('should calc stakingrewards apy - xUSD', async () => {
+  //   await hre.names.gather();
+  //   const staking = await hre.ethers.getContractAt(
+  //     hre.names.internal.diamonds.locusXArbTokensStaking.interface,
   //     "0x6390743ccb7928581F61427652330a1aEfD885c2"
   //   );
 
+  //   const xUsdToUsd = 1.03;
+  //   const locusToUsdPrice = 1.02;
   //   const rewardAdded = 7000;
-  //   const b = 1;
   //   const ts = parseFloat(hre.ethers.utils.formatUnits(await staking.totalSupply(), 6));
-  //   const yearlyRewardAdded = rewardAdded * 12;
-  //   console.log(`yearly reward: ${yearlyRewardAdded}`);
-  //   const newB = b + (b / ts) * yearlyRewardAdded;
 
-  //   console.log(`ts: ${ts}`);
-  //   console.log(`b: ${b}`);
-  //   console.log(`newB: ${newB}`);
-  //   const apr = (newB - b) / ((b + newB) / 2);
-  //   console.log(`nominal rate: ${apr}`);
-  //   const apy = 100 * (((1 + apr / 12) ** 12) - 1);
+  //   const yearlyRewardAdded = rewardAdded * 12;
+  //   const yearlyRewardAddedEquivalentInUsd = yearlyRewardAdded * locusToUsdPrice;
+
+  //   const b = 1;
+  //   const share = b / ts;
+    
+  //   console.log(`yearly reward in usd: ${yearlyRewardAddedEquivalentInUsd}`);
+
+  //   const bUsd = b * xUsdToUsd;
+  //   const newBUsd = bUsd + share * yearlyRewardAddedEquivalentInUsd;
+
+  //   console.log(`total supply: ${ts}`);
+  //   console.log(`share: ${share}`);
+  //   console.log(`balance in usd: ${bUsd}`);
+  //   console.log(`new balance in usd: ${newBUsd}`);
+  //   const apy = 100 * ((newBUsd - bUsd) / bUsd);
   //   console.log(`APY: ${apy}`);
   // });
 
