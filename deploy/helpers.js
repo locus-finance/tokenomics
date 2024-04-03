@@ -157,6 +157,18 @@ const parseCSV = (keys, fileName) => {
   });
 }
 
+const retryTxIfFailed = async (contract, functionName, functionParams, confirmations) => {
+  const contractCall = contract[functionName](...functionParams);
+  const estimatedGas = await contract.estimateGas[functionName](...functionParams);
+  while (true) {
+    
+  }
+  // estimate first
+  // in try catch - execute and wait
+  // in catch try again
+
+};
+
 module.exports = {
   skipIfAlreadyDeployed,
   withImpersonatedSigner,
@@ -174,5 +186,6 @@ module.exports = {
   DAY,
   WEEK,
   MONTH,
-  facetCutActions
+  facetCutActions,
+  retryTxIfFailed
 };

@@ -60,8 +60,8 @@ describe("AnyFixture", () => {
   //     "0x6C447230F098CDdB62f6AEaeEc25C27E8b90B25e"
   //   );
 
-  //   const xUsdToUsd = 1.03;
-  //   const locusToUsdPrice = 1.02;
+  //   const xArbToUsd = 1.162550462795565;//1.03;
+  //   const locusToUsdPrice = 0.994897;//1.02;
   //   const rewardAdded = 3000;
   //   const ts = parseFloat(hre.ethers.utils.formatUnits(await staking.totalSupply(), 6));
 
@@ -73,7 +73,7 @@ describe("AnyFixture", () => {
     
   //   console.log(`yearly reward in usd: ${yearlyRewardAddedEquivalentInUsd}`);
 
-  //   const bUsd = b * xUsdToUsd;
+  //   const bUsd = b * xArbToUsd;
   //   const newBUsd = bUsd + share * yearlyRewardAddedEquivalentInUsd;
 
   //   console.log(`total supply: ${ts}`);

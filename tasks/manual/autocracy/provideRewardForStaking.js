@@ -38,9 +38,12 @@ module.exports = (task) =>
       );
 
       const amountWei = hre.ethers.utils.parseEther(amount);
+
       const approveTx = await locusToken.approve(autoreflectiveStaking.address, amountWei);
       await approveTx.wait(confirmations);
+      
       const notifyRewardAmountTx = await autoreflectiveStaking.notifyRewardAmount(amountWei);
       await notifyRewardAmountTx.wait(confirmations);
+      
       console.log(`Success: notifyRewardAmount(${amount}) called:\n${JSON.stringify(notifyRewardAmountTx)}`);
     });

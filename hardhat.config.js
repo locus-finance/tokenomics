@@ -23,6 +23,7 @@ require("./tasks/manual/observe/locusBalance")(task);
 require("./tasks/manual/observe/pingProjectedAPR")(task);
 require("./tasks/manual/observe/pingPrimitives")(task);
 require("./tasks/manual/observe/printSendingsQueue")(task);
+require("./tasks/manual/observe/printLastDeposits")(task);
 
 require("./tasks/manual/observe/errorIncident/collectStLocusBalancesAndEarned")(task);
 
