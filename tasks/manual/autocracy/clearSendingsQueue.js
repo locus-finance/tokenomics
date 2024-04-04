@@ -10,10 +10,20 @@ module.exports = (task) =>
 
       await hre.names.gather();
 
-      const stakingInstance = await hre.ethers.getContractAt(
-        hre.names.internal.diamonds[diamond].interface,
-        (await hre.deployments.get(hre.names.internal.diamonds[diamond].proxy)).address
-      );
+      let stakingInstance;
+      
+      if (diamond.startsWith("0x")) {
+        stakingInstance = await hre.ethers.getContractAt(
+          hre.names.internal.diamonds.locusStaking.interface,
+          diamond
+        );
+      } else {
+        stakingInstance = await hre.ethers.getContractAt(
+          hre.names.internal.diamonds[diamond].interface,
+          (await hre.deployments.get(hre.names.internal.diamonds[diamond].proxy)).address
+        );
+      }
+
       let processQueueTx;
       if ((await stakingInstance.getDequeSize()).gt(0)) {
         processQueueTx = await stakingInstance.connect(deployer).processQueue();
