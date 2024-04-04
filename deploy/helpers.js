@@ -157,11 +157,11 @@ const parseCSV = (keys, fileName) => {
   });
 }
 
-const retryTxIfFailed = async (contract, functionName, functionParams, confirmations) => {
+const retryTxIfFailed = async (contract, functionName, functionParams, confirmations, retriesNumber) => {
   const contractCall = contract[functionName](...functionParams);
-  const estimatedGas = await contract.estimateGas[functionName](...functionParams);
-  while (true) {
-    
+  
+  for (let i = 0; i < retriesNumber; i++) {
+    const estimatedGas = await contract.estimateGas[functionName](...functionParams);
   }
   // estimate first
   // in try catch - execute and wait
