@@ -29,7 +29,7 @@ module.exports = (task) =>
       ];
       
       const contractInstanceForQueryingEvents = new hre.ethers.Contract(contractAddress, eventsAbi, hre.ethers.provider);
-      const filter = contractInstanceForQueryingEvents.filters[event](null, null);
+      const filter = contractInstanceForQueryingEvents.filters[event]();
       const rawEvents = await contractInstanceForQueryingEvents.queryFilter(filter, start, end);
       const decodedEvents = rawEvents.map(e => {
         return {

@@ -9,6 +9,10 @@ const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/he
 // ALLOWED TO SMELL AND BE LITTERED
 describe("AnyFixture", () => {
 
+  // it('should get the deque queue at an older block number', async () => {
+  //   await hre.run('printQueue');
+  // });
+
   // it('should test', async () => {
   //   await hre.names.gather();
   //   const staking = await hre.ethers.getContractAt(

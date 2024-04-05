@@ -25,6 +25,7 @@ require("./tasks/manual/observe/pingProjectedAPR")(task);
 require("./tasks/manual/observe/pingPrimitives")(task);
 require("./tasks/manual/observe/printSendingsQueue")(task);
 require("./tasks/manual/observe/printLastDeposits")(task);
+require("./tasks/manual/observe/printLastWithdrawals")(task);
 
 require("./tasks/manual/observe/errorIncident/collectStLocusBalancesAndEarned")(task);
 
@@ -87,7 +88,7 @@ module.exports = {
       forking: {
         url: arbitrumOneUrl,
         chainId: arbitrumOneChainId,
-        // blockNumber: 188049440
+        blockNumber: 195439487///188049440
       },
       gas: 30_000_000,
       saveDeployments: true,
