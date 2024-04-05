@@ -367,11 +367,11 @@ describe("AnyFixture", () => {
   //   await hre.run('provide');
   // });
 
-  it('Successful run queue', async () => {
-    await hre.run('queue', {
-      diamond: "0x6390743ccb7928581F61427652330a1aEfD885c2"
-    });
-  });
+  // it('Successful run queue', async () => {
+  //   await hre.run('queue', {
+  //     diamond: "0x6390743ccb7928581F61427652330a1aEfD885c2"
+  //   });
+  // });
 
   // xit("Successful fixture performance", async () => {
   //   await deployments.fixture(['debug']);

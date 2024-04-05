@@ -1,17 +1,14 @@
+const { retryTxIfFailed } = require("../../../deploy/helpers");
 module.exports = (task) =>
   task(
     "queue",
     "Clear a queue of sendings in LOCUS Staking Contract.",
   )
     .addOptionalParam("diamond", "Camel-cased name of the diamond in 'hre.names'.", 'autoreflectiveStaking', types.string)
-    .setAction(async ({ diamond } , hre) => {
-      const signers = await hre.ethers.getSigners();
-      const deployer = signers[0];
-
+    .addOptionalParam("confirmations", "An amount of confirmations to wait.", 10, types.int)
+    .setAction(async ({ diamond, confirmations } , hre) => {
       await hre.names.gather();
-
       let stakingInstance;
-      
       if (diamond.startsWith("0x")) {
         stakingInstance = await hre.ethers.getContractAt(
           hre.names.internal.diamonds.locusStaking.interface,
@@ -24,14 +21,13 @@ module.exports = (task) =>
         );
       }
 
-      let processQueueTx;
+      let processQueueTxMetadata;
       if ((await stakingInstance.getDequeSize()).gt(0)) {
-        processQueueTx = await stakingInstance.connect(deployer).processQueue();
-        await processQueueTx.wait();
-      }
-      if (processQueueTx === undefined) {
-        console.log('Nothing to clear.');
+        processQueueTxMetadata = await retryTxIfFailed(
+          stakingInstance, "processQueue", [], confirmations
+        );
+        console.log(`Diamond(${diamond}): the queue has been cleared. Gas used: ${processQueueTxMetadata.gas}:\nTx info: ${JSON.stringify(processQueueTxMetadata.receipt)}`);
       } else {
-        console.log(`Diamond(${diamond}): the queue has been cleared:\n${JSON.stringify(processQueueTx)}`);
+        console.log('Nothing to clear.');
       }
     });

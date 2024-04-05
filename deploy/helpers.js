@@ -32,7 +32,7 @@ const mintNativeTokens = async (signer, amountHex) => {
 }
 
 const getFakeDeployment = async (address, name, save) => {
-  await save(name, {address});
+  await save(name, { address });
 }
 
 const withImpersonatedSigner = async (signerAddress, action) => {
@@ -50,24 +50,24 @@ const withImpersonatedSigner = async (signerAddress, action) => {
   });
 }
 
-const getEventBody = async (eventName, contractInstance, resultIndex=-1) => {
+const getEventBody = async (eventName, contractInstance, resultIndex = -1) => {
   const filter = contractInstance.filters[eventName]();
   const filterQueryResult = await contractInstance.queryFilter(filter);
   const lastIndex = filterQueryResult.length == 0 ? 0 : filterQueryResult.length - 1;
   return filterQueryResult[resultIndex == -1 ? lastIndex : resultIndex].args;
 }
 
-const emptyStage = (message) => 
-  async ({deployments}) => {
-      const {log} = deployments;
-      log(message);
+const emptyStage = (message) =>
+  async ({ deployments }) => {
+    const { log } = deployments;
+    log(message);
   };
 
 const diamondCut = async (
-  facetCuts, 
-  initializableContract, 
-  initializeCalldata, 
-  diamondInstanceName, 
+  facetCuts,
+  initializableContract,
+  initializeCalldata,
+  diamondInstanceName,
   deployments
 ) => {
   const diamondInstance = await hre.ethers.getContractAt(
@@ -90,16 +90,16 @@ const diamondCut = async (
 //   require('hardhat-deploy/extendedArtifacts/OwnershipFacet.json').abi
 // );
 const manipulateFacet = async (
-  diamondInstanceName, 
+  diamondInstanceName,
   facetCutAction,
-  deployments, 
+  deployments,
   abi,
-  facetNameOrFacetAddress=hre.ethers.constants.AddressZero,
-  initializableContract=hre.ethers.constants.AddressZero,
-  initializeCalldata=hre.ethers.utils.stripZeros(hre.ethers.utils.arrayify("0x00"))
+  facetNameOrFacetAddress = hre.ethers.constants.AddressZero,
+  initializableContract = hre.ethers.constants.AddressZero,
+  initializeCalldata = hre.ethers.utils.stripZeros(hre.ethers.utils.arrayify("0x00"))
 ) => {
-  const facetAddress = facetNameOrFacetAddress.startsWith("0x") 
-    ? facetNameOrFacetAddress 
+  const facetAddress = facetNameOrFacetAddress.startsWith("0x")
+    ? facetNameOrFacetAddress
     : (await deployments.get(facetNameOrFacetAddress)).address;
 
   const iface = new hre.ethers.utils.Interface(abi);
@@ -157,16 +157,29 @@ const parseCSV = (keys, fileName) => {
   });
 }
 
-const retryTxIfFailed = async (contract, functionName, functionParams, confirmations, retriesNumber) => {
-  const contractCall = contract[functionName](...functionParams);
-  
-  for (let i = 0; i < retriesNumber; i++) {
-    const estimatedGas = await contract.estimateGas[functionName](...functionParams);
+const retryTxIfFailed = async (contract, functionName, functionParams, confirmations, maxRetries=100000) => {
+  let retriesCount = 0;
+  while (true) {
+    let estimatedGas;
+    try {
+      estimatedGas = await contract.estimateGas[functionName](...functionParams);
+    } catch (e) {
+      console.log(`Cannot perform tx. Reason: ${e}\nRetrying...`);
+      retriesCount++;
+      if (retriesCount >= maxRetries) {
+        throw RuntimeError(`Max retries count has been reached: ${maxRetries}`);
+      }
+      continue;
+    }
+    if (estimatedGas > 0) {
+      const receipt = await contract[functionName](...functionParams);
+      await receipt.wait(confirmations);
+      return {
+        receipt,
+        gas: estimatedGas
+      };
+    }
   }
-  // estimate first
-  // in try catch - execute and wait
-  // in catch try again
-
 };
 
 module.exports = {
@@ -182,7 +195,7 @@ module.exports = {
   getMockTree,
   getMerkleTree,
   parseCSV,
-  HOUR, 
+  HOUR,
   DAY,
   WEEK,
   MONTH,
