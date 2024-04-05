@@ -11,6 +11,7 @@ require("hardhat-contract-sizer");
 
 extendEnvironment(require("./plugins/names.plugin.js"));
 extendEnvironment(require("./plugins/disync.plugin.js"));
+extendEnvironment(require("./plugins/sentry.plugin.js"));
 
 require("./tasks/utils/accounts")(task);
 require("./tasks/utils/getAllArtifacts")(task);
@@ -51,7 +52,6 @@ require("./tasks/manual/midasClaim/updateMerkleTree")(task);
 require("./tasks/manual/midasClaim/generateJsonOfMerkleTreeBody")(task);
 
 const arbitrumOneUrl = process.env.ALCHEMY_ARBITRUM_URL;
-
 const arbitrumOneChainId = 42161;
 
 const optimizer = {

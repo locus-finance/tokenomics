@@ -157,17 +157,24 @@ const parseCSV = (keys, fileName) => {
   });
 }
 
-const retryTxIfFailed = async (contract, functionName, functionParams, confirmations, maxRetries=100000) => {
+const retryTxIfFailed = async (hre, contract, functionName, functionParams, confirmations, maxRetries=100000) => {
   let retriesCount = 0;
   while (true) {
     let estimatedGas;
     try {
       estimatedGas = await contract.estimateGas[functionName](...functionParams);
     } catch (e) {
+      await hre.sentry.start(async sentry => {
+        sentry.captureException(e);
+      });
       console.log(`Cannot perform tx. Reason: ${e}\nRetrying...`);
       retriesCount++;
       if (retriesCount >= maxRetries) {
-        throw RuntimeError(`Max retries count has been reached: ${maxRetries}`);
+        const exception = new RuntimeError(`Max retries count has been reached: ${maxRetries}`);
+        await hre.sentry.start(async sentry => {
+          sentry.captureException(exception);
+        });
+        throw exception;
       }
       continue;
     }
