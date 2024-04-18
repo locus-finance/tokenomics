@@ -29,6 +29,7 @@ require("./tasks/manual/observe/printLastWithdrawals")(task);
 
 require("./tasks/manual/observe/errorIncident/collectStLocusBalancesAndEarned")(task);
 
+require("./tasks/manual/stakingOperations/earned")(task);
 require("./tasks/manual/stakingOperations/balanceOf")(task);
 require("./tasks/manual/stakingOperations/getReward")(task);
 require("./tasks/manual/stakingOperations/withdraw")(task);
@@ -88,7 +89,7 @@ module.exports = {
       forking: {
         url: arbitrumOneUrl,
         chainId: arbitrumOneChainId,
-        blockNumber: 195439487///188049440
+        // blockNumber: 200479922
       },
       gas: 30_000_000,
       saveDeployments: true,
