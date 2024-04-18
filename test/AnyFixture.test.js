@@ -9,12 +9,12 @@ const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/he
 // ALLOWED TO SMELL AND BE LITTERED
 describe("AnyFixture", () => {
 
-  // it('should', async () => {
-  //   await hre.run('earned', {
-  //     staking: "0x6390743ccb7928581F61427652330a1aEfD885c2",
-  //     address: "0x05Be8D9FcB36647032fE5aee73fE0407f29aBAa8"
-  //   });
-  // });
+  it('should', async () => {
+    await hre.run('earned', {
+      staking: "0x6390743ccb7928581F61427652330a1aEfD885c2",
+      address: "0x05Be8D9FcB36647032fE5aee73fE0407f29aBAa8"
+    });
+  });
 
   // it('should test', async () => {
   //   await hre.names.gather();

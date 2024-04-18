@@ -13,5 +13,6 @@ module.exports = (task) =>
         (await hre.deployments.get(staking)).address
       );
       let result = await stakingInstance.getPrimitives();
-      console.log(`Primitives:\n${JSON.stringify(result)}`);
+      console.log(`Primitives:`);
+      console.log(result);
     });
