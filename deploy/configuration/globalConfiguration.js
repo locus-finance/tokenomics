@@ -38,6 +38,13 @@ module.exports = async ({
     save
   );
 
+  // Injecting pendleEth Vault
+  await getFakeDeployment(
+    "",
+    hre.names.external.pendleEth,
+    save
+  );
+
   // Injecting All Fees Receiver EOA
   await getFakeDeployment(
     "0x56bf05C28eF161fC6fc2C2DaC037d70eF97af6D1",
