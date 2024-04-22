@@ -1,5 +1,6 @@
 const { types } = require("hardhat/config");
-const keccak256 = require('keccak256');
+const { retryTxIfFailed } = require("../../../deploy/helpers");
+
 module.exports = (task) =>
   task(
     "provide",
@@ -39,11 +40,13 @@ module.exports = (task) =>
 
       const amountWei = hre.ethers.utils.parseEther(amount);
 
-      const approveTx = await locusToken.approve(autoreflectiveStaking.address, amountWei);
-      await approveTx.wait(confirmations);
+      const approveTxMetadata = await retryTxIfFailed(
+        hre, locusToken, "approve", [autoreflectiveStaking.address, amountWei], confirmations
+      );
+      console.log(`Diamond(${staking}): approved LOCUS' (gas: ${approveTxMetadata.gas}). Tx info:\n${JSON.stringify(approveTxMetadata.receipt)}`);
       
-      const notifyRewardAmountTx = await autoreflectiveStaking.notifyRewardAmount(amountWei);
-      await notifyRewardAmountTx.wait(confirmations);
-      
-      console.log(`Success: notifyRewardAmount(${amount}) called:\n${JSON.stringify(notifyRewardAmountTx)}`);
+      const notifyRewardAmountTxMetadata = await retryTxIfFailed(
+        hre, autoreflectiveStaking, "notifyRewardAmount", [amountWei], confirmations
+      );
+      console.log(`Success: notifyRewardAmount(${amount}) called (gas used: ${notifyRewardAmountTxMetadata.gas}):\n${JSON.stringify(notifyRewardAmountTxMetadata.receipt)}`);
     });

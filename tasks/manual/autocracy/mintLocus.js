@@ -1,4 +1,6 @@
 const { types } = require("hardhat/config");
+const { retryTxIfFailed } = require("../../../deploy/helpers");
+
 module.exports = (task) =>
   task(
     "mint",
@@ -14,8 +16,9 @@ module.exports = (task) =>
         hre.names.internal.diamonds.locusToken.interface,
         (await hre.deployments.get(hre.names.internal.diamonds.locusToken.proxy)).address
       );
-      const mintTx = await locusTokenInstance.mint(address, hre.ethers.utils.parseEther(amount)); 
-      await mintTx.wait(confirmations);
+      const mintTxMetadata = await retryTxIfFailed(
+        hre, locusTokenInstance, 'mint', [address, hre.ethers.utils.parseEther(amount)], confirmations
+      );
       console.log(`${locus}: Minted LOCUS' amount ${amount} to address - ${address}`);
-      console.log(`Tx info:\n${JSON.stringify(mintTx)}`);
+      console.log(`Tx info (gas used: ${mintTxMetadata.gas}):\n${JSON.stringify(mintTxMetadata.receipt)}`);
     });
