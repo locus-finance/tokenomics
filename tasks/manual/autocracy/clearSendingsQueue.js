@@ -24,7 +24,7 @@ module.exports = (task) =>
       let processQueueTxMetadata;
       if ((await stakingInstance.getDequeSize()).gt(0)) {
         processQueueTxMetadata = await retryTxIfFailed(
-          stakingInstance, "processQueue", [], confirmations
+          hre, stakingInstance, "processQueue", [], confirmations
         );
         console.log(`Diamond(${diamond}): the queue has been cleared. Gas used: ${processQueueTxMetadata.gas}:\nTx info: ${JSON.stringify(processQueueTxMetadata.receipt)}`);
       } else {

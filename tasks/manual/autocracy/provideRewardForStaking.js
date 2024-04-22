@@ -13,7 +13,7 @@ module.exports = (task) =>
     .addOptionalParam("locus", "Define a name of Diamond Locus Token from hre.names.", '', types.string)
     .addOptionalParam("confirmations", "An amount of confirmations to wait.", 10, types.int)
     .setAction(async ({ amount, staking, locus, confirmations }, hre) => {
-      if (amount === "0") throw RuntimeError("Nothing to provide. Zero is past as amount parameter.");
+      if (amount === "0") throw Error("Nothing to provide. Zero is past as amount parameter.");
       const signers = await hre.ethers.getSigners();
       const deployer = signers[0].address;
       await hre.names.gather();
