@@ -23,11 +23,11 @@ module.exports = (task) =>
       }
       const eventsAbi = [
         "event Staked(address indexed user,uint256 indexed amount)",
-        second 
+        second
           ? "event Deposit(address indexed from, uint256 indexed wantTokenAmount, address indexed recipient, uint256 sharesIssued, uint256 timestamp)"
           : "event Deposit(address indexed recipient,uint256 indexed shares,uint256 indexed value,uint256 timestamp)"
       ];
-      
+
       const contractInstanceForQueryingEvents = new hre.ethers.Contract(contractAddress, eventsAbi, hre.ethers.provider);
       const filter = contractInstanceForQueryingEvents.filters[event]();
       const rawEvents = await contractInstanceForQueryingEvents.queryFilter(filter, start, end);
@@ -41,23 +41,23 @@ module.exports = (task) =>
         }
       });
       let csvString = "\"user\",\"amount\",\"blockNumber\"\n";
-        for (const eventData of decodedEvents) {
-          let amount;
-          let user;
-          if (eventData.log.args.amount !== undefined) {
-            amount = eventData.log.args.amount;
-            user = eventData.log.args.user;
+      for (const eventData of decodedEvents) {
+        let amount;
+        let user;
+        if (eventData.log.args.amount !== undefined) {
+          amount = eventData.log.args.amount;
+          user = eventData.log.args.user;
+        } else {
+          if (second) {
+            amount = eventData.log.args.wantTokenAmount;
+            user = eventData.log.args.recipient;
           } else {
-            if (second) {
-              amount = eventData.log.args.wantTokenAmount;
-              user = eventData.log.args.recipient;
-            } else {
-              amount = eventData.log.args.value;
-              user = eventData.log.args.recipient;
-            }
+            amount = eventData.log.args.value;
+            user = eventData.log.args.recipient;
           }
-          csvString += `\"${user}\",${hre.ethers.utils.formatUnits(amount, decimals)},${eventData.blockNumber}\n`;
         }
-        await fsExtra.outputFile(csv, csvString);
-        console.log(`CSV table stored in: ${csv}`);
+        csvString += `\"${user}\",${hre.ethers.utils.formatUnits(amount, decimals)},${eventData.blockNumber}\n`;
+      }
+      await fsExtra.outputFile(csv, csvString);
+      console.log(`CSV table stored in: ${csv}`);
     });

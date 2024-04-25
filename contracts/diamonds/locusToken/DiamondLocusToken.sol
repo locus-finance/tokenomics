@@ -15,7 +15,6 @@ import "./v1/interfaces/ILTEmissionControlFacet.sol";
 import "./v1/interfaces/ILTInitializerFacet.sol";
 
 import "./v1/autocracy/interfaces/ILTAutocracyFacet.sol";
-import "./v1/incidentLiquidation/interfaces/ILTIncidentLiquidatorFacet.sol";
 
 /// @notice IMPORTANT: all of the collective diamond interfaces MUST be prefixed with "Diamond" word.
 /// @dev This MUST aggregate all of the faucets interfaces, to be able to grasp a full view of ABI in one place.
@@ -29,6 +28,5 @@ interface DiamondLocusToken is
     IERC20Metadata,
     ILTEmissionControlFacet,
     ILTInitializerFacet,
-    ILTAutocracyFacet,
-    ILTIncidentLiquidatorFacet
+    ILTAutocracyFacet
 {}

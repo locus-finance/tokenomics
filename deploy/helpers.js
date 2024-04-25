@@ -157,6 +157,25 @@ const parseCSV = (keys, fileName) => {
   });
 }
 
+const captureException = async (e, hre, metadata) => {
+  if (hre.sentry !== undefined) {
+    await hre.sentry.start(async sentry => {
+      sentry.captureException(e);
+    });
+  }
+  if (hre.discord !== undefined) {
+    if (metadata !== undefined) {
+      await hre.discord.sendDiscordMessage(
+        `Failed to execute ${metadata.contract}.${metadata.functionName}(...[${functionParams}]) - ${e.toString()}`
+      );
+    } else {
+      await hre.discord.sendDiscordMessage(
+        `Failed to execute - ${e.toString()}`
+      );
+    }
+  }
+}
+
 const retryTxIfFailed = async (hre, contract, functionName, functionParams, confirmations, maxRetries=100) => {
   let retriesCount = 0;
   while (true) {
@@ -164,20 +183,12 @@ const retryTxIfFailed = async (hre, contract, functionName, functionParams, conf
     try {
       estimatedGas = await contract.estimateGas[functionName](...functionParams);
     } catch (e) {
-      if (hre.sentry !== undefined) {
-        await hre.sentry.start(async sentry => {
-          sentry.captureException(e);
-        });
-      }
+      await captureException(e, hre, {contract, functionName, functionParams});
       console.log(`Cannot perform tx. Reason: ${e}\nRetrying...`);
       retriesCount++;
       if (retriesCount >= maxRetries) {
         const exception = new Error(`Max retries count has been reached: ${maxRetries}`);
-        if (hre.sentry !== undefined) {
-          await hre.sentry.start(async sentry => {
-            sentry.captureException(exception);
-          });
-        }
+        await captureException(exception, hre, {contract, functionName, functionParams});
         throw exception;
       }
       continue;
@@ -211,5 +222,6 @@ module.exports = {
   WEEK,
   MONTH,
   facetCutActions,
-  retryTxIfFailed
+  retryTxIfFailed,
+  captureException
 };

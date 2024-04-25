@@ -17,8 +17,7 @@ module.exports = (
     "LTERC20Facet",
     "LTEmissionControlFacet",
     "LTAutocracyFacet",
-    "LTInitializerFacet",
-    "LTIncidentLiquidatorFacet"
+    "LTInitializerFacet"
   ];
 
   const libraries = [
