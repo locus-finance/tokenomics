@@ -17,6 +17,7 @@ extendEnvironment(require("./plugins/discord.plugin.js"));
 require("./tasks/utils/accounts")(task);
 require("./tasks/utils/getAllArtifacts")(task);
 require("./tasks/utils/verifyAll")(task);
+require("./tasks/utils/sendDiscordMessage")(task);
 
 require("./tasks/manual/observe/locusBalance")(task);
 require("./tasks/manual/observe/pingProjectedAPR")(task);
