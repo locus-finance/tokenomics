@@ -6,8 +6,8 @@ module.exports = (task) =>
     "events",
     "Prints last events.",
   )
-    .addOptionalParam("end", "Define an ending point block to search deposits.", 204663841, types.int)
-    .addOptionalParam("start", "Define an starting point block to search deposits.", 203684120, types.int)
+    .addOptionalParam("end", "Define an ending point block to search deposits.", 204935385, types.int)
+    .addOptionalParam("start", "Define an starting point block to search deposits.", 204655165, types.int)
     .addOptionalParam("contract", "Define a name of staking contract in hre.names.", '0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684', types.string)
     .addOptionalParam("event", "Define a name of staking contract in hre.names.", 'RewardAdded', types.string)
     .addOptionalParam("abi", "Specify the ABI of the event.", "event RewardAdded(uint256 indexed amount)", types.string)

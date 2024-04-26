@@ -159,9 +159,7 @@ const parseCSV = (keys, fileName) => {
 
 const captureException = async (e, hre, metadata) => {
   if (hre.sentry !== undefined) {
-    await hre.sentry.start(async sentry => {
-      sentry.captureException(e);
-    });
+    await hre.sentry.start(async sentry => () => sentry.captureException(e));
   }
   if (hre.discord !== undefined) {
     if (metadata !== undefined) {
