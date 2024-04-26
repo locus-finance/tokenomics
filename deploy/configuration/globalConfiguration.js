@@ -52,7 +52,7 @@ module.exports = async ({
     save
   );
   
-  // Injecting All Fees Receiver EOA
+  // Injecting backend deployer
   await getFakeDeployment(
     "0x609108771e65C1E736F9630497025b48E15929ab",
     hre.names.external.backendDeployer,

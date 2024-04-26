@@ -6,6 +6,9 @@ module.exports = (
   getNamedAccounts,
   deployments
 }) => {
+  if (!hre.names.isInitialized()) {
+    await hre.names.gather();
+  }
   const { diamond, execute } = deployments;
   const { deployer } = await getNamedAccounts();
 
@@ -17,6 +20,7 @@ module.exports = (
     "LTERC20Facet",
     "LTEmissionControlFacet",
     "LTAutocracyFacet",
+    "LTAutocracyGovernmentFacet",
     "LTInitializerFacet"
   ];
 
@@ -26,7 +30,8 @@ module.exports = (
     'InitializerLib',
     'PausabilityLib',
     'RolesManagementLib',
-    'AutocracyLib'
+    'AutocracyLib',
+    'AutocracyGovernmentLib'
   ];
 
   let diamondDeployConfig = {

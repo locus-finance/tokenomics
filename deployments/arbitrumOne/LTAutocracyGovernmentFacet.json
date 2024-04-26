@@ -1,0 +1,217 @@
+{
+  "address": "0x039Dd4Fd2e09f19E1955eAD8Ad80D56DC2f083A6",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "DelegatedCallsOnly",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "who",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "role",
+          "type": "bytes32"
+        }
+      ],
+      "name": "HasNoRole",
+      "type": "error"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes4",
+          "name": "selector",
+          "type": "bytes4"
+        },
+        {
+          "internalType": "address",
+          "name": "whoCalled",
+          "type": "address"
+        }
+      ],
+      "name": "IsNotAllowedByTheAutocract",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint8",
+          "name": "version",
+          "type": "uint8"
+        }
+      ],
+      "name": "Initialized",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "entity",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes4",
+          "name": "selector",
+          "type": "bytes4"
+        },
+        {
+          "indexed": true,
+          "internalType": "bool",
+          "name": "status",
+          "type": "bool"
+        }
+      ],
+      "name": "SelectorUsageStatusSet",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "who",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes4",
+          "name": "selector",
+          "type": "bytes4"
+        }
+      ],
+      "name": "enforceAutocracyGovernmentDelegatee",
+      "outputs": [],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "who",
+          "type": "address"
+        },
+        {
+          "internalType": "bool",
+          "name": "status",
+          "type": "bool"
+        }
+      ],
+      "name": "setStatusOfMintingBurningSelectorsFor",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "who",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes4",
+          "name": "selector",
+          "type": "bytes4"
+        },
+        {
+          "internalType": "bool",
+          "name": "status",
+          "type": "bool"
+        }
+      ],
+      "name": "setStatusOfSelectorUsageTo",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x8fae297f1d0e883a7413dc04ec7e6b1d2933dd150c786c6daaa031d575027080",
+  "receipt": {
+    "to": "0x4e59b44847b379578588920cA78FbF26c0B4956C",
+    "from": "0x729F2222aaCD99619B8B660b412baE9fCEa3d90F",
+    "contractAddress": null,
+    "transactionIndex": 2,
+    "gasUsed": "353520",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x8ee2abd7084fa624addac1fd99a720d3941f727ef9f2877043d3192e8db81b7a",
+    "transactionHash": "0x8fae297f1d0e883a7413dc04ec7e6b1d2933dd150c786c6daaa031d575027080",
+    "logs": [],
+    "blockNumber": 205025099,
+    "cumulativeGasUsed": "391825",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "c89948f92f050da9009fec708e5c8ce3",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"DelegatedCallsOnly\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"who\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"}],\"name\":\"HasNoRole\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"selector\",\"type\":\"bytes4\"},{\"internalType\":\"address\",\"name\":\"whoCalled\",\"type\":\"address\"}],\"name\":\"IsNotAllowedByTheAutocract\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint8\",\"name\":\"version\",\"type\":\"uint8\"}],\"name\":\"Initialized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"entity\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"bytes4\",\"name\":\"selector\",\"type\":\"bytes4\"},{\"indexed\":true,\"internalType\":\"bool\",\"name\":\"status\",\"type\":\"bool\"}],\"name\":\"SelectorUsageStatusSet\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"who\",\"type\":\"address\"},{\"internalType\":\"bytes4\",\"name\":\"selector\",\"type\":\"bytes4\"}],\"name\":\"enforceAutocracyGovernmentDelegatee\",\"outputs\":[],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"who\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"status\",\"type\":\"bool\"}],\"name\":\"setStatusOfMintingBurningSelectorsFor\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"who\",\"type\":\"address\"},{\"internalType\":\"bytes4\",\"name\":\"selector\",\"type\":\"bytes4\"},{\"internalType\":\"bool\",\"name\":\"status\",\"type\":\"bool\"}],\"name\":\"setStatusOfSelectorUsageTo\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"events\":{\"Initialized(uint8)\":{\"details\":\"Triggered when the contract has been initialized or reinitialized.\"}},\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/diamonds/locusToken/v1/autocracy/LTAutocracyGovernmentFacet.sol\":\"LTAutocracyGovernmentFacet\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":1},\"remappings\":[],\"viaIR\":true},\"sources\":{\"@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.9.0) (proxy/utils/Initializable.sol)\\n\\npragma solidity ^0.8.2;\\n\\nimport \\\"../../utils/AddressUpgradeable.sol\\\";\\n\\n/**\\n * @dev This is a base contract to aid in writing upgradeable contracts, or any kind of contract that will be deployed\\n * behind a proxy. Since proxied contracts do not make use of a constructor, it's common to move constructor logic to an\\n * external initializer function, usually called `initialize`. It then becomes necessary to protect this initializer\\n * function so it can only be called once. The {initializer} modifier provided by this contract will have this effect.\\n *\\n * The initialization functions use a version number. Once a version number is used, it is consumed and cannot be\\n * reused. This mechanism prevents re-execution of each \\\"step\\\" but allows the creation of new initialization steps in\\n * case an upgrade adds a module that needs to be initialized.\\n *\\n * For example:\\n *\\n * [.hljs-theme-light.nopadding]\\n * ```solidity\\n * contract MyToken is ERC20Upgradeable {\\n *     function initialize() initializer public {\\n *         __ERC20_init(\\\"MyToken\\\", \\\"MTK\\\");\\n *     }\\n * }\\n *\\n * contract MyTokenV2 is MyToken, ERC20PermitUpgradeable {\\n *     function initializeV2() reinitializer(2) public {\\n *         __ERC20Permit_init(\\\"MyToken\\\");\\n *     }\\n * }\\n * ```\\n *\\n * TIP: To avoid leaving the proxy in an uninitialized state, the initializer function should be called as early as\\n * possible by providing the encoded function call as the `_data` argument to {ERC1967Proxy-constructor}.\\n *\\n * CAUTION: When used with inheritance, manual care must be taken to not invoke a parent initializer twice, or to ensure\\n * that all initializers are idempotent. This is not verified automatically as constructors are by Solidity.\\n *\\n * [CAUTION]\\n * ====\\n * Avoid leaving a contract uninitialized.\\n *\\n * An uninitialized contract can be taken over by an attacker. This applies to both a proxy and its implementation\\n * contract, which may impact the proxy. To prevent the implementation contract from being used, you should invoke\\n * the {_disableInitializers} function in the constructor to automatically lock it when it is deployed:\\n *\\n * [.hljs-theme-light.nopadding]\\n * ```\\n * /// @custom:oz-upgrades-unsafe-allow constructor\\n * constructor() {\\n *     _disableInitializers();\\n * }\\n * ```\\n * ====\\n */\\nabstract contract Initializable {\\n    /**\\n     * @dev Indicates that the contract has been initialized.\\n     * @custom:oz-retyped-from bool\\n     */\\n    uint8 private _initialized;\\n\\n    /**\\n     * @dev Indicates that the contract is in the process of being initialized.\\n     */\\n    bool private _initializing;\\n\\n    /**\\n     * @dev Triggered when the contract has been initialized or reinitialized.\\n     */\\n    event Initialized(uint8 version);\\n\\n    /**\\n     * @dev A modifier that defines a protected initializer function that can be invoked at most once. In its scope,\\n     * `onlyInitializing` functions can be used to initialize parent contracts.\\n     *\\n     * Similar to `reinitializer(1)`, except that functions marked with `initializer` can be nested in the context of a\\n     * constructor.\\n     *\\n     * Emits an {Initialized} event.\\n     */\\n    modifier initializer() {\\n        bool isTopLevelCall = !_initializing;\\n        require(\\n            (isTopLevelCall && _initialized < 1) || (!AddressUpgradeable.isContract(address(this)) && _initialized == 1),\\n            \\\"Initializable: contract is already initialized\\\"\\n        );\\n        _initialized = 1;\\n        if (isTopLevelCall) {\\n            _initializing = true;\\n        }\\n        _;\\n        if (isTopLevelCall) {\\n            _initializing = false;\\n            emit Initialized(1);\\n        }\\n    }\\n\\n    /**\\n     * @dev A modifier that defines a protected reinitializer function that can be invoked at most once, and only if the\\n     * contract hasn't been initialized to a greater version before. In its scope, `onlyInitializing` functions can be\\n     * used to initialize parent contracts.\\n     *\\n     * A reinitializer may be used after the original initialization step. This is essential to configure modules that\\n     * are added through upgrades and that require initialization.\\n     *\\n     * When `version` is 1, this modifier is similar to `initializer`, except that functions marked with `reinitializer`\\n     * cannot be nested. If one is invoked in the context of another, execution will revert.\\n     *\\n     * Note that versions can jump in increments greater than 1; this implies that if multiple reinitializers coexist in\\n     * a contract, executing them in the right order is up to the developer or operator.\\n     *\\n     * WARNING: setting the version to 255 will prevent any future reinitialization.\\n     *\\n     * Emits an {Initialized} event.\\n     */\\n    modifier reinitializer(uint8 version) {\\n        require(!_initializing && _initialized < version, \\\"Initializable: contract is already initialized\\\");\\n        _initialized = version;\\n        _initializing = true;\\n        _;\\n        _initializing = false;\\n        emit Initialized(version);\\n    }\\n\\n    /**\\n     * @dev Modifier to protect an initialization function so that it can only be invoked by functions with the\\n     * {initializer} and {reinitializer} modifiers, directly or indirectly.\\n     */\\n    modifier onlyInitializing() {\\n        require(_initializing, \\\"Initializable: contract is not initializing\\\");\\n        _;\\n    }\\n\\n    /**\\n     * @dev Locks the contract, preventing any future reinitialization. This cannot be part of an initializer call.\\n     * Calling this in the constructor of a contract will prevent that contract from being initialized or reinitialized\\n     * to any version. It is recommended to use this to lock implementation contracts that are designed to be called\\n     * through proxies.\\n     *\\n     * Emits an {Initialized} event the first time it is successfully executed.\\n     */\\n    function _disableInitializers() internal virtual {\\n        require(!_initializing, \\\"Initializable: contract is initializing\\\");\\n        if (_initialized != type(uint8).max) {\\n            _initialized = type(uint8).max;\\n            emit Initialized(type(uint8).max);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the highest version that has been initialized. See {reinitializer}.\\n     */\\n    function _getInitializedVersion() internal view returns (uint8) {\\n        return _initialized;\\n    }\\n\\n    /**\\n     * @dev Returns `true` if the contract is currently initializing. See {onlyInitializing}.\\n     */\\n    function _isInitializing() internal view returns (bool) {\\n        return _initializing;\\n    }\\n}\\n\",\"keccak256\":\"0x89be10e757d242e9b18d5a32c9fbe2019f6d63052bbe46397a430a1d60d7f794\",\"license\":\"MIT\"},\"@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.9.0) (utils/Address.sol)\\n\\npragma solidity ^0.8.1;\\n\\n/**\\n * @dev Collection of functions related to the address type\\n */\\nlibrary AddressUpgradeable {\\n    /**\\n     * @dev Returns true if `account` is a contract.\\n     *\\n     * [IMPORTANT]\\n     * ====\\n     * It is unsafe to assume that an address for which this function returns\\n     * false is an externally-owned account (EOA) and not a contract.\\n     *\\n     * Among others, `isContract` will return false for the following\\n     * types of addresses:\\n     *\\n     *  - an externally-owned account\\n     *  - a contract in construction\\n     *  - an address where a contract will be created\\n     *  - an address where a contract lived, but was destroyed\\n     *\\n     * Furthermore, `isContract` will also return true if the target contract within\\n     * the same transaction is already scheduled for destruction by `SELFDESTRUCT`,\\n     * which only has an effect at the end of a transaction.\\n     * ====\\n     *\\n     * [IMPORTANT]\\n     * ====\\n     * You shouldn't rely on `isContract` to protect against flash loan attacks!\\n     *\\n     * Preventing calls from contracts is highly discouraged. It breaks composability, breaks support for smart wallets\\n     * like Gnosis Safe, and does not provide security since it can be circumvented by calling from a contract\\n     * constructor.\\n     * ====\\n     */\\n    function isContract(address account) internal view returns (bool) {\\n        // This method relies on extcodesize/address.code.length, which returns 0\\n        // for contracts in construction, since the code is only stored at the end\\n        // of the constructor execution.\\n\\n        return account.code.length > 0;\\n    }\\n\\n    /**\\n     * @dev Replacement for Solidity's `transfer`: sends `amount` wei to\\n     * `recipient`, forwarding all available gas and reverting on errors.\\n     *\\n     * https://eips.ethereum.org/EIPS/eip-1884[EIP1884] increases the gas cost\\n     * of certain opcodes, possibly making contracts go over the 2300 gas limit\\n     * imposed by `transfer`, making them unable to receive funds via\\n     * `transfer`. {sendValue} removes this limitation.\\n     *\\n     * https://consensys.net/diligence/blog/2019/09/stop-using-soliditys-transfer-now/[Learn more].\\n     *\\n     * IMPORTANT: because control is transferred to `recipient`, care must be\\n     * taken to not create reentrancy vulnerabilities. Consider using\\n     * {ReentrancyGuard} or the\\n     * https://solidity.readthedocs.io/en/v0.8.0/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].\\n     */\\n    function sendValue(address payable recipient, uint256 amount) internal {\\n        require(address(this).balance >= amount, \\\"Address: insufficient balance\\\");\\n\\n        (bool success, ) = recipient.call{value: amount}(\\\"\\\");\\n        require(success, \\\"Address: unable to send value, recipient may have reverted\\\");\\n    }\\n\\n    /**\\n     * @dev Performs a Solidity function call using a low level `call`. A\\n     * plain `call` is an unsafe replacement for a function call: use this\\n     * function instead.\\n     *\\n     * If `target` reverts with a revert reason, it is bubbled up by this\\n     * function (like regular Solidity function calls).\\n     *\\n     * Returns the raw returned data. To convert to the expected return value,\\n     * use https://solidity.readthedocs.io/en/latest/units-and-global-variables.html?highlight=abi.decode#abi-encoding-and-decoding-functions[`abi.decode`].\\n     *\\n     * Requirements:\\n     *\\n     * - `target` must be a contract.\\n     * - calling `target` with `data` must not revert.\\n     *\\n     * _Available since v3.1._\\n     */\\n    function functionCall(address target, bytes memory data) internal returns (bytes memory) {\\n        return functionCallWithValue(target, data, 0, \\\"Address: low-level call failed\\\");\\n    }\\n\\n    /**\\n     * @dev Same as {xref-Address-functionCall-address-bytes-}[`functionCall`], but with\\n     * `errorMessage` as a fallback revert reason when `target` reverts.\\n     *\\n     * _Available since v3.1._\\n     */\\n    function functionCall(\\n        address target,\\n        bytes memory data,\\n        string memory errorMessage\\n    ) internal returns (bytes memory) {\\n        return functionCallWithValue(target, data, 0, errorMessage);\\n    }\\n\\n    /**\\n     * @dev Same as {xref-Address-functionCall-address-bytes-}[`functionCall`],\\n     * but also transferring `value` wei to `target`.\\n     *\\n     * Requirements:\\n     *\\n     * - the calling contract must have an ETH balance of at least `value`.\\n     * - the called Solidity function must be `payable`.\\n     *\\n     * _Available since v3.1._\\n     */\\n    function functionCallWithValue(address target, bytes memory data, uint256 value) internal returns (bytes memory) {\\n        return functionCallWithValue(target, data, value, \\\"Address: low-level call with value failed\\\");\\n    }\\n\\n    /**\\n     * @dev Same as {xref-Address-functionCallWithValue-address-bytes-uint256-}[`functionCallWithValue`], but\\n     * with `errorMessage` as a fallback revert reason when `target` reverts.\\n     *\\n     * _Available since v3.1._\\n     */\\n    function functionCallWithValue(\\n        address target,\\n        bytes memory data,\\n        uint256 value,\\n        string memory errorMessage\\n    ) internal returns (bytes memory) {\\n        require(address(this).balance >= value, \\\"Address: insufficient balance for call\\\");\\n        (bool success, bytes memory returndata) = target.call{value: value}(data);\\n        return verifyCallResultFromTarget(target, success, returndata, errorMessage);\\n    }\\n\\n    /**\\n     * @dev Same as {xref-Address-functionCall-address-bytes-}[`functionCall`],\\n     * but performing a static call.\\n     *\\n     * _Available since v3.3._\\n     */\\n    function functionStaticCall(address target, bytes memory data) internal view returns (bytes memory) {\\n        return functionStaticCall(target, data, \\\"Address: low-level static call failed\\\");\\n    }\\n\\n    /**\\n     * @dev Same as {xref-Address-functionCall-address-bytes-string-}[`functionCall`],\\n     * but performing a static call.\\n     *\\n     * _Available since v3.3._\\n     */\\n    function functionStaticCall(\\n        address target,\\n        bytes memory data,\\n        string memory errorMessage\\n    ) internal view returns (bytes memory) {\\n        (bool success, bytes memory returndata) = target.staticcall(data);\\n        return verifyCallResultFromTarget(target, success, returndata, errorMessage);\\n    }\\n\\n    /**\\n     * @dev Same as {xref-Address-functionCall-address-bytes-}[`functionCall`],\\n     * but performing a delegate call.\\n     *\\n     * _Available since v3.4._\\n     */\\n    function functionDelegateCall(address target, bytes memory data) internal returns (bytes memory) {\\n        return functionDelegateCall(target, data, \\\"Address: low-level delegate call failed\\\");\\n    }\\n\\n    /**\\n     * @dev Same as {xref-Address-functionCall-address-bytes-string-}[`functionCall`],\\n     * but performing a delegate call.\\n     *\\n     * _Available since v3.4._\\n     */\\n    function functionDelegateCall(\\n        address target,\\n        bytes memory data,\\n        string memory errorMessage\\n    ) internal returns (bytes memory) {\\n        (bool success, bytes memory returndata) = target.delegatecall(data);\\n        return verifyCallResultFromTarget(target, success, returndata, errorMessage);\\n    }\\n\\n    /**\\n     * @dev Tool to verify that a low level call to smart-contract was successful, and revert (either by bubbling\\n     * the revert reason or using the provided one) in case of unsuccessful call or if target was not a contract.\\n     *\\n     * _Available since v4.8._\\n     */\\n    function verifyCallResultFromTarget(\\n        address target,\\n        bool success,\\n        bytes memory returndata,\\n        string memory errorMessage\\n    ) internal view returns (bytes memory) {\\n        if (success) {\\n            if (returndata.length == 0) {\\n                // only check isContract if the call was successful and the return data is empty\\n                // otherwise we already know that it was a contract\\n                require(isContract(target), \\\"Address: call to non-contract\\\");\\n            }\\n            return returndata;\\n        } else {\\n            _revert(returndata, errorMessage);\\n        }\\n    }\\n\\n    /**\\n     * @dev Tool to verify that a low level call was successful, and revert if it wasn't, either by bubbling the\\n     * revert reason or using the provided one.\\n     *\\n     * _Available since v4.3._\\n     */\\n    function verifyCallResult(\\n        bool success,\\n        bytes memory returndata,\\n        string memory errorMessage\\n    ) internal pure returns (bytes memory) {\\n        if (success) {\\n            return returndata;\\n        } else {\\n            _revert(returndata, errorMessage);\\n        }\\n    }\\n\\n    function _revert(bytes memory returndata, string memory errorMessage) private pure {\\n        // Look for revert reason and bubble it up if present\\n        if (returndata.length > 0) {\\n            // The easiest way to bubble the revert reason is using memory via assembly\\n            /// @solidity memory-safe-assembly\\n            assembly {\\n                let returndata_size := mload(returndata)\\n                revert(add(32, returndata), returndata_size)\\n            }\\n        } else {\\n            revert(errorMessage);\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0x9c80f545915582e63fe206c6ce27cbe85a86fc10b9cd2a0e8c9488fb7c2ee422\",\"license\":\"MIT\"},\"contracts/diamonds/facetsFramework/diamondBase/facets/BaseFacet.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\nimport \\\"@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol\\\";\\r\\n\\r\\nimport \\\"../libraries/PausabilityLib.sol\\\";\\r\\nimport \\\"../libraries/InitializerLib.sol\\\";\\r\\nimport \\\"../libraries/RolesManagementLib.sol\\\";\\r\\n\\r\\nabstract contract BaseFacet is Initializable {\\r\\n    error DelegatedCallsOnly();\\r\\n    \\r\\n    /// @dev An address of the actual contract instance. The original address as part of the context.\\r\\n    address internal immutable __self = address(this);\\r\\n\\r\\n    function enforceDelegatedOnly() internal view {\\r\\n        if (address(this) == __self || !InitializerLib.get().initialized) {\\r\\n            revert DelegatedCallsOnly();\\r\\n        }\\r\\n    }\\r\\n\\r\\n    /// @dev The body of the modifier is copied into a faucet sources, so to make a small gas\\r\\n    /// optimization - the modifier uses an internal function call.\\r\\n    modifier delegatedOnly {\\r\\n        enforceDelegatedOnly();\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    modifier internalOnly {\\r\\n        RolesManagementLib.enforceSenderRole(RolesManagementLib.INTERNAL_ROLE);\\r\\n        _;\\r\\n    }\\r\\n}\",\"keccak256\":\"0x2a062649afde4b46419cf35b5662c3fa217d03656ebd83d83751c57fde0b3c90\",\"license\":\"MIT\"},\"contracts/diamonds/facetsFramework/diamondBase/libraries/InitializerLib.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\nlibrary InitializerLib {\\r\\n    error AlreadyInitialized();\\r\\n    error NotImplemented();\\r\\n\\r\\n    bytes32 constant INITIALIZER_STORAGE_POSITION = keccak256(\\\"diamond.standard.diamond.storage.locus.initializer\\\");\\r\\n\\r\\n    struct Storage {\\r\\n        bool initialized;\\r\\n    }\\r\\n\\r\\n    function get() internal pure returns (Storage storage s) {\\r\\n        bytes32 position = INITIALIZER_STORAGE_POSITION;\\r\\n        assembly {\\r\\n            s.slot := position\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function reset() internal {\\r\\n        get().initialized = false;\\r\\n    }\\r\\n\\r\\n    function initialize() internal {\\r\\n        if (get().initialized) {\\r\\n            revert AlreadyInitialized();\\r\\n        } else {\\r\\n            get().initialized = true;\\r\\n        }\\r\\n    }\\r\\n}\",\"keccak256\":\"0xc0f1dacbaff19bbca3f59fe381f195906a7d5d87b17f27d5f81c8f3affbf4060\",\"license\":\"MIT\"},\"contracts/diamonds/facetsFramework/diamondBase/libraries/PausabilityLib.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\nlibrary PausabilityLib {\\r\\n    error OnlyWhenNotPaused();\\r\\n    \\r\\n    bytes32 constant PAUSABILITY_STORAGE_POSITION = keccak256(\\\"diamond.standard.diamond.storage.locus.pausability\\\");\\r\\n\\r\\n    struct Storage {\\r\\n        bool paused;\\r\\n    }\\r\\n\\r\\n    function get() internal pure returns (Storage storage s) {\\r\\n        bytes32 position = PAUSABILITY_STORAGE_POSITION;\\r\\n        assembly {\\r\\n            s.slot := position\\r\\n        }\\r\\n    }\\r\\n}\",\"keccak256\":\"0x99306f533b5797bd58d92b2ac976324d14b61b7b426c90083f2f060f75863686\",\"license\":\"MIT\"},\"contracts/diamonds/facetsFramework/diamondBase/libraries/RolesManagementLib.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\nlibrary RolesManagementLib {\\r\\n    event RoleSet(address who, bytes32 role, bool isGrantedOrRevoked);\\r\\n\\r\\n    error HasNoRole(address who, bytes32 role);\\r\\n    error HasNoRoles(address who, bytes32[] roles);\\r\\n\\r\\n    bytes32 constant ROLES_MANAGEMENT_STORAGE_POSITION = keccak256(\\\"diamond.standard.diamond.storage.locus.roles\\\");\\r\\n\\r\\n    // roles to check with EOA\\r\\n    bytes32 public constant PAUSER_ROLE = keccak256('PAUSER_ROLE');\\r\\n    bytes32 public constant OWNER_ROLE = keccak256('OWNER_ROLE');\\r\\n\\r\\n    // A special role - must not be removed.\\r\\n    bytes32 public constant INTERNAL_ROLE = keccak256('INTERNAL_ROLE');\\r\\n\\r\\n    // roles to check with smart-contracts\\r\\n    bytes32 public constant ALLOWED_TOKEN_ROLE = keccak256('ALLOWED_TOKEN_ROLE');\\r\\n\\r\\n    struct Storage {\\r\\n        mapping(bytes32 => mapping(address => bool)) roles;\\r\\n    }\\r\\n\\r\\n    function get() internal pure returns (Storage storage s) {\\r\\n        bytes32 position = ROLES_MANAGEMENT_STORAGE_POSITION;\\r\\n        assembly {\\r\\n            s.slot := position\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function enforceRole(address who, bytes32 role) internal view {\\r\\n        if (role == INTERNAL_ROLE) {\\r\\n            if (who != address(this)) {\\r\\n                revert HasNoRole(who, INTERNAL_ROLE);\\r\\n            }\\r\\n        } else if (!get().roles[role][who]) {\\r\\n            revert HasNoRole(who, role);\\r\\n        }\\r\\n        \\r\\n    }\\r\\n\\r\\n    function hasRole(address who, bytes32 role) internal view returns(bool) {\\r\\n        return get().roles[role][who];\\r\\n    }\\r\\n\\r\\n    function enforceSenderRole(bytes32 role) internal view {\\r\\n        enforceRole(msg.sender, role);\\r\\n    }\\r\\n\\r\\n    function grantRole(address who, bytes32 role) internal {\\r\\n        get().roles[role][who] = true; \\r\\n        emit RoleSet(who, role, true);\\r\\n    }\\r\\n\\r\\n    function revokeRole(address who, bytes32 role) internal {\\r\\n        get().roles[role][who] = false; \\r\\n        emit RoleSet(who, role, false);\\r\\n    }\\r\\n\\r\\n    function enforceEitherOfRoles(address who, bytes32[] memory roles) internal view {\\r\\n        bool result;\\r\\n        for (uint256 i = 0; i < roles.length; i++) {\\r\\n            if (roles[i] == INTERNAL_ROLE) {\\r\\n                result = result || who == address(this);\\r\\n            } else {\\r\\n                result = result || get().roles[roles[i]][who];\\r\\n            }\\r\\n        }\\r\\n        if (!result) {\\r\\n            revert HasNoRoles(who, roles);\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function enforceSenderEitherOfRoles(bytes32[] memory roles) internal view {\\r\\n        enforceEitherOfRoles(msg.sender, roles);\\r\\n    }\\r\\n}\",\"keccak256\":\"0x63362b8189cb9c1cec32aade5a5fdf3b2548761cf124dfe8ded723569ce2c00d\",\"license\":\"MIT\"},\"contracts/diamonds/locusToken/v1/autocracy/LTAutocracyGovernmentFacet.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\nimport \\\"../../../facetsFramework/diamondBase/facets/BaseFacet.sol\\\";\\r\\nimport \\\"./libraries/AutocracyGovernmentLib.sol\\\";\\r\\nimport \\\"./libraries/AutocracyLib.sol\\\";\\r\\nimport \\\"./interfaces/ILTAutocracyGovernmentFacet.sol\\\";\\r\\nimport \\\"./interfaces/ILTAutocracyFacet.sol\\\";\\r\\n\\r\\ncontract LTAutocracyGovernmentFacet is BaseFacet, ILTAutocracyGovernmentFacet {\\r\\n    function enforceAutocracyGovernmentDelegatee(address who, bytes4 selector) external view override internalOnly {\\r\\n        if (RolesManagementLib.hasRole(who, AutocracyLib.AUTOCRAT_ROLE)) {\\r\\n            return;\\r\\n        }\\r\\n        if (!AutocracyGovernmentLib.get().entityToSelectorToAllowedToCall[who][selector]) {\\r\\n            revert IsNotAllowedByTheAutocract(selector, who);\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function _setStatusOfSelectorUsageTo(address who, bytes4 selector, bool status) internal {\\r\\n        RolesManagementLib.enforceSenderRole(AutocracyLib.AUTOCRAT_ROLE);\\r\\n        AutocracyGovernmentLib.get().entityToSelectorToAllowedToCall[who][selector] = status;\\r\\n        emit SelectorUsageStatusSet(who, selector, status);\\r\\n    }\\r\\n\\r\\n    function setStatusOfSelectorUsageTo(address who, bytes4 selector, bool status) external override delegatedOnly {\\r\\n        _setStatusOfSelectorUsageTo(who, selector, status);\\r\\n    }\\r\\n\\r\\n    function setStatusOfMintingBurningSelectorsFor(address who, bool status) external override delegatedOnly {\\r\\n        _setStatusOfSelectorUsageTo(who, ILTAutocracyFacet.mint.selector, status);\\r\\n        _setStatusOfSelectorUsageTo(who, ILTAutocracyFacet.burn.selector, status);\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0xe5926b3bc84241d6daf4693dd1e247e35fe10912e73ce6180864e87c0209c56d\",\"license\":\"MIT\"},\"contracts/diamonds/locusToken/v1/autocracy/interfaces/ILTAutocracyFacet.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\ninterface ILTAutocracyFacet {\\r\\n    function establishAutocracy() external;\\r\\n\\r\\n    function defeatAutocracyForever() external;\\r\\n\\r\\n    function burn(address from, uint256 amount) external;\\r\\n\\r\\n    function mint(address who, uint256 amount) external;\\r\\n\\r\\n    function areAutocratsReign() external view returns (bool);\\r\\n}\\r\\n\",\"keccak256\":\"0x92e18095ac748060f0ab66e07d0809b7d3c6b4af2372e59d9d5040de3b702928\",\"license\":\"MIT\"},\"contracts/diamonds/locusToken/v1/autocracy/interfaces/ILTAutocracyGovernmentFacet.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\ninterface ILTAutocracyGovernmentFacet {\\r\\n    event SelectorUsageStatusSet(\\r\\n        address indexed entity,\\r\\n        bytes4 indexed selector,\\r\\n        bool indexed status\\r\\n    );\\r\\n    error IsNotAllowedByTheAutocract(bytes4 selector, address whoCalled);\\r\\n\\r\\n    function enforceAutocracyGovernmentDelegatee(\\r\\n        address who,\\r\\n        bytes4 selector\\r\\n    ) external view;\\r\\n\\r\\n    function setStatusOfSelectorUsageTo(\\r\\n        address who,\\r\\n        bytes4 selector,\\r\\n        bool status\\r\\n    ) external;\\r\\n\\r\\n    function setStatusOfMintingBurningSelectorsFor(\\r\\n        address who,\\r\\n        bool status\\r\\n    ) external;\\r\\n}\\r\\n\",\"keccak256\":\"0x0d031c3b983e4fc1d3ec4f9e9fcb61c0aef150c74e97c352b5ac5f19368a02f0\",\"license\":\"MIT\"},\"contracts/diamonds/locusToken/v1/autocracy/libraries/AutocracyGovernmentLib.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\n// look for the Diamond.sol in the hardhat-deploy/solc_0.8/Diamond.sol\\r\\nlibrary AutocracyGovernmentLib {\\r\\n    bytes32 constant LOCUS_TOKEN_AUTOCRACY_GOVERNMENT_STORAGE_POSITION = keccak256(\\\"diamond.standard.diamond.storage.locus_token.autocracy.government\\\");\\r\\n\\r\\n    struct Storage {\\r\\n        // entity (caller) => selector => is allowed to call that function\\r\\n        mapping(address => mapping(bytes4 => bool)) entityToSelectorToAllowedToCall;\\r\\n    }\\r\\n\\r\\n    function get() internal pure returns (Storage storage s) {\\r\\n        bytes32 position = LOCUS_TOKEN_AUTOCRACY_GOVERNMENT_STORAGE_POSITION;\\r\\n        assembly {\\r\\n            s.slot := position\\r\\n        }\\r\\n    }\\r\\n}\",\"keccak256\":\"0x34a98aabff832c315886988526e971557048eb7248f19e0c72f63ff5657be4bb\",\"license\":\"MIT\"},\"contracts/diamonds/locusToken/v1/autocracy/libraries/AutocracyLib.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.18;\\r\\n\\r\\n// look for the Diamond.sol in the hardhat-deploy/solc_0.8/Diamond.sol\\r\\nlibrary AutocracyLib {\\r\\n    bytes32 constant LOCUS_TOKEN_AUTOCRACY_STORAGE_POSITION = keccak256(\\\"diamond.standard.diamond.storage.locus_token.autocracy\\\");\\r\\n\\r\\n    bytes32 public constant AUTOCRAT_ROLE = keccak256('AUTOCRAT_ROLE');\\r\\n    bytes32 public constant REVOLUTIONARY_ROLE = keccak256('REVOLUTIONARY_ROLE');\\r\\n\\r\\n    struct Storage {\\r\\n        // True - then the tokens can be transferrable only to a restricted set of addresses.\\r\\n        bool isAutocracyEnabled;\\r\\n    }\\r\\n\\r\\n    function get() internal pure returns (Storage storage s) {\\r\\n        bytes32 position = LOCUS_TOKEN_AUTOCRACY_STORAGE_POSITION;\\r\\n        assembly {\\r\\n            s.slot := position\\r\\n        }\\r\\n    }\\r\\n}\",\"keccak256\":\"0xa6e9c462b62a97dbf4947d4561e2a200fd94a4d377ec2b49b753575e9e8544f7\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x60a08060405234610023573060805261044390816100298239608051816103590152f35b600080fdfe604060808152600436101561001357600080fd5b6000803560e01c806382aab2811461014a578063be2814d8146100b45763c186d95a1461003f57600080fd5b346100b157816003193601126100b157610057610203565b61005f61021e565b9030330361007457906100719161026e565b80f35b8351632bc93d7960e21b81523360048201527fddd94edc7da5bca8f576c77964a4737ba5172c728e2d539e672f0229d1e9ec2d6024820152604490fd5b80fd5b509034610146576060366003190112610146576100cf610203565b6100d761021e565b9060443592831515809403610142576100ee610356565b6100f66102ee565b6100ff82610235565b6001600160e01b0319939093168086526020939093528420805460ff191660ff85161790556001600160a01b03166000805160206103ee8339815191528480a480f35b8480fd5b5080fd5b509034610146578060031936011261014657610164610203565b90602435918215158093036101ff5761017b610356565b6101836102ee565b61018c81610235565b6340c10f1960e01b9081865260205282852060ff1990818154169060ff871680921790556101e060018060a01b03851694876000805160206103ee8339815191529587878c80a46101db6102ee565b610235565b94632770a7eb60e21b958689526020528720918254161790558480a480f35b8380fd5b600435906001600160a01b038216820361021957565b600080fd5b602435906001600160e01b03198216820361021957565b6001600160a01b031660009081527f7866d865a6ae5515c23f6b582acd263a41599a8e7fcea7b1b93e6eebbf73c2956020526040902090565b6001600160a01b03811660008181526000805160206103ce83398151915260205260408120549192909160ff166102e85760ff916102ad604092610235565b9463ffffffff60e01b1694858252602052205416156102ca575050565b60449250604051916306935ca760e41b835260048301526024820152fd5b50505050565b3360009081526000805160206103ce83398151915260205260409020547f1f5a72ff210e1987f45ef6999da4be546bb5ea71f60de5cbc44d2ddb6c29d7169060ff16156103385750565b60449060405190632bc93d7960e21b82523360048301526024820152fd5b307f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03161480156103a1575b61038f57565b604051639f357e6b60e01b8152600490fd5b5060ff7f9f1709bc5ab0578be51bb81e11b02cdd9c21aa603d7325a8a7551bbd5685a00554161561038956fedaf4e0039e06efc15f0aa13f58517bb65a6ff7e78ed13e11b7ffe60077941653b20ab1fd7f4fd8cbc6357d0cbb035acaa00399a77cb2c6dcb7935b7e00bdfce8a2646970667358221220bcc2df514c38425cab5e0e05be5a0f826bbae6a04b4f7b64c2209d4918801f0a64736f6c63430008130033",
+  "deployedBytecode": "0x604060808152600436101561001357600080fd5b6000803560e01c806382aab2811461014a578063be2814d8146100b45763c186d95a1461003f57600080fd5b346100b157816003193601126100b157610057610203565b61005f61021e565b9030330361007457906100719161026e565b80f35b8351632bc93d7960e21b81523360048201527fddd94edc7da5bca8f576c77964a4737ba5172c728e2d539e672f0229d1e9ec2d6024820152604490fd5b80fd5b509034610146576060366003190112610146576100cf610203565b6100d761021e565b9060443592831515809403610142576100ee610356565b6100f66102ee565b6100ff82610235565b6001600160e01b0319939093168086526020939093528420805460ff191660ff85161790556001600160a01b03166000805160206103ee8339815191528480a480f35b8480fd5b5080fd5b509034610146578060031936011261014657610164610203565b90602435918215158093036101ff5761017b610356565b6101836102ee565b61018c81610235565b6340c10f1960e01b9081865260205282852060ff1990818154169060ff871680921790556101e060018060a01b03851694876000805160206103ee8339815191529587878c80a46101db6102ee565b610235565b94632770a7eb60e21b958689526020528720918254161790558480a480f35b8380fd5b600435906001600160a01b038216820361021957565b600080fd5b602435906001600160e01b03198216820361021957565b6001600160a01b031660009081527f7866d865a6ae5515c23f6b582acd263a41599a8e7fcea7b1b93e6eebbf73c2956020526040902090565b6001600160a01b03811660008181526000805160206103ce83398151915260205260408120549192909160ff166102e85760ff916102ad604092610235565b9463ffffffff60e01b1694858252602052205416156102ca575050565b60449250604051916306935ca760e41b835260048301526024820152fd5b50505050565b3360009081526000805160206103ce83398151915260205260409020547f1f5a72ff210e1987f45ef6999da4be546bb5ea71f60de5cbc44d2ddb6c29d7169060ff16156103385750565b60449060405190632bc93d7960e21b82523360048301526024820152fd5b307f00000000000000000000000000000000000000000000000000000000000000006001600160a01b03161480156103a1575b61038f57565b604051639f357e6b60e01b8152600490fd5b5060ff7f9f1709bc5ab0578be51bb81e11b02cdd9c21aa603d7325a8a7551bbd5685a00554161561038956fedaf4e0039e06efc15f0aa13f58517bb65a6ff7e78ed13e11b7ffe60077941653b20ab1fd7f4fd8cbc6357d0cbb035acaa00399a77cb2c6dcb7935b7e00bdfce8a2646970667358221220bcc2df514c38425cab5e0e05be5a0f826bbae6a04b4f7b64c2209d4918801f0a64736f6c63430008130033",
+  "libraries": [
+    "TDLib",
+    "LTLib",
+    "InitializerLib",
+    "PausabilityLib",
+    "RolesManagementLib",
+    "AutocracyLib",
+    "AutocracyGovernmentLib"
+  ],
+  "devdoc": {
+    "events": {
+      "Initialized(uint8)": {
+        "details": "Triggered when the contract has been initialized or reinitialized."
+      }
+    },
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 6,
+        "contract": "contracts/diamonds/locusToken/v1/autocracy/LTAutocracyGovernmentFacet.sol:LTAutocracyGovernmentFacet",
+        "label": "_initialized",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_uint8"
+      },
+      {
+        "astId": 9,
+        "contract": "contracts/diamonds/locusToken/v1/autocracy/LTAutocracyGovernmentFacet.sol:LTAutocracyGovernmentFacet",
+        "label": "_initializing",
+        "offset": 1,
+        "slot": "0",
+        "type": "t_bool"
+      }
+    ],
+    "types": {
+      "t_bool": {
+        "encoding": "inplace",
+        "label": "bool",
+        "numberOfBytes": "1"
+      },
+      "t_uint8": {
+        "encoding": "inplace",
+        "label": "uint8",
+        "numberOfBytes": "1"
+      }
+    }
+  }
+}

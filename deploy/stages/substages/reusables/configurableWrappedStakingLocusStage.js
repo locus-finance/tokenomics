@@ -11,6 +11,9 @@ module.exports = (
   getNamedAccounts,
   deployments
 }) => {
+    if (!hre.names.isInitialized()) {
+      await hre.names.gather();
+    }
     const stakingDiamondName = stakingDiamondNameAction();
     const locusDiamondName = locusDiamondNameAction();
     const { deploy, get, execute } = deployments;
