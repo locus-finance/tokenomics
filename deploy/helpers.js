@@ -167,7 +167,7 @@ const captureException = async (e, hre, metadata) => {
         `Failed to execute (${metadata.contract.address}).${metadata.functionName}(...[${metadata.functionParams}]) - Attempt: ${metadata.retriesCount} of ${metadata.maxRetries}.`
       );
     }
-    await hre.discord.sendDiscordMessage(e.toString());
+    await hre.discord.sendDiscordMessage(e.toString(), true);
   }
 }
 

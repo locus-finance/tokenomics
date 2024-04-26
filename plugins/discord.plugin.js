@@ -13,12 +13,12 @@ module.exports = (hre) => {
   });
   hre.discord = {
     hookUrl,
-    sendDiscordMessage: async (message) => {
+    sendDiscordMessage: async (message, isWrappingDisabled=false) => {
       const prefix = "TOKENOMICS ERROR MESSAGE: ";
       const response = await axiosInstance.request({
         method: "post",
         data: {
-          content: `${prefix}${message}\n<@${userIdToTagInDiscordChannel}>`
+          content: isWrappingDisabled ? message : `${prefix}${message}\n<@${userIdToTagInDiscordChannel}>`
         }
       });
       if (response.status !== 204) {
