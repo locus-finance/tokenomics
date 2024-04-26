@@ -10,9 +10,11 @@ const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/he
 describe("AnyFixture", () => {
 
   it('should', async () => {
-    await hre.run('earned', {
-      staking: "0x6390743ccb7928581F61427652330a1aEfD885c2",
-      address: "0x05Be8D9FcB36647032fE5aee73fE0407f29aBAa8"
+    await hre.run('provide', {
+      staking: "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684",
+      locus: "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E",
+      amount: "1083.333333333333333334",
+      confirmations: 0
     });
   });
 

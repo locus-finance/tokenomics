@@ -174,7 +174,7 @@ const captureException = async (e, hre, metadata) => {
   }
 }
 
-const retryTxIfFailed = async (hre, contract, functionName, functionParams, confirmations, maxRetries=100) => {
+const retryTxIfFailed = async (hre, contract, functionName, functionParams, confirmations, maxRetries=10) => {
   let retriesCount = 0;
   while (true) {
     let estimatedGas;
@@ -182,7 +182,7 @@ const retryTxIfFailed = async (hre, contract, functionName, functionParams, conf
       estimatedGas = await contract.estimateGas[functionName](...functionParams);
     } catch (e) {
       await captureException(e, hre, {contract, functionName, functionParams});
-      console.log(`Cannot perform tx. Reason: ${e}\nRetrying...`);
+      console.log(`Cannot perform tx. Reason: ${e}\nRetrying (${retriesCount}/${maxRetries})...`);
       retriesCount++;
       if (retriesCount >= maxRetries) {
         const exception = new Error(`Max retries count has been reached: ${maxRetries}`);
@@ -193,7 +193,9 @@ const retryTxIfFailed = async (hre, contract, functionName, functionParams, conf
     }
     if (estimatedGas > 0) {
       const receipt = await contract[functionName](...functionParams);
-      await receipt.wait(confirmations);
+      if (confirmations > 0) {
+        await receipt.wait(confirmations);
+      }
       return {
         receipt,
         gas: estimatedGas

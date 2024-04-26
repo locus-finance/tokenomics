@@ -21,21 +21,22 @@ module.exports = (task) =>
       await hre.run('mint', {
         locus,
         amount: amount,
-        address: deployer
+        address: deployer,
+        confirmations
       });
       
-      const locusStakingName = staking === '' ? hre.names.internal.diamonds.autoreflectiveStaking.proxy : staking;
-      const locusTokenName = locus === '' ? hre.names.internal.diamonds.locusToken.proxy : locus;
+      const locusStakingAddress = staking === '' ? (await hre.deployments.get(hre.names.internal.diamonds.autoreflectiveStaking.proxy)).address : staking;
+      const locusTokenAddress = locus === '' ? (await hre.deployments.get(hre.names.internal.diamonds.locusToken.proxy)).address : locus;
 
-      console.log(`Using hre.names - Staking Diamond: ${locusStakingName}, Locus instance name: ${locusTokenName}`);
+      console.log(`Using hre.names - Staking Diamond: ${locusStakingAddress}, Locus instance name: ${locusTokenAddress}`);
 
       const autoreflectiveStaking = await hre.ethers.getContractAt(
         hre.names.internal.diamonds.autoreflectiveStaking.interface,
-        (await hre.deployments.get(locusStakingName)).address
+        locusStakingAddress
       );
       const locusToken = await hre.ethers.getContractAt(
         hre.names.internal.diamonds.locusToken.interface,
-        (await hre.deployments.get(locusTokenName)).address
+        locusTokenAddress
       );
 
       const amountWei = hre.ethers.utils.parseEther(amount);
