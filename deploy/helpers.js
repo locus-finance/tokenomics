@@ -164,7 +164,7 @@ const captureException = async (e, hre, metadata) => {
   if (hre.discord !== undefined) {
     if (metadata !== undefined) {
       await hre.discord.sendDiscordMessage(
-        `Failed to execute ${metadata.contract}.${metadata.functionName}(...[${functionParams}]) - ${e.toString()}`
+        `Failed to execute ${metadata.contract}.${metadata.functionName}(...[${metadata.functionParams}]) - ${e.toString()}`
       );
     } else {
       await hre.discord.sendDiscordMessage(
