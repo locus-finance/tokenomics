@@ -164,13 +164,10 @@ const captureException = async (e, hre, metadata) => {
   if (hre.discord !== undefined) {
     if (metadata !== undefined) {
       await hre.discord.sendDiscordMessage(
-        `Failed to execute ${metadata.contract}.${metadata.functionName}(...[${metadata.functionParams}]) - ${e.toString()}`
-      );
-    } else {
-      await hre.discord.sendDiscordMessage(
-        `Failed to execute - ${e.toString()}`
+        `Failed to execute (${metadata.contract.address}).${metadata.functionName}(...[${metadata.functionParams}]) - Attempt: ${metadata.retriesCount} of ${metadata.maxRetries}.`
       );
     }
+    await hre.discord.sendDiscordMessage(e.toString());
   }
 }
 
@@ -181,12 +178,12 @@ const retryTxIfFailed = async (hre, contract, functionName, functionParams, conf
     try {
       estimatedGas = await contract.estimateGas[functionName](...functionParams);
     } catch (e) {
-      await captureException(e, hre, {contract, functionName, functionParams});
+      await captureException(e, hre, {contract, functionName, functionParams, retriesCount, maxRetries});
       console.log(`Cannot perform tx. Reason: ${e}\nRetrying (${retriesCount}/${maxRetries})...`);
       retriesCount++;
       if (retriesCount >= maxRetries) {
         const exception = new Error(`Max retries count has been reached: ${maxRetries}`);
-        await captureException(exception, hre, {contract, functionName, functionParams});
+        await captureException(exception, hre, {contract, functionName, functionParams, retriesCount, maxRetries});
         throw exception;
       }
       continue;
