@@ -22,7 +22,7 @@ module.exports = (task) =>
       const locusStakingAddress = staking === '' ? (await hre.deployments.get(hre.names.internal.diamonds.autoreflectiveStaking.proxy)).address : staking;
       const locusTokenAddress = locus === '' ? (await hre.deployments.get(hre.names.internal.diamonds.locusToken.proxy)).address : locus;
 
-      console.log(`Using hre.names - Staking Diamond: ${locusStakingAddress}, Locus instance name: ${locusTokenAddress}`);
+      console.log(`Using hre.names - Staking Diamond: ${locusStakingAddress}, Locus instance address: ${locusTokenAddress}`);
 
       const autoreflectiveStaking = await hre.ethers.getContractAt(
         hre.names.internal.diamonds.autoreflectiveStaking.interface,
@@ -48,6 +48,7 @@ module.exports = (task) =>
         console.log(`The deployer has enough funds to provide (${hre.ethers.utils.formatEther(deployerBalance)} LOCUS') - continue...`);
       }
 
+      console.log(autoreflectiveStaking.address);
       const approveTxMetadata = await retryTxIfFailed(
         hre, locusToken, "approve", [autoreflectiveStaking.address, amountWei], confirmations
       );
