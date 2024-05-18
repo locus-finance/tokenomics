@@ -18,12 +18,6 @@ module.exports = (task) =>
       const signers = await hre.ethers.getSigners();
       const deployer = signers[0].address;
       await hre.names.gather();
-      await hre.run('mint', {
-        locus,
-        amount: amount,
-        address: deployer,
-        confirmations
-      });
       
       const locusStakingAddress = staking === '' ? (await hre.deployments.get(hre.names.internal.diamonds.autoreflectiveStaking.proxy)).address : staking;
       const locusTokenAddress = locus === '' ? (await hre.deployments.get(hre.names.internal.diamonds.locusToken.proxy)).address : locus;
@@ -40,6 +34,19 @@ module.exports = (task) =>
       );
 
       const amountWei = hre.ethers.utils.parseEther(amount);
+      
+      const deployerBalance = await locusToken.balanceOf(deployer); 
+      if (deployerBalance.lt(amountWei)) {
+        console.log(`The deployer has not enough funds to provide (${hre.ethers.utils.formatEther(deployerBalance)} LOCUS') - minting ${amount} LOCUS'...`);
+        await hre.run('mint', {
+          locus,
+          amount: amount,
+          address: deployer,
+          confirmations
+        });
+      } else {
+        console.log(`The deployer has enough funds to provide (${hre.ethers.utils.formatEther(deployerBalance)} LOCUS') - continue...`);
+      }
 
       const approveTxMetadata = await retryTxIfFailed(
         hre, locusToken, "approve", [autoreflectiveStaking.address, amountWei], confirmations
