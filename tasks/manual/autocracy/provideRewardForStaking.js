@@ -10,10 +10,11 @@ module.exports = (task) =>
     // wei amount for autoreflective token is 1778563941240000000000 and it has to be until 15 of april 2024
     // wei amount for autoreflective token is 3250000000000000000000
     .addOptionalParam("amount", "Define amount to be provided.", '0', types.string)
-    .addOptionalParam("staking", "Define a custom name of Diamond Staking from hre.names.", '', types.string)
-    .addOptionalParam("locus", "Define a name of Diamond Locus Token from hre.names.", '', types.string)
+    .addOptionalParam("staking", "Define an address of Diamond Staking.", '', types.string)
+    .addOptionalParam("locus", "Define an address of Diamond Locus Token.", '', types.string)
     .addOptionalParam("confirmations", "An amount of confirmations to wait.", 10, types.int)
-    .setAction(async ({ amount, staking, locus, confirmations }, hre) => {
+    .addOptionalParam("mint", "A flag whether the mint should be performed anyway.", false, types.boolean)
+    .setAction(async ({ amount, staking, locus, confirmations, mint }, hre) => {
       if (amount === "0") throw Error("Nothing to provide. Zero is past as amount parameter.");
       const signers = await hre.ethers.getSigners();
       const deployer = signers[0].address;
@@ -22,7 +23,7 @@ module.exports = (task) =>
       const locusStakingAddress = staking === '' ? (await hre.deployments.get(hre.names.internal.diamonds.autoreflectiveStaking.proxy)).address : staking;
       const locusTokenAddress = locus === '' ? (await hre.deployments.get(hre.names.internal.diamonds.locusToken.proxy)).address : locus;
 
-      console.log(`Using hre.names - Staking Diamond: ${locusStakingAddress}, Locus instance address: ${locusTokenAddress}`);
+      console.log(`Using hre.names - Staking Diamond address: ${locusStakingAddress}, Locus instance address: ${locusTokenAddress}`);
 
       const autoreflectiveStaking = await hre.ethers.getContractAt(
         hre.names.internal.diamonds.autoreflectiveStaking.interface,
@@ -36,8 +37,8 @@ module.exports = (task) =>
       const amountWei = hre.ethers.utils.parseEther(amount);
       
       const deployerBalance = await locusToken.balanceOf(deployer); 
-      if (deployerBalance.lt(amountWei)) {
-        console.log(`The deployer has not enough funds to provide (${hre.ethers.utils.formatEther(deployerBalance)} LOCUS') - minting ${amount} LOCUS'...`);
+      if (mint || deployerBalance.lt(amountWei)) {
+        console.log(`The deployer has not enough funds to provide (${hre.ethers.utils.formatEther(deployerBalance)} LOCUS') or the force mint were engaged - minting ${amount} LOCUS'...`);
         await hre.run('mint', {
           locus,
           amount: amount,
@@ -48,7 +49,6 @@ module.exports = (task) =>
         console.log(`The deployer has enough funds to provide (${hre.ethers.utils.formatEther(deployerBalance)} LOCUS') - continue...`);
       }
 
-      console.log(autoreflectiveStaking.address);
       const approveTxMetadata = await retryTxIfFailed(
         hre, locusToken, "approve", [autoreflectiveStaking.address, amountWei], confirmations
       );
