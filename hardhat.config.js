@@ -32,6 +32,7 @@ require("./tasks/manual/stakingOperations/balanceOf")(task);
 require("./tasks/manual/stakingOperations/getReward")(task);
 require("./tasks/manual/stakingOperations/withdraw")(task);
 require("./tasks/manual/stakingOperations/stake")(task);
+require("./tasks/manual/stakingOperations/totalSupply")(task);
 
 require("./tasks/manual/autocracy/mintLocus")(task);
 require("./tasks/manual/autocracy/burnLocus")(task);

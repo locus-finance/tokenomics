@@ -40,7 +40,7 @@ module.exports = async ({
 
   // Injecting pendleEth Vault
   await getFakeDeployment(
-    "",
+    "0xA31eC4C877C65bEa5C5d4c307473624A0B377090",
     hre.names.external.pendleEth,
     save
   );

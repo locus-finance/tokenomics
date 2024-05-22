@@ -9,7 +9,7 @@ module.exports = (task) =>
     .setAction(async ({ address, staking }, hre) => {
       await hre.names.gather();
       address = address !== '' ? address : (await hre.ethers.getSingers())[0].address;
-      staking = staking !== '' ? staking : hre.names.internal.diamonds.locusStaking.proxy;
+      staking = staking !== '' ? staking : hre.names.internal.diamonds.autoreflectiveStaking.proxy;
       const stakingInstance = await hre.ethers.getContractAt(
         hre.names.internal.iERC20,
         (await hre.deployments.get(staking)).address

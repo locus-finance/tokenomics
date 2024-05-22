@@ -9,6 +9,7 @@ module.exports.dependencies = [
   "xArbStakingWithInit",
   "xEthStakingWithInit",
   "xUsdStakingWithInit",
+  "pendleEthStakingWithInit",
   "claim",
   "tracer"
 ];
