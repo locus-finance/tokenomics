@@ -9,14 +9,69 @@ const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/he
 // ALLOWED TO SMELL AND BE LITTERED
 describe("AnyFixture", () => {
 
-  it('should', async () => {
-    await hre.run('provide', {
-      staking: "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684",
-      locus: "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E",
-      amount: "1083.333333333333333334",
-      confirmations: 0
-    });
-  });
+  // it('should', async () => {
+  //   await hre.run('provide', {
+  //     staking: "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684",
+  //     locus: "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E",
+  //     amount: "1083.333333333333333334",
+  //     confirmations: 0
+  //   });
+  // });
+
+  // it('should collect balances', async () => {
+  //   const addresses = [
+  //     "0x722982c9A02e2571D245f18E460914E884AdC892",
+  //     "0xb992E179423D23ad1B51d61779f7a9DF93730CDA",
+  //     "0x18ef63c43b3c5dEA10273A70335d2445B58e2738",
+  //     "0x4C904f5C12B86AAA4cA1d35d52D2c0064618A737",
+  //     "0xBfE0D8d9393704ADdA8C3e4C4030929AAdD205Bb",
+  //     "0x2319ad98c36dfBcd5e99a99685B317A71e14FCB6",
+  //     "0xc9E8DbFc889a2a7192e1c188c5143EAc3417cfF1",
+  //     "0xA28A89C9d6A52F2F5a64E3f3b764ED686FBD76EB",
+  //     "0x75B7ae82aabef46D97C297EEDABb24E675D428EA",
+  //     "0x8Dc80Ba9A5363Af7863B5b9104aF1ecB3AE82703",
+  //     "0x6EAE941D74B4541965a46c5caEE0f52217Eeb913",
+  //     "0x06fE4c621A486D755d28e903631B01B07Ab53Dec",
+  //     "0x036d6794fdDE4b5c4ED216503d0717783dF900AA",
+  //     "0x012E414b3043E5de1714Cc0a03fA6E0125EFD80E",
+  //     "0x7701eA24fF3F7f2d27a490Fd56be79f934A513Dc",
+  //     "0x0244dEf181972d20b50548c1a6F4b366488be7AA",
+  //     "0xC80c40f6222659589CfB4Ec66502561E5209FbB8",
+  //     "0x18acce43e77897c295700946386B85d0bb1f5A65",
+  //     "0xf793859eC763477EE2f282186eBB2Fb2E6A71BbA",
+  //     "0x71B8976d5A647a5ECCE880fF426bDa9AE431CEfe",
+  //     "0x423bF3038EAEE9cB3880DDdc44b8AaA543Aa5B4A",
+  //     "0x604Fd492376548F6AF577107F4B6e58999dF12A1",
+  //     "0x805EBB94084e01da57c4bc70B6FE414aF9148596",
+  //     "0x145a254E3B71B3D812E6652989FD1c4db676cE52",
+  //     "0x05Be8D9FcB36647032fE5aee73fE0407f29aBAa8",
+  //     "0x19bddDcd62159bff07451D3A784497c0A1e08249",
+  //     "0x149421136d0C2CfFB590e3f8f0cB4CC5415335b6",
+  //     "0x67364e192dC953AA4C298E334f519Aa8d85b114f",
+  //     "0x2C1c633AF2261652055eC9e092ca3b1DFE3fDbBf",
+  //     "0x00BdE02A876D67C22E46F4De7AbB73178061D577",
+  //     "0x89c30E3Af15D210736b2918fbD655c9842Fd74f7"
+  //   ];
+  //   const locusAddr = "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E";
+  //   const stLocusAddr = "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684";
+  //   let locusBalances = "";
+  //   let stLocusBalances = "";
+  //   for (const address of addresses) {
+  //     const locusBalance = await hre.run('locus', {
+  //       address,
+  //       locus: locusAddr
+  //     });
+  //     const stLocusBalance = await hre.run('locus', {
+  //       address,
+  //       locus: stLocusAddr
+  //     });
+  //     locusBalances = `${locusBalances}\n${hre.ethers.utils.formatEther(locusBalance)}`;
+  //     stLocusBalances = `${stLocusBalances}\n${hre.ethers.utils.formatEther(stLocusBalance)}`;
+  //   }
+  //   console.log(locusBalances);
+  //   console.log("---");
+  //   console.log(stLocusBalances);
+  // });
 
   // it('should test', async () => {
   //   await hre.names.gather();
@@ -66,12 +121,12 @@ describe("AnyFixture", () => {
   //   await hre.names.gather();
   //   const staking = await hre.ethers.getContractAt(
   //     hre.names.internal.diamonds.locusXArbTokensStaking.interface,
-  //     "0x6C447230F098CDdB62f6AEaeEc25C27E8b90B25e"
+  //     "0x24d6D6af23Cd865B4Dee7f169CA60Bf07B4DD9AE"
   //   );
 
-  //   const xArbToUsd = 1.162550462795565;//1.03;
+  //   const pendleEthToUsd = 1.162550462795565;//1.03;
   //   const locusToUsdPrice = 0.994897;//1.02;
-  //   const rewardAdded = 3000;
+  //   const rewardAdded = 10000;
   //   const ts = parseFloat(hre.ethers.utils.formatUnits(await staking.totalSupply(), 6));
 
   //   const yearlyRewardAdded = rewardAdded * 12;

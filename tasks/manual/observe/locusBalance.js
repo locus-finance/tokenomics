@@ -9,11 +9,12 @@ module.exports = (task) =>
     .setAction(async ({ address, locus }, hre) => {
       await hre.names.gather();
       address = address !== '' ? address : (await hre.ethers.getSingers())[0].address;
-      locus = locus !== '' ? locus : hre.names.internal.diamonds.locusToken.proxy;
+      locus = locus !== '' ? locus : (await hre.deployments.get(hre.names.internal.diamonds.locusToken.proxy)).address;
       const locusInstance = await hre.ethers.getContractAt(
         hre.names.internal.iERC20,
-        (await hre.deployments.get(locus)).address
+        locus
       );
       const result = await locusInstance.balanceOf(address);
       console.log(`LOCUS balance of address (${address}): ${hre.ethers.utils.formatEther(result)}`);
+      return result;
     });
