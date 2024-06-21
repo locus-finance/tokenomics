@@ -26,6 +26,7 @@ require("./tasks/manual/observe/printSendingsQueue")(task);
 require("./tasks/manual/observe/printLastDeposits")(task);
 require("./tasks/manual/observe/printLastWithdrawals")(task);
 require("./tasks/manual/observe/printEvents")(task);
+require("./tasks/manual/observe/printRolesOf")(task);
 
 require("./tasks/manual/stakingOperations/earned")(task);
 require("./tasks/manual/stakingOperations/balanceOf")(task);
@@ -123,4 +124,16 @@ module.exports = {
     disambiguatePaths: false,
     runOnCompile: true,
   },
+  customTokenomicsConfig: {
+    roles: [
+      "PAUSER_ROLE",
+      "OWNER_ROLE",
+      "REWARD_DISTRIBUTOR_ROLE",
+      "ALLOWED_TO_STAKE_FOR_ROLE",
+      "DELAYED_SENDINGS_QUEUE_PROCESSOR_ROLE",
+      "AUTOCRAT_ROLE",
+      "REVOLUTIONARY_ROLE",
+      "ALLOWANCE_FREE_ROLE"
+    ]
+  }
 };

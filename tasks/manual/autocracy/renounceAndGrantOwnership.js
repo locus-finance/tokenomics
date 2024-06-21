@@ -13,16 +13,7 @@ module.exports = (task) =>
       const deployer = signers[0].address;
       await hre.names.gather();
       // gather all roles
-      const allRoles = [
-        "PAUSER_ROLE",
-        "OWNER_ROLE",
-        "REWARD_DISTRIBUTOR_ROLE",
-        "ALLOWED_TO_STAKE_FOR_ROLE",
-        "DELAYED_SENDINGS_QUEUE_PROCESSOR_ROLE",
-        "AUTOCRAT_ROLE",
-        "REVOLUTIONARY_ROLE",
-        "ALLOWANCE_FREE_ROLE"
-      ];
+      const allRoles = hre.config.customTokenomicsConfig.roles;
       const rolesHashes = allRoles.map(keccak256);
       const firstArgument = allRoles.map(_ => address);
       const firstArgumentForRevokeRole = allRoles.map(_ => deployer);
