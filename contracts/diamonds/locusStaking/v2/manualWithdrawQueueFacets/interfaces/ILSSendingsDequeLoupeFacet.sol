@@ -18,4 +18,9 @@ interface ILSSendingsDequeLoupeFacet {
     function getTotalSendingsPerStaker(
         address staker
     ) external view returns (uint256);
+
+    function getSendingsDequeIndiciesStored()
+        external
+        view
+        returns (uint256[] memory);
 }

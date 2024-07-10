@@ -54,4 +54,19 @@ contract LSSendingsDequeLoupeFacet is BaseFacet, ILSSendingsDequeLoupeFacet {
                 .getDelayedSending(uint256(deque.at(i)));
         }
     }
+
+    function getSendingsDequeIndiciesStored()
+        external
+        view
+        override
+        delegatedOnly
+        returns (uint256[] memory result)
+    {
+        DoubleEndedQueue.Bytes32Deque storage deque = DelayedSendingsQueueLib.get().sendingsDeque;
+        uint256 dequeSize = deque.length();
+        result = new uint256[](dequeSize);
+        for (uint256 i; i < dequeSize; i++) {
+            result[i] = uint256(deque.at(i));
+        }
+    }
 }

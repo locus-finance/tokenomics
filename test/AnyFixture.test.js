@@ -94,12 +94,16 @@ describe("AnyFixture", () => {
       zippedSendings.push([newSendings[i], oldSendings[i]]);
     }
 
-    console.log(newSendings.filter(e => e.dueToDuration === dueToDurationToSimulate));
-    console.log('---');
-    console.log(zippedSendings.filter(e => e[0] === undefined || e[1] === undefined));
-    console.log('***');
-    console.log(zippedSendings[zippedSendings.length - 1]);
-  })
+
+    console.log(newSendings.filter(e => !oldSendings.includes(e)));
+    console.log(await staking.getSendingsDequeIndiciesStored());
+
+    // console.log(newSendings.filter(e => e.dueToDuration === dueToDurationToSimulate));
+    // console.log('---');
+    // console.log(zippedSendings.filter(e => e[0] === undefined || e[1] === undefined));
+    // console.log('***');
+    // console.log(zippedSendings[zippedSendings.length - 1]);
+  });
 
   // it('should clear the deque of sendings', async () => {
   //   await hre.names.gather();

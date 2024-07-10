@@ -9,6 +9,7 @@ module.exports.dependencies = [
   "xArbStaking",
   "xEthStaking",
   "xUsdStaking",
+  "pendleEthStaking",
   "claim",
   "stLOCUS",
   "tracer"
