@@ -89,16 +89,18 @@ describe("AnyFixture", () => {
 
     const newSendings = await staking.getSendingsDeque();
 
-    const zippedSendings = [];
-    for (let i = 0; i < newSendings.length; i++) {
-      zippedSendings.push([newSendings[i], oldSendings[i]]);
-    }
+    console.log(oldSendings.filter(e => e.receiver === userAddress));
+    console.log('---');
+    console.log(newSendings.filter(e => e.receiver === userAddress));
+    
+    // const zippedSendings = [];
+    // for (let i = 0; i < newSendings.length; i++) {
+    //   zippedSendings.push([newSendings[i], oldSendings[i]]);
+    // }
 
+    // console.log(newSendings.filter(e => !oldSendings.includes(e)));
+    // console.log(await staking.getSendingsDequeIndiciesStored());
 
-    console.log(newSendings.filter(e => !oldSendings.includes(e)));
-    console.log(await staking.getSendingsDequeIndiciesStored());
-
-    // console.log(newSendings.filter(e => e.dueToDuration === dueToDurationToSimulate));
     // console.log('---');
     // console.log(zippedSendings.filter(e => e[0] === undefined || e[1] === undefined));
     // console.log('***');
