@@ -82,7 +82,7 @@ module.exports = {
       forking: {
         url: arbitrumOneUrl,
         chainId: arbitrumOneChainId,
-        blockNumber: 228651034 - 5
+        // blockNumber: 228651034 - 5
       },
       gas: 30_000_000,
       saveDeployments: true,

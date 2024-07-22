@@ -9,6 +9,22 @@ const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/he
 // ALLOWED TO SMELL AND BE LITTERED
 describe("AnyFixture", () => {
 
+  // it('should call provision', async () => {
+  //   await hre.names.gather();
+  //   const stakingAddress = "0x24d6D6af23Cd865B4Dee7f169CA60Bf07B4DD9AE";
+  //   const backendAddress = "0x609108771e65C1E736F9630497025b48E15929ab";
+  //   const rewardAmount = hre.ethers.utils.parseEther('10000');
+
+  //   const staking = await hre.ethers.getContractAt(
+  //     hre.names.internal.diamonds.locusStaking.interface,
+  //     stakingAddress
+  //   );
+
+  //   await withImpersonatedSigner(backendAddress, async (backendSigner) => {
+  //     await staking.connect(backendSigner).notifyRewardAmount(rewardAmount);
+  //   });
+  // });
+
   // it('should collect balances', async () => {
   //   const addresses = [
   //     "0x722982c9A02e2571D245f18E460914E884AdC892",
@@ -64,34 +80,34 @@ describe("AnyFixture", () => {
   //   console.log(stLocusBalances);
   // });
 
-  it('should ', async () => {
+  // it('should ', async () => {
 
-    await hre.names.gather();
-    const staking = await hre.ethers.getContractAt(
-      hre.names.internal.diamonds.locusStaking.interface,
-      "0x6390743ccb7928581F61427652330a1aEfD885c2"
-    );
-    const userAddress = "0xd278A92a2bED505A67987D2d597Afd2AB160bB3a";
+  //   await hre.names.gather();
+  //   const staking = await hre.ethers.getContractAt(
+  //     hre.names.internal.diamonds.locusStaking.interface,
+  //     "0x6390743ccb7928581F61427652330a1aEfD885c2"
+  //   );
+  //   const userAddress = "0xd278A92a2bED505A67987D2d597Afd2AB160bB3a";
 
-    // const userSendingOld = (await staking.getSendingsDeque()).filter(e => e.receiver === userAddress);
+  //   // const userSendingOld = (await staking.getSendingsDeque()).filter(e => e.receiver === userAddress);
     
-    const earned = await staking.earned(userAddress);
-    console.log(earned.toString());
+  //   const earned = await staking.earned(userAddress);
+  //   console.log(earned.toString());
     
-    const oldSendings = await staking.getSendingsDeque();
+  //   const oldSendings = await staking.getSendingsDeque();
 
-    const dueToDurationToSimulate = 3;
+  //   const dueToDurationToSimulate = 3;
 
-    await withImpersonatedSigner(userAddress, async (userSigner) => {
-      const tx = await staking.connect(userSigner).getReward(dueToDurationToSimulate);
-      await tx.wait();
-    });
+  //   await withImpersonatedSigner(userAddress, async (userSigner) => {
+  //     const tx = await staking.connect(userSigner).getReward(dueToDurationToSimulate);
+  //     await tx.wait();
+  //   });
 
-    const newSendings = await staking.getSendingsDeque();
+  //   const newSendings = await staking.getSendingsDeque();
 
-    console.log(oldSendings.filter(e => e.receiver === userAddress));
-    console.log('---');
-    console.log(newSendings.filter(e => e.receiver === userAddress));
+  //   console.log(oldSendings.filter(e => e.receiver === userAddress));
+  //   console.log('---');
+  //   console.log(newSendings.filter(e => e.receiver === userAddress));
     
     // const zippedSendings = [];
     // for (let i = 0; i < newSendings.length; i++) {
@@ -105,7 +121,7 @@ describe("AnyFixture", () => {
     // console.log(zippedSendings.filter(e => e[0] === undefined || e[1] === undefined));
     // console.log('***');
     // console.log(zippedSendings[zippedSendings.length - 1]);
-  });
+  // });
 
   // it('should clear the deque of sendings', async () => {
   //   await hre.names.gather();
