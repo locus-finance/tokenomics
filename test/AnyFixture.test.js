@@ -9,6 +9,20 @@ const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/he
 // ALLOWED TO SMELL AND BE LITTERED
 describe("AnyFixture", () => {
 
+  it('should call earned', async () => {
+    await hre.names.gather();
+    const user = "0xbC64827ddfD207bE92435Ac1c378f68571dD798C";
+    const staking = "0x24d6D6af23Cd865B4Dee7f169CA60Bf07B4DD9AE"; 
+    await hre.run("balance", {
+      address: user,
+      staking
+    });
+    await hre.run("earned", {
+      address: "0xbC64827ddfD207bE92435Ac1c378f68571dD798C",
+      staking
+    });
+  });
+
   // it('should call provision', async () => {
   //   await hre.names.gather();
   //   const stakingAddress = "0x24d6D6af23Cd865B4Dee7f169CA60Bf07B4DD9AE";
@@ -511,17 +525,6 @@ describe("AnyFixture", () => {
   //   );
   //   console.log((await locusStaking.totalSupply()).toString());
   //   console.log((await locusStaking.getRewardForDuration()).toString());
-  // });
-
-  // xit('Successful run mint and notifyRewardAmount', async () => {
-  //   await deployments.fixture(['debug']);
-  //   await hre.run('provide');
-  // });
-
-  // it('Successful run queue', async () => {
-  //   await hre.run('queue', {
-  //     diamond: "0x6390743ccb7928581F61427652330a1aEfD885c2"
-  //   });
   // });
 
   // xit("Successful fixture performance", async () => {
