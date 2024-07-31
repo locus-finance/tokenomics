@@ -13,6 +13,10 @@ import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 import "../../facetsFramework/tokensDistributor/TDLib.sol";
 import "../../locusStaking/v2/manualWithdrawQueueFacets/libraries/DelayedSendingsQueueLib.sol";
 
+/// @title A facet that implements all of the diamonds facets initialization. 
+/// @author Oleg Bedrin <o.bedrin@locus.finance> - Locus Team
+/// @notice The contract is meant to be utilized as a EIP2535 proxy facet. Hence it cannot be called directly and not through
+/// the diamond proxy.
 contract ASInitializerFacet is BaseFacet, IASInitializerFacet {
     using SafeERC20 for IERC20;
     using EnumerableSet for EnumerableSet.AddressSet;

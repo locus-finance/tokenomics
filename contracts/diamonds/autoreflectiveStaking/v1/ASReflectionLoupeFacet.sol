@@ -8,6 +8,10 @@ import "./interfaces/IASFeeAdvisorFacet.sol";
 import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 import "../ASLib.sol";
 
+/// @title A facet that implements the observation of autoreflective math inside the staking contract.
+/// @author Oleg Bedrin <o.bedrin@locus.finance> - Locus Team
+/// @notice The contract is meant to be utilized as a EIP2535 proxy facet. Hence it cannot be called directly and not through
+/// the diamond proxy.
 contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
     using EnumerableSet for EnumerableSet.AddressSet;
 
