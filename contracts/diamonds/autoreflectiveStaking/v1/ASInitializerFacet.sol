@@ -17,6 +17,7 @@ contract ASInitializerFacet is BaseFacet, IASInitializerFacet {
     using SafeERC20 for IERC20;
     using EnumerableSet for EnumerableSet.AddressSet;
 
+    /// @inheritdoc IASInitializerFacet
     function initialize(
         address owner,
         address token

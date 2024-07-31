@@ -12,6 +12,7 @@ import "../ASLib.sol";
 contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
     using EnumerableSet for EnumerableSet.AddressSet;
 
+    /// @inheritdoc IASReflectionFacet
     function _mintTo(
         address who,
         uint256 tAmount
@@ -37,6 +38,7 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
         );
     }
 
+    /// @inheritdoc IASReflectionFacet
     function _burnFrom(
         address who,
         uint256 tAmount
@@ -65,11 +67,13 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
         );
     }
 
+    /// @inheritdoc IASReflectionFacet
     function _updateTotalReflection() external override internalOnly {
         ASLib.Primitives storage p = ASLib.get().p;
         p.rTotal = type(uint256).max - (type(uint256).max % p.tTotal);
     }
 
+    /// @inheritdoc IASReflectionFacet
     function excludeAccount(address account) external override delegatedOnly {
         RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
@@ -81,6 +85,7 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
         }
     }
 
+    /// @inheritdoc IASReflectionFacet
     function includeAccount(address account) external override delegatedOnly {
         RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);
         ASLib.ReferenceTypes storage rt = ASLib.get().rt;
@@ -89,6 +94,7 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
         emit AddressStatus(account, false);
     }
 
+    /// @inheritdoc IASReflectionFacet
     function _transferStandard(
         address sender,
         address recipient,
@@ -107,6 +113,7 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
         );
     }
 
+    /// @inheritdoc IASReflectionFacet
     function _transferToExcluded(
         address sender,
         address recipient,
@@ -126,6 +133,7 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
         );
     }
 
+    /// @inheritdoc IASReflectionFacet
     function _transferFromExcluded(
         address sender,
         address recipient,
@@ -145,6 +153,7 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
         );
     }
 
+    /// @inheritdoc IASReflectionFacet
     function _transferBothExcluded(
         address sender,
         address recipient,
@@ -165,6 +174,7 @@ contract ASReflectionFacet is IASReflectionFacet, BaseFacet {
         );
     }
 
+    /// @dev Performs fees charging everytime its called.
     function _reflectFee(uint256 rFee, uint256 tFee) internal {
         ASLib.Primitives storage p = ASLib.get().p;
         p.rTotal -= rFee;

@@ -15,6 +15,7 @@ import "./interfaces/IASDepositaryFacet.sol";
 contract ASDepositaryFacet is IASDepositaryFacet, BaseFacet {
     using SafeERC20 for IERC20Metadata;
 
+    /// @inheritdoc IASDepositaryFacet
     function stake(uint256 amount) external override delegatedOnly {
         IASReflectionFacet(address(this))._mintTo(msg.sender, amount);
         IERC20Metadata(ASLib.get().p.token).safeTransferFrom(
@@ -25,6 +26,7 @@ contract ASDepositaryFacet is IASDepositaryFacet, BaseFacet {
         emit Staked(amount);
     }
 
+    /// @inheritdoc IASDepositaryFacet
     function withdraw(
         uint256 amount,
         DelayedSendingsQueueLib.DueDuration dueDuration    
@@ -36,6 +38,7 @@ contract ASDepositaryFacet is IASDepositaryFacet, BaseFacet {
         emit Withdrawn(amount);
     }
 
+    /// @inheritdoc IASDepositaryFacet
     function notifyRewardAmount(
         uint256 amount
     ) external override delegatedOnly {

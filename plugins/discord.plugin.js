@@ -1,4 +1,4 @@
-const { lazyObject, HardhatPluginError } = require("hardhat/plugins");
+const { HardhatPluginError } = require("hardhat/plugins");
 const axios = require("axios");
 
 module.exports = (hre) => {
@@ -22,7 +22,10 @@ module.exports = (hre) => {
         }
       });
       if (response.status !== 204) {
-        throw Error(`Failed to send message to Discord. Status code: ${response.status}`);
+        throw new HardhatPluginError(
+          'discord', 
+          `Failed to send message to Discord. Status code: ${response.status}`
+        );
       }
     }
   }

@@ -18,7 +18,7 @@ describe("AnyFixture", () => {
       staking
     });
     await hre.run("earned", {
-      address: "0xbC64827ddfD207bE92435Ac1c378f68571dD798C",
+      address: user,
       staking
     });
   });

@@ -11,12 +11,14 @@ import "../ASLib.sol";
 contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
     using EnumerableSet for EnumerableSet.AddressSet;
 
+    /// @inheritdoc IASReflectionLoupeFacet
     function isExcluded(
         address account
     ) external view override delegatedOnly returns (bool) {
         return ASLib.get().rt.excluded.contains(account);
     }
 
+    /// @inheritdoc IASReflectionLoupeFacet
     function reflectionFromToken(
         uint256 tAmount,
         bool addTransferFee
@@ -28,12 +30,14 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
         }
     }
 
+    /// @inheritdoc IASReflectionLoupeFacet
     function tokenFromReflection(
         uint256 rAmount
     ) external view override delegatedOnly returns (uint256) {
         return rAmount / this._getRate();
     }
 
+    /// @inheritdoc IASReflectionLoupeFacet
     function _getValues(
         uint256 tAmount
     ) external view internalOnly returns (ASLib.Values memory) {
@@ -58,6 +62,7 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
             });
     }
 
+    /// @inheritdoc IASReflectionLoupeFacet
     function _getTValues(
         uint256 tAmount
     ) external view override internalOnly returns (ASLib.TValues memory) {
@@ -66,6 +71,7 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
         return ASLib.TValues({tTransferAmount: tTransferAmount, tFee: tFee});
     }
 
+    /// @inheritdoc IASReflectionLoupeFacet
     function _getRValues(
         uint256 tAmount,
         uint256 tFee,
@@ -82,11 +88,13 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
             });
     }
 
+    /// @inheritdoc IASReflectionLoupeFacet
     function _getRate() external view override internalOnly returns (uint256) {
         ASLib.Supply memory supply = this._getCurrentSupply();
         return supply.rSupply / supply.tSupply;
     }
 
+    /// @inheritdoc IASReflectionLoupeFacet
     function _getCurrentSupply()
         external
         view
@@ -116,6 +124,7 @@ contract ASReflectionLoupeFacet is BaseFacet, IASReflectionLoupeFacet {
         return ASLib.Supply({rSupply: rSupply, tSupply: tSupply});
     }
 
+    /// @inheritdoc IASReflectionLoupeFacet
     function getPrimitives() external view override delegatedOnly returns (ASLib.Primitives memory) {
         return ASLib.get().p;
     }

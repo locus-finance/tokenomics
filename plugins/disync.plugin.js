@@ -3,7 +3,7 @@ const { lazyObject, HardhatPluginError } = require("hardhat/plugins");
 module.exports = (hre) => {
   // LICENCE: MIT
   // Author: Oleg Bedrin <simplavero@gmail.com>
-  // This is for synchronization of diamonds facets info with the DB.
+  // This is a template plugin for future synchronization of diamonds facets info with the DB.
   
   if (hre.names === undefined || !hre.names.isInitialized) {
     throw new HardhatPluginError(

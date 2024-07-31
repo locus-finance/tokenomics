@@ -12,6 +12,7 @@ import "../ASLib.sol";
 contract ASEip20Facet is BaseFacet, IASEip20Facet {
     using EnumerableSet for EnumerableSet.AddressSet;
 
+    /// @inheritdoc IERC20
     function totalSupply()
         external
         view
@@ -22,6 +23,7 @@ contract ASEip20Facet is BaseFacet, IASEip20Facet {
         return ASLib.get().p.totalStaked;
     }
 
+    /// @inheritdoc IERC20
     function balanceOf(
         address account
     ) external view override delegatedOnly returns (uint256) {
@@ -34,6 +36,7 @@ contract ASEip20Facet is BaseFacet, IASEip20Facet {
             );
     }
 
+    /// @inheritdoc IERC20
     function transfer(
         address to,
         uint256 amount
@@ -42,6 +45,7 @@ contract ASEip20Facet is BaseFacet, IASEip20Facet {
         return true;
     }
 
+    /// @inheritdoc IERC20
     function allowance(
         address owner,
         address spender
@@ -49,6 +53,7 @@ contract ASEip20Facet is BaseFacet, IASEip20Facet {
         return ASLib.get().rt.allowance[owner][spender];
     }
 
+    /// @inheritdoc IERC20
     function approve(
         address spender,
         uint256 amount
@@ -57,6 +62,7 @@ contract ASEip20Facet is BaseFacet, IASEip20Facet {
         return true;
     }
 
+    /// @inheritdoc IERC20
     function transferFrom(
         address from,
         address to,
@@ -71,18 +77,22 @@ contract ASEip20Facet is BaseFacet, IASEip20Facet {
         return true;
     }
 
+    /// @inheritdoc IERC20Metadata
     function name() external view override returns (string memory) {
         return ASLib.get().p.name;
     }
 
+    /// @inheritdoc IERC20Metadata
     function symbol() external view override returns (string memory) {
         return ASLib.get().p.symbol;
     }
 
+    /// @inheritdoc IERC20Metadata
     function decimals() external view override returns (uint8) {
         return ASLib.get().p.decimals;
     }
 
+    /// @inheritdoc IASEip20Facet
     function increaseAllowance(
         address spender,
         uint256 addedValue
@@ -95,6 +105,7 @@ contract ASEip20Facet is BaseFacet, IASEip20Facet {
         return true;
     }
 
+    /// @inheritdoc IASEip20Facet
     function decreaseAllowance(
         address spender,
         uint256 subtractedValue
@@ -107,6 +118,7 @@ contract ASEip20Facet is BaseFacet, IASEip20Facet {
         return true;
     }
 
+    /// @inheritdoc IASEip20Facet
     function _emitTransferEvent(
         address from,
         address to,
@@ -115,6 +127,7 @@ contract ASEip20Facet is BaseFacet, IASEip20Facet {
         emit Transfer(from, to, amount);
     }
 
+    /// @dev A classic approval method from EIP20. 
     function _approve(address owner, address spender, uint256 amount) internal {
         if (owner == address(0)) revert ASLib.CannotApproveFromZeroAddress();
         if (spender == address(0)) revert ASLib.CannotApproveToZeroAddress();
@@ -122,6 +135,7 @@ contract ASEip20Facet is BaseFacet, IASEip20Facet {
         emit Approval(owner, spender, amount);
     }
 
+    /// @dev A classic transfer method but it performs it relatively to sender and receiver status'.
     function _transfer(
         address sender,
         address recipient,
