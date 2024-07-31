@@ -8,22 +8,34 @@ library TDLib {
     error NothingWasFound();
     error IncorrectLengths(uint256 l1, uint256 l2);
 
+    /// @notice Emits when tokens receiver info is altered.
+    /// @param receiver A tokens receiver.
+    /// @param share The receivers share.
+    /// @param isBlocked The receivers status.
+    /// @param sumOfShares Total sum of all shares.
     event ReceiverAltered(
         address indexed receiver,
         uint256 indexed share,
         bool indexed isBlocked,
         uint256 sumOfShares
     );
+
+    /// @notice Emits when tokens distribution is triggered.
+    /// @param distributedValue An amount of tokens distributed.
+    /// @param tokensLeftAndSentToGovernance A dust that could be left after all divisions. It is sent to the governance or distribution
+    /// call sender.
     event Distributed(
         uint256 indexed distributedValue,
         uint256 indexed tokensLeftAndSentToGovernance
     );
 
+    /// @dev Slot number when the storage has been markdowned.
     bytes32 constant LOCUS_TOKEN_DISTRIBUTION_STORAGE_POSITION =
         keccak256("diamond.standard.diamond.storage.locus.token_distribution");
 
     uint16 public constant MAX_BPS = 10000;
 
+    /// @dev Tokens receiver info.
     struct DistributionReceiver {
         uint256 share;
         uint256 previousShare;
@@ -31,6 +43,7 @@ library TDLib {
         bool isBlocked;
     }
 
+    /// @dev Main storage markdown
     struct Storage {
         mapping(address => uint32) startTimestamps;
         uint32[] distributionDurationPoints;
@@ -40,6 +53,7 @@ library TDLib {
         address undistributedAmountsReceiver;
     }
 
+    /// @dev Returns the storage part that manipulable through Storage struct operations.
     function get() internal pure returns (Storage storage s) {
         bytes32 position = LOCUS_TOKEN_DISTRIBUTION_STORAGE_POSITION;
         assembly {
@@ -47,6 +61,9 @@ library TDLib {
         }
     }
 
+    /// @dev DEPRECATED AND NOT USED ANYWHERE. Calculates how much from total value stored in the diamond
+    /// should be distributed among the token receivers depending on relative time from duration points 
+    /// (basically timestamps after which the sum should be different).
     function getAmountToDistribute(
         address entity
     )
