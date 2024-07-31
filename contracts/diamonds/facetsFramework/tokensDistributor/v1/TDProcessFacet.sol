@@ -10,9 +10,15 @@ import "../../../locusToken/v1/interfaces/ILTERC20Facet.sol";
 
 import "../TDLib.sol";
 
+/// @title A facet which is a part of `tokenDistributor` group of facets. It allows to perform distribution of any token that
+/// is holding in the diamond according to tokens receivers their shares.
+/// @author Oleg Bedrin <o.bedrin@locus.finance> - Locus Team
+/// @notice The contract is meant to be utilized as a EIP2535 proxy facet. Hence it cannot be called directly and not through
+/// the diamond proxy.
 contract TDProcessFacet is BaseFacet, ITDProcessFacet {
     using SafeERC20 for IERC20;
 
+    /// @inheritdoc ITDProcessFacet
     function distribute(
         uint256 amount,
         IERC20 token // if token == address(this), mints the tokens

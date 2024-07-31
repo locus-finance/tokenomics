@@ -7,9 +7,15 @@ import "./interfaces/ITDManagementFacet.sol";
 import "../../diamondBase/facets/BaseFacet.sol";
 import "../TDLib.sol";
 
+/// @title A facet which is a part of `tokenDistributor` group of facets. It allows to add new receivers of tokens and manipulate
+/// their status (whether they're blocked which means they're excluded from the distribution) and their shares in a distribution.
+/// @author Oleg Bedrin <o.bedrin@locus.finance> - Locus Team
+/// @notice The contract is meant to be utilized as a EIP2535 proxy facet. Hence it cannot be called directly and not through
+/// the diamond proxy.
 contract TDManagementFacet is BaseFacet, ITDManagementFacet {
     using EnumerableSet for EnumerableSet.UintSet;
 
+    /// @inheritdoc ITDManagementFacet
     function addReceiver(
         address distributionReceiver,
         uint256 share,
@@ -33,6 +39,7 @@ contract TDManagementFacet is BaseFacet, ITDManagementFacet {
         );
     }
 
+    /// @inheritdoc ITDManagementFacet
     function setReceiverShare(
         address distributionReceiver,
         uint256 share
@@ -68,6 +75,7 @@ contract TDManagementFacet is BaseFacet, ITDManagementFacet {
         }
     }
 
+    /// @inheritdoc ITDManagementFacet
     function setReceiverStatus(
         address distributionReceiver,
         bool status
@@ -104,6 +112,7 @@ contract TDManagementFacet is BaseFacet, ITDManagementFacet {
         }
     }
 
+    /// @dev Just a wrapper function to check if sender is either diamond itself or `OWNER_ROLE` bearer.
     function _enforceSenderOwnerOrInternal() internal view {
         bytes32[] memory roles = new bytes32[](2);
         roles[0] = RolesManagementLib.OWNER_ROLE;
