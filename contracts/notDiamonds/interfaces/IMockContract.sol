@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
+/// @notice For docs please address: https://github.com/gnosis/mock-contract/blob/master/contracts/MockContract.sol
 interface IMockContract {
 	/**
 	 * @dev After calling this method, the mock will return `response` when it is called

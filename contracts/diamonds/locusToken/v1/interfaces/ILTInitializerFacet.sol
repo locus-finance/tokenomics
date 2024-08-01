@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
+/// @title This facet handles the initialization process for the diamond, including setting up token information and establishing autocracy.
+/// @author Oleg Bedrin <o.bedrin@locus.finance> - Locus Team
+/// @notice The contract is meant to be utilized as a EIP2535 proxy facet. Hence it cannot be called directly and not through
+/// the diamond proxy.
 interface ILTInitializerFacet {
     /// @notice An initializer function for Locus Token owner and starting state of the inflation.
     /// @param owner An address who can end and rule autocracy, and mint inflation of LCS tokens.
@@ -19,5 +23,7 @@ interface ILTInitializerFacet {
         uint256[][] calldata amountsPerEpochs
     ) external;
 
+    /// @notice Sets up the token information and establishes autocracy.
+    /// @dev Must be called by a delegated address. Calls internal functions to setup token info and enable autocracy.
     function setupTokenInfoAndEstablishAutocracy() external;
 }

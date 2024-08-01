@@ -3,6 +3,7 @@ pragma solidity ^0.8.18;
 
 import "../interfaces/IMockContract.sol";
 
+/// @notice For docs please address: https://github.com/gnosis/mock-contract/blob/master/contracts/MockContract.sol
 contract MockContract is IMockContract {
 	enum MockType { Return, Revert, OutOfGas }
 	

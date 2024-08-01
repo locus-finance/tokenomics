@@ -8,6 +8,7 @@ import "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol
 import "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
 
+/// @notice Classic OZ Governor without any custom functionality.
 contract LocusGovernor is
     Governor,
     GovernorSettings,

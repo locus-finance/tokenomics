@@ -11,7 +11,12 @@ import "../../facetsFramework/tokensDistributor/v1/interfaces/ITDManagementFacet
 import "./autocracy/interfaces/ILTAutocracyFacet.sol";
 import "./autocracy/libraries/AutocracyLib.sol";
 
+/// @title This facet handles the initialization process for the diamond, including setting up token information and establishing autocracy.
+/// @author Oleg Bedrin <o.bedrin@locus.finance> - Locus Team
+/// @notice The contract is meant to be utilized as a EIP2535 proxy facet. Hence it cannot be called directly and not through
+/// the diamond proxy.
 contract LTInitializerFacet is BaseFacet, ILTInitializerFacet {
+    /// @inheritdoc ILTInitializerFacet
     function initialize(address owner) external override {
         InitializerLib.initialize();
         TDLib.Storage storage s = TDLib.get();
@@ -25,12 +30,14 @@ contract LTInitializerFacet is BaseFacet, ILTInitializerFacet {
         RolesManagementLib.grantRole(owner, AutocracyLib.AUTOCRAT_ROLE);
     }
 
+    /// @inheritdoc ILTInitializerFacet
     function setupTokenInfoAndEstablishAutocracy() external override delegatedOnly {
         // WARNING: AN INITIALIZER MODIFIER PREVENTS DOUBLE CALL
         ILTERC20Facet(address(this)).setupTokenInfo();
         ILTAutocracyFacet(address(this)).establishAutocracy();
     }
 
+    /// @inheritdoc ILTInitializerFacet
     function setupInflation(
         address[] calldata distributionReceivers,
         uint256[] calldata distributionReceiversShares,
