@@ -8,7 +8,12 @@ import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 import "../../facetsFramework/tokensDistributor/TDLib.sol";
 import "./interfaces/ILSLoupeFacet.sol";
 
+/// @title A facet that implements view functions of the diamond.
+/// @author Oleg Bedrin <o.bedrin@locus.finance> - Locus Team
+/// @notice The contract is meant to be utilized as a EIP2535 proxy facet. Hence it cannot be called directly and not through
+/// the diamond proxy.
 contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
+    /// @inheritdoc ILSLoupeFacet
     function lastTimeRewardApplicable()
         public
         view
@@ -22,6 +27,7 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
                 : LSLib.get().p.periodFinish;
     }
 
+    /// @inheritdoc ILSLoupeFacet
     function rewardPerToken()
         public
         view
@@ -40,6 +46,7 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
                 LSLib.PRECISION) / p.totalSupply);
     }
 
+    /// @inheritdoc ILSLoupeFacet
     function earned(
         address account
     ) external view override delegatedOnly returns (uint256) {
@@ -51,6 +58,7 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
             rt.rewards[account];
     }
 
+    /// @inheritdoc ILSLoupeFacet
     function getTotalReward()
         external
         view
@@ -61,6 +69,7 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
         return LSLib.get().p.totalReward;
     }
 
+    /// @inheritdoc ILSLoupeFacet
     function getRewardForDuration()
         external
         view
@@ -72,20 +81,24 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
         return p.rewardRate * p.rewardsDuration;
     }
 
+    /// @inheritdoc ILSLoupeFacet
     function totalSupply() external view override delegatedOnly returns (uint256) {
         return LSLib.get().p.totalSupply;
     }
 
+    /// @inheritdoc ILSLoupeFacet
     function balanceOf(
         address account
     ) external view override delegatedOnly returns (uint256) {
         return LSLib.get().rt.balanceOf[account];
     }
 
+    /// @inheritdoc ILSLoupeFacet
     function decimals() external view override delegatedOnly returns (uint8) {
         return LSLib.get().p.stakingToken.decimals();
     }
 
+    /// @inheritdoc ILSLoupeFacet
     function getProjectedAPR(
         uint256 rewardRate,
         uint256 rewardDuration
@@ -93,11 +106,13 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
         return _getProjectedAPR(rewardRate, rewardDuration);
     }
 
+    /// @inheritdoc ILSLoupeFacet
     function getAPR() external view override delegatedOnly returns (uint256) {
         LSLib.Primitives memory p = LSLib.get().p;
         return _getProjectedAPR(p.rewardRate, p.rewardsDuration);
     }
 
+    /// @inheritdoc ILSLoupeFacet
     function getAPRInAbsoluteValue()
         external
         view
@@ -111,6 +126,9 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
             LSLib.PRECISION;
     }
 
+    /// @dev Calculates projected rewards if 1 token would be staking for 1 staking cycle.
+    /// @param rewardRate A rate with which rewards are accumulated.
+    /// @param rewardDuration  A staking cycle duration.
     function _getProjectedAPRInAbsoluteValue(
         uint256 rewardRate,
         uint256 rewardDuration
@@ -126,6 +144,9 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
             ((rewardRate * rewardDuration * LSLib.PRECISION) / p.totalSupply);
     }
 
+    /// @dev Calculates projected APR (where annual equal to 1 staking cycle).
+    /// @param rewardRate A rate with which rewards are accumulated.
+    /// @param rewardDuration  A staking cycle duration.
     function _getProjectedAPR(
         uint256 rewardRate,
         uint256 rewardDuration
@@ -140,6 +161,7 @@ contract LSLoupeFacet is BaseFacet, ILSLoupeFacet {
                 oneToken) / LSLib.PRECISION;
     }
 
+    /// @inheritdoc ILSLoupeFacet
     function getPrimitives()
         external
         view

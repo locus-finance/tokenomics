@@ -45,7 +45,7 @@ library ASLib {
     bytes32 constant AUTOREFLECTIVE_STAKING_STORAGE_POSITION =
         keccak256("diamond.standard.diamond.storage.autoreflective_staking");
     
-    /// @dev Classic `AccessControl` role.
+    /// @dev Classic `AccessControl` role. Allowes the bearer to send and distribute rewards.
     bytes32 public constant REWARD_DISTRIBUTOR_ROLE = keccak256("REWARD_DISTRIBUTOR_ROLE");
 
     string public constant NAME_PREFIX = "Locus Staking";

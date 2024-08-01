@@ -13,11 +13,16 @@ import "../../LSLib.sol";
 import "./libraries/DelayedSendingsQueueLib.sol";
 import "./interfaces/ILSSendingsDequeFacet.sol";
 
+/// @title A facet that implements CRUD operations on delayed sendings. It also implements queue clearing of those delayed sendings.
+/// @author Oleg Bedrin <o.bedrin@locus.finance> - Locus Team
+/// @notice The contract is meant to be utilized as a EIP2535 proxy facet. Hence it cannot be called directly and not through
+/// the diamond proxy.
 contract LSSendingsDequeFacet is BaseFacet, ILSSendingsDequeFacet {
     using Counters for Counters.Counter;
     using DoubleEndedQueue for DoubleEndedQueue.Bytes32Deque;
     using SafeERC20 for IERC20Metadata;
 
+    /// @inheritdoc ILSSendingsDequeFacet
     function addDelayedSending(
         IERC20Metadata sendingToken,
         address receiver,
@@ -71,6 +76,7 @@ contract LSSendingsDequeFacet is BaseFacet, ILSSendingsDequeFacet {
         s.nodeCounter.increment();
     }
 
+    /// @inheritdoc ILSSendingsDequeFacet
     function processQueue() external override delegatedOnly {
         RolesManagementLib.enforceSenderRole(
             DelayedSendingsQueueLib.DELAYED_SENDINGS_QUEUE_PROCESSOR_ROLE
@@ -109,6 +115,12 @@ contract LSSendingsDequeFacet is BaseFacet, ILSSendingsDequeFacet {
         }
     }
 
+    /// @dev Mapping function to match due duration code to actual time interval.
+    /// @param sendingToken Token of sending.
+    /// @param amount An amount of sending.
+    /// @param dueToDuration Due duration code of sending.
+    /// @return amountWithFees An amount with possible fees to be sent at the moment of the execution.
+    /// @return feesGathered An amount of fees that could be possibly charged.
     function _getAmountWithAccountedFees(
         IERC20Metadata sendingToken,
         uint256 amount,

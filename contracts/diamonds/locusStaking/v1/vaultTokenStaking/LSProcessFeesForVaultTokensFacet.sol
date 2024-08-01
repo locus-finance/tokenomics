@@ -10,9 +10,14 @@ import "../../v2/manualWithdrawQueueFacets/libraries/DelayedSendingsQueueLib.sol
 import "../../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 import "../interfaces/ILSProcessFeesFacet.sol";
 
+/// @title A facet that implements creation of delayed sendings for vault tokens. 
+/// @author Oleg Bedrin <o.bedrin@locus.finance> - Locus Team
+/// @notice The contract is meant to be utilized as a EIP2535 proxy facet. Hence it cannot be called directly and not through
+/// the diamond proxy.
 contract LSProcessFeesForVaultTokensFacet is BaseFacet, ILSProcessFeesFacet {
     using SafeERC20 for IERC20Metadata;
 
+    /// @inheritdoc ILSProcessFeesFacet
     function processRewardSending(
         address staker,
         uint256 reward,
@@ -24,6 +29,7 @@ contract LSProcessFeesForVaultTokensFacet is BaseFacet, ILSProcessFeesFacet {
         );
     }
 
+    /// @inheritdoc ILSProcessFeesFacet
     function processWithdrawalSending(
         address staker,
         uint256 amount,

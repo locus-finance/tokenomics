@@ -9,9 +9,14 @@ import "../../LSLib.sol";
 import "../../v2/manualWithdrawQueueFacets/libraries/DelayedSendingsQueueLib.sol";
 import "../interfaces/ILSGeneralDepositaryFacet.sol";
 
+/// @title A facet that implements the depositary logic for users. But for vault tokens.
+/// @author Oleg Bedrin <o.bedrin@locus.finance> - Locus Team
+/// @notice The contract is meant to be utilized as a EIP2535 proxy facet. Hence it cannot be called directly and not through
+/// the diamond proxy.
 contract LSDepositaryForVaultTokensFacet is ILSGeneralDepositaryFacet {
     using SafeERC20 for IERC20Metadata;
 
+    /// @inheritdoc ILSGeneralDepositaryFacet
     function withdraw(
         uint256 amount,
         DelayedSendingsQueueLib.DueDuration dueDuration
@@ -28,6 +33,7 @@ contract LSDepositaryForVaultTokensFacet is ILSGeneralDepositaryFacet {
         );
     }
 
+    /// @inheritdoc ILSGeneralDepositaryFacet
     function _stake(
         address staker,
         address fundsOwner,

@@ -20,6 +20,10 @@ import "./ILSProcessFeesFacet.sol";
 import "./ILSDepositaryFacet.sol";
 import "./ILSLoupeFacet.sol";
 
+/// @title A facet that implements the basic depositary logic for users, specifically: `stakeFor`, `stake`, `getReward`, `updateReward`.
+/// @author Oleg Bedrin <o.bedrin@locus.finance> - Locus Team
+/// @notice The contract is meant to be utilized as a EIP2535 proxy facet. Hence it cannot be called directly and not through
+/// the diamond proxy.
 abstract contract ILSGeneralDepositaryFacet is
     BaseFacet,
     PausabilityFacet,
@@ -28,8 +32,7 @@ abstract contract ILSGeneralDepositaryFacet is
 {
     using SafeERC20 for IERC20Metadata;
 
-    /// @dev MIND THAT THIS SHOULD BE THE ONLY SMART CONTRACT (MEANING REENTRANCY GUARD) FROM OZ LIB THAT
-    /// IS TO BE UTILIZIED IN THIS DIAMOND.
+    /// @inheritdoc ILSDepositaryFacet
     function _initialize_LSDepositaryFacet()
         external
         override
@@ -39,6 +42,7 @@ abstract contract ILSGeneralDepositaryFacet is
         __ReentrancyGuard_init();
     }
 
+    /// @inheritdoc ILSDepositaryFacet
     function stakeFor(
         address staker,
         uint256 amount
@@ -47,22 +51,28 @@ abstract contract ILSGeneralDepositaryFacet is
         _stake(staker, msg.sender, amount);
     }
 
+    /// @inheritdoc ILSDepositaryFacet
     function stake(
         uint256 amount
     ) external override nonReentrant delegatedOnly whenNotPaused {
         _stake(msg.sender, msg.sender, amount);
     }
 
+    /// @inheritdoc ILSDepositaryFacet
     function getReward(
         DelayedSendingsQueueLib.DueDuration dueDuration
     ) public override nonReentrant delegatedOnly {
         _getReward(dueDuration);
     }
 
+    /// @inheritdoc ILSDepositaryFacet
     function updateReward(address account) public override internalOnly {
         _updateReward(account);
     }
 
+    /// @dev Standard realization of `getReward` from Synthetix' `StakingRewards.sol` but instead of
+    /// `safeTransfer` immideately - sends it with delay through `ILSProcessFeesFacet` facet.
+    /// @param dueDuration A code of time duration interval to expect earned funds after.
     function _getReward(
         DelayedSendingsQueueLib.DueDuration dueDuration
     ) internal {
@@ -81,6 +91,9 @@ abstract contract ILSGeneralDepositaryFacet is
         }
     }
 
+    /// @dev Classic Synthetix' `StakingRewards.sol` `updateReward` implementation but
+    /// for EIP2535 facet.
+    /// @param account An account to update rewards info for.
     function _updateReward(address account) internal {
         ILSLoupeFacet self = ILSLoupeFacet(address(this));
         LSLib.Primitives storage p = LSLib.get().p;
@@ -93,12 +106,17 @@ abstract contract ILSGeneralDepositaryFacet is
         }
     }
 
+    /// @dev Performs unchecked stake operation with rewards math update.
+    /// @param staker A staker.
+    /// @param fundsOwner Actual funds owner to stake for `staker`.
+    /// @param amount An amount of funds to stake.
     function _stake(
         address staker,
         address fundsOwner,
         uint256 amount
     ) internal virtual;
 
+    /// @inheritdoc ILSDepositaryFacet
     function withdraw(
         uint256 amount,
         DelayedSendingsQueueLib.DueDuration dueDuration

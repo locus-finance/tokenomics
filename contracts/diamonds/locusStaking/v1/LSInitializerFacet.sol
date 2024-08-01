@@ -12,7 +12,12 @@ import "./interfaces/ILSInitializerFacet.sol";
 import "./interfaces/ILSDepositaryFacet.sol";
 import "./interfaces/ILSGeneralDepositaryFacet.sol";
 
+/// @title A facet that implements the diamond initalization.
+/// @author Oleg Bedrin <o.bedrin@locus.finance> - Locus Team
+/// @notice The contract is meant to be utilized as a EIP2535 proxy facet. Hence it cannot be called directly and not through
+/// the diamond proxy.
 contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
+    /// @inheritdoc ILSInitializerFacet
     function initialize(
         address owner,
         address rewardDistributor,
@@ -36,12 +41,14 @@ contract LSInitializerFacet is BaseFacet, ILSInitializerFacet {
         p.rewardsDuration = 4 weeks;
     }
 
+    /// @inheritdoc ILSInitializerFacet
     function prepareDepositary() external override delegatedOnly {
         RolesManagementLib.enforceSenderRole(RolesManagementLib.OWNER_ROLE);
         // WARNING: CONTAINS INITIALIZER CUSTOM MODIFIER, SO IT COULDN'T BE CALLED TWICE.
         ILSDepositaryFacet(address(this))._initialize_LSDepositaryFacet();
     }
 
+    /// @inheritdoc ILSInitializerFacet
     function setWrappedStakingLocus(
         address wrappedStLocusToken
     ) external override delegatedOnly {

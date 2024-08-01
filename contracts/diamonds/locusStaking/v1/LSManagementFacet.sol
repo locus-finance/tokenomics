@@ -9,9 +9,16 @@ import "../../facetsFramework/diamondBase/facets/BaseFacet.sol";
 import "./interfaces/ILSManagementFacet.sol";
 import "./interfaces/ILSDepositaryFacet.sol";
 
+/// @title A facet that implements managemental functionality of the diamond. 
+/// Specifically: rewards management, setting duration of the staking cycle, recovering stuck tokens that
+/// are allowed to be extracted.
+/// @author Oleg Bedrin <o.bedrin@locus.finance> - Locus Team
+/// @notice The contract is meant to be utilized as a EIP2535 proxy facet. Hence it cannot be called directly and not through
+/// the diamond proxy.
 contract LSManagementFacet is BaseFacet, ILSManagementFacet {
     using SafeERC20 for IERC20Metadata;
 
+    /// @inheritdoc ILSManagementFacet
     function notifyRewardAmount(
         uint256 reward
     ) external override delegatedOnly {
@@ -44,6 +51,7 @@ contract LSManagementFacet is BaseFacet, ILSManagementFacet {
         emit LSLib.RewardAdded(reward);
     }
 
+    /// @inheritdoc ILSManagementFacet
     function recoverTokens(
         address tokenAddress,
         uint256 tokenAmount
@@ -56,6 +64,7 @@ contract LSManagementFacet is BaseFacet, ILSManagementFacet {
         emit LSLib.Recovered(tokenAddress, tokenAmount);
     }
     
+    /// @inheritdoc ILSManagementFacet
     function setRewardsDuration(
         uint256 _rewardsDuration
     ) external override delegatedOnly {

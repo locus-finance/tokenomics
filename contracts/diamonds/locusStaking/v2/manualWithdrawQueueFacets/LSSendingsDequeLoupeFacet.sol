@@ -8,9 +8,14 @@ import "../../LSLib.sol";
 import "./libraries/DelayedSendingsQueueLib.sol";
 import "./interfaces/ILSSendingsDequeLoupeFacet.sol";
 
+/// @title A facet that implements getters and iteration tools over the delayed sendings queue.
+/// @author Oleg Bedrin <o.bedrin@locus.finance> - Locus Team
+/// @notice The contract is meant to be utilized as a EIP2535 proxy facet. Hence it cannot be called directly and not through
+/// the diamond proxy.
 contract LSSendingsDequeLoupeFacet is BaseFacet, ILSSendingsDequeLoupeFacet {
     using DoubleEndedQueue for DoubleEndedQueue.Bytes32Deque;
 
+    /// @inheritdoc ILSSendingsDequeLoupeFacet
     function getDelayedSending(
         uint256 index
     )
@@ -23,12 +28,14 @@ contract LSSendingsDequeLoupeFacet is BaseFacet, ILSSendingsDequeLoupeFacet {
         return DelayedSendingsQueueLib.get().queueNodes[index];
     }
 
+    /// @inheritdoc ILSSendingsDequeLoupeFacet
     function getTotalSendingsPerStaker(
         address staker
     ) external view override returns (uint256) {
         return DelayedSendingsQueueLib.get().totalSendingsPerStaker[staker];
     }
 
+    /// @inheritdoc ILSSendingsDequeLoupeFacet
     function getDequeSize()
         external
         view
@@ -39,6 +46,7 @@ contract LSSendingsDequeLoupeFacet is BaseFacet, ILSSendingsDequeLoupeFacet {
         return DelayedSendingsQueueLib.get().sendingsDeque.length();
     }
 
+    /// @inheritdoc ILSSendingsDequeLoupeFacet
     function getSendingsDeque()
         external
         view
@@ -55,6 +63,7 @@ contract LSSendingsDequeLoupeFacet is BaseFacet, ILSSendingsDequeLoupeFacet {
         }
     }
 
+    /// @inheritdoc ILSSendingsDequeLoupeFacet
     function getSendingsDequeIndiciesStored()
         external
         view
