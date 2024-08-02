@@ -9,27 +9,54 @@ The tokenomics project consists of several logical modules.
 
 ## Contracts
 
-Locus Facets Framework
+The contracts of the project is divided in two groups: diamonds and non-diamonds.
 
-Autoreflective Staking
+### Locus Facets Framework
 
-Classic Staking
+### Autoreflective Staking
 
-Governance Token
+### Classic Staking
 
-Midas Claim
+### Governance Token
 
-Locus Governor
+### Midas Claim
 
-Locus Wrapping Staking Token
+### Locus Governor
+
+### Locus Wrapping Staking Token
 
 ## Tasks
 
+### `manual` tasks
+
+#### Under folder `autocracy`
+
+#### Under folder `midasClaim`
+
+#### Under folder `observe`
+
+#### Under folder `stakingOperations`
+
+### `utils` tasks
+
 ## Plugins
+
+### `hardhat-discord` custom plugin
+
+### `hardhat-disync` custom plugin
+
+### `hardhat-names` custom plugin
+
+### `hardhat-sentry` custom plugin
 
 ## How-to's
 
 ### How to test hypothesis'
+
+### How to transfer full ownership of the contracts
+
+### How to verify all artifacts of the diamonds and others.
+
 
 
 
