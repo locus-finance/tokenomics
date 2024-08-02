@@ -9,19 +9,86 @@ const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/he
 // ALLOWED TO SMELL AND BE LITTERED
 describe("AnyFixture", () => {
 
-  it('should call earned', async () => {
-    await hre.names.gather();
-    const user = "0xbC64827ddfD207bE92435Ac1c378f68571dD798C";
-    const staking = "0x24d6D6af23Cd865B4Dee7f169CA60Bf07B4DD9AE"; 
-    await hre.run("balance", {
-      address: user,
-      staking
+  it('should transfer full ownership of tokenomics to another address', async () => {
+    const confirmations = 1;
+    const newOwner = "0x57eb63d0aab5822EFCd7A9B56775F772D3e03CfD";
+    
+    const oldBackend = "0x609108771e65C1E736F9630497025b48E15929ab";
+    const newBackend = "0xE0042827FEA7d3da413D60A602C7DF369b89A6eA";
+    
+    const stakingAddresses = [
+      "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684", // locus autoreflective staking
+      "0x24d6D6af23Cd865B4Dee7f169CA60Bf07B4DD9AE", // pendleETH vault tokens staking
+      "0x6C447230F098CDdB62f6AEaeEc25C27E8b90B25e", // xARB vault tokens staking
+      "0x91A894C32B14F26f708389E5F8e21964b7d3C025", // xDEFI vault tokens staking
+      "0xCC50DC869546524E675121fC331249727A549027", // xETH vault tokens staking
+      "0x6390743ccb7928581F61427652330a1aEfD885c2", // xUSD vault tokens staking
+    ];
+    const midasClaimAddress = "0x445816ac3E78D1B0547b4642b373A88aD875cc8a";
+    const locusTokenAddress = "0xe1d3495717f9534Db67A6A8d4940Dd17435b6A9E";
+
+    for (const stakingAddress of stakingAddresses) {
+      console.log('working with', stakingAddress)
+      await hre.run("transfer", {
+        diamond: stakingAddress,
+        address: newOwner,
+        confirmations
+      });
+      await hre.run("ownership", {
+        diamond: stakingAddress,
+        address: newOwner,
+        confirmations
+      });
+    }
+
+    await hre.run("midas", {
+      contract: midasClaimAddress,
+      address: newOwner,
+      confirmations
     });
-    await hre.run("earned", {
-      address: user,
-      staking
+
+    console.log('Managing mint/burn ops access');
+    await hre.run("minter", {
+      diamond: locusTokenAddress,
+      address: oldBackend,
+      status: false,
+      confirmations
     });
+    await hre.run("minter", {
+      diamond: locusTokenAddress,
+      address: newBackend,
+      status: true,
+      confirmations
+    });
+    console.log('Managed mint/burn ops access');
+
+    await hre.run("transfer", {
+      diamond: locusTokenAddress,
+      address: newOwner,
+      confirmations
+    });
+    await hre.run("ownership", {
+      diamond: locusTokenAddress,
+      address: newOwner,
+      confirmations
+    });
+
+    console.log('Tokenomics is transferred.');
   });
+
+  // it('should call earned', async () => {
+  //   await hre.names.gather();
+  //   const user = "0xbC64827ddfD207bE92435Ac1c378f68571dD798C";
+  //   const staking = "0x24d6D6af23Cd865B4Dee7f169CA60Bf07B4DD9AE"; 
+  //   await hre.run("balance", {
+  //     address: user,
+  //     staking
+  //   });
+  //   await hre.run("earned", {
+  //     address: user,
+  //     staking
+  //   });
+  // });
 
   // it('should call provision', async () => {
   //   await hre.names.gather();

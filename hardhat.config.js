@@ -41,6 +41,9 @@ require("./tasks/manual/autocracy/grantRole")(task);
 require("./tasks/manual/autocracy/provideRewardForStaking")(task);
 require("./tasks/manual/autocracy/clearSendingsQueue")(task);
 require("./tasks/manual/autocracy/renounceAndGrantOwnership")(task);
+require("./tasks/manual/autocracy/setAccessToGovernanceTokenMint")(task);
+require("./tasks/manual/autocracy/transferDiamondOwnership")(task);
+require("./tasks/manual/autocracy/transferMidasClaimOwnership")(task);
 
 require("./tasks/manual/midasClaim/getMerkleTreeInfo")(task);
 require("./tasks/manual/midasClaim/updateMerkleTree")(task);
@@ -82,6 +85,7 @@ module.exports = {
       forking: {
         url: arbitrumOneUrl,
         chainId: arbitrumOneChainId,
+        // blockNumber: 238650250
         // blockNumber: 234887395 // 232683953 - 16 july//234887395 - 22 july
       },
       gas: 30_000_000,
