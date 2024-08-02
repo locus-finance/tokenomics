@@ -11,7 +11,7 @@ describe("AnyFixture", () => {
 
   it('should transfer full ownership of tokenomics to another address', async () => {
     const confirmations = 1;
-    const newOwner = "0x57eb63d0aab5822EFCd7A9B56775F772D3e03CfD";
+    const newOwner = "0x3C2792d5Ea8f9C03e8E73738E9Ed157aeB4FeCBe";
     
     const oldBackend = "0x609108771e65C1E736F9630497025b48E15929ab";
     const newBackend = "0xE0042827FEA7d3da413D60A602C7DF369b89A6eA";

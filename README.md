@@ -7,23 +7,40 @@ The tokenomics project consists of several logical modules.
 * Midas Claim airdrop - smart-contract.
 * Locus Finance Governor - smart-contract.
 
+## Installation
+
+Classic simple steps:
+
+1) `git clone https://github.com/locus-finance/tokenomics.git`
+2) `yarn`
+
+To use any Hardhat related functionality utilize: `npx hardhat <cmd>`
+
 ## Contracts
 
 The contracts of the project is divided in two groups: diamonds and non-diamonds.
 
-### Locus Facets Framework
+### Diamonds
 
-### Autoreflective Staking
+#### Locus Facets Framework
 
-### Classic Staking
+`diamondBase` folder consists of smart-contracts utilized to build facets with built-in inter-/outer-facets calls security.
 
-### Governance Token
+`tokensDistributor` folder consists of facets utilized to provide a diamond weighted distribution functionality.
 
-### Midas Claim
+#### Autoreflective Staking
 
-### Locus Governor
+#### Classic Staking
 
-### Locus Wrapping Staking Token
+#### Governance Token
+
+### Non-diamonds
+
+#### Midas Claim
+
+#### Locus Governor
+
+#### Locus Wrapping Staking Token
 
 ## Tasks
 
@@ -51,11 +68,13 @@ The contracts of the project is divided in two groups: diamonds and non-diamonds
 
 ## How-to's
 
-### How to test hypothesis'
+### How to write testable in unit tests Hardhat tasks?
 
-### How to transfer full ownership of the contracts
+### How to test hypothesis'?
 
-### How to verify all artifacts of the diamonds and others.
+### How to transfer full ownership of the contracts?
+
+### How to verify all artifacts of the diamonds and others?
 
 
 
