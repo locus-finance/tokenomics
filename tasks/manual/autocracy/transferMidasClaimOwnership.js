@@ -25,5 +25,6 @@ module.exports = (task) =>
       const transferOwnershipTx = await contractInstance.transferOwnership(address);
       await transferOwnershipTx.wait(confirmations);
       console.log(`Ownership of the MidasClaim contract (${contract}) is transferred to - ${address}:`);
-      console.log(transferOwnershipTx);
+      console.log(`Hash: ${transferOwnershipTx.hash}`);
+      console.log();
     });

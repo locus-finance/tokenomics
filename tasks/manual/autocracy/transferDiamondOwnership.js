@@ -25,5 +25,6 @@ module.exports = (task) =>
       const transferOwnershipTx = await diamondInstance.transferOwnership(address);
       await transferOwnershipTx.wait(confirmations);
       console.log(`Ownership of the diamond (${diamond}) is transferred to - ${address}:`);
-      console.log(transferOwnershipTx);
+      console.log(`Hash: ${transferOwnershipTx.hash}`);
+      console.log();
     });

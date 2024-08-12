@@ -26,5 +26,6 @@ module.exports = (task) =>
       const setStatusOfMintingBurningSelectorsForTx = await diamondInstance.setStatusOfMintingBurningSelectorsFor(address, status);
       await setStatusOfMintingBurningSelectorsForTx.wait(confirmations);
       console.log(`An access for Governance Token mint or burn operation is set (${status}) for ${address}:`);
-      console.log(setStatusOfMintingBurningSelectorsForTx);
+      console.log(`Hash: ${setStatusOfMintingBurningSelectorsForTx.hash}`);
+      console.log();
     });

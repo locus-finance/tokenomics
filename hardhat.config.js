@@ -44,6 +44,7 @@ require("./tasks/manual/autocracy/renounceAndGrantOwnership")(task);
 require("./tasks/manual/autocracy/setAccessToGovernanceTokenMint")(task);
 require("./tasks/manual/autocracy/transferDiamondOwnership")(task);
 require("./tasks/manual/autocracy/transferMidasClaimOwnership")(task);
+require("./tasks/manual/autocracy/fullTransfer")(task);
 
 require("./tasks/manual/midasClaim/getMerkleTreeInfo")(task);
 require("./tasks/manual/midasClaim/updateMerkleTree")(task);

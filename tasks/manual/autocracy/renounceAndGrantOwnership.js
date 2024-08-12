@@ -35,13 +35,13 @@ module.exports = (task) =>
       const grantRolesTx = await diamondInstance.grantRoles(firstArgument, rolesHashes);
       await grantRolesTx.wait(confirmations);
       console.log(`Roles to new owner granted:`);
-      console.log(grantRolesTx);
+      console.log(grantRolesTx.hash);
       console.log('---');
-
       const revokeRolesTx = await diamondInstance.revokeRoles(firstArgumentForRevokeRole, rolesHashes);
       await revokeRolesTx.wait(confirmations);
       console.log(`Roles from old owner revoked:`);
-      console.log(revokeRolesTx);
+      console.log(revokeRolesTx.hash);
       console.log('***');
       console.log(`The roles:\n${allRoles}\nhas been transferred from deployer:<${deployer}> to: ${address}`);
+      console.log();
     });
