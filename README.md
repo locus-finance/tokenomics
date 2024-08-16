@@ -68,7 +68,7 @@ The contracts of the project is divided in two groups: diamonds and non-diamonds
 
 ## How-to's
 
-### How to write testable in unit tests Hardhat tasks?
+### How to write Hardhat tasks that could be utilized in unit tests?
 
 ### How to test hypothesis'?
 

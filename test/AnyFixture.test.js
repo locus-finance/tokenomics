@@ -9,18 +9,47 @@ const { WEEK, withImpersonatedSigner, mintNativeTokens } = require("../deploy/he
 // ALLOWED TO SMELL AND BE LITTERED
 describe("AnyFixture", () => {
 
-  it('should perform full transfer of the autocracy reigns', async () => {
-    const confirmations = 1;
-    const newOwner = "0x3C2792d5Ea8f9C03e8E73738E9Ed157aeB4FeCBe";
-    const oldBackend = "0x609108771e65C1E736F9630497025b48E15929ab";
-    const newBackend = "0x717f5cE5A5aF7AC5f48daCDf9AaC45b23a299db7";
-    await hre.run('full', {
-      confirmations,
-      newOwner,
-      oldBackend,
-      newBackend
-    })
+  xit('should call provision', async () => {
+    await hre.names.gather();
+    const stakingAddress = "";
+    const backendAddress = "0x717f5cE5A5aF7AC5f48daCDf9AaC45b23a299db7";
+    const rewardAmount = hre.ethers.utils.parseEther('1083');
+
+    const staking = await hre.ethers.getContractAt(
+      hre.names.internal.diamonds.locusStaking.interface,
+      stakingAddress
+    );
+
+    await withImpersonatedSigner(backendAddress, async (backendSigner) => {
+      await staking.connect(backendSigner).notifyRewardAmount(rewardAmount);
+    });
   });
+
+  xit('should clear queue', async () => {
+    await hre.names.gather();
+    const newBackend = "0x717f5cE5A5aF7AC5f48daCDf9AaC45b23a299db7";
+    const stakingAddress = "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684";
+    await withImpersonatedSigner(newBackend, async (newBackedSigner) => {
+      const stakingInstance = await hre.ethers.getContractAt(
+        hre.names.internal.diamonds.locusStaking.interface,
+        stakingAddress
+      );
+      await stakingInstance.connect(newBackedSigner).processQueue();
+    });
+  });
+
+  // it('should perform full transfer of the autocracy reigns', async () => {
+  //   const confirmations = 1;
+  //   const newOwner = "0x3C2792d5Ea8f9C03e8E73738E9Ed157aeB4FeCBe";
+  //   const oldBackend = "0x609108771e65C1E736F9630497025b48E15929ab";
+  //   const newBackend = "0x717f5cE5A5aF7AC5f48daCDf9AaC45b23a299db7";
+  //   await hre.run('full', {
+  //     confirmations,
+  //     newOwner,
+  //     oldBackend,
+  //     newBackend
+  //   })
+  // });
 
   // it('should transfer full ownership of tokenomics to another address', async () => {
   //   const confirmations = 1;
@@ -100,22 +129,6 @@ describe("AnyFixture", () => {
   //   await hre.run("earned", {
   //     address: user,
   //     staking
-  //   });
-  // });
-
-  // it('should call provision', async () => {
-  //   await hre.names.gather();
-  //   const stakingAddress = "0x24d6D6af23Cd865B4Dee7f169CA60Bf07B4DD9AE";
-  //   const backendAddress = "0x609108771e65C1E736F9630497025b48E15929ab";
-  //   const rewardAmount = hre.ethers.utils.parseEther('10000');
-
-  //   const staking = await hre.ethers.getContractAt(
-  //     hre.names.internal.diamonds.locusStaking.interface,
-  //     stakingAddress
-  //   );
-
-  //   await withImpersonatedSigner(backendAddress, async (backendSigner) => {
-  //     await staking.connect(backendSigner).notifyRewardAmount(rewardAmount);
   //   });
   // });
 
@@ -221,9 +234,12 @@ describe("AnyFixture", () => {
   //   await hre.names.gather();
   //   const staking = await hre.ethers.getContractAt(
   //     hre.names.internal.diamonds.locusStaking.interface,
-  //     "0x24d6D6af23Cd865B4Dee7f169CA60Bf07B4DD9AE"
+  //     "0xFCE625E69Bd4952417Fe628bC63D9AA0e4012684"
   //   );
-  //   await staking.processQueue();
+  //   const newBack = "0x717f5cE5A5aF7AC5f48daCDf9AaC45b23a299db7";
+  //   await withImpersonatedSigner(newBack, async (newBackSigner) => {
+  //     await staking.connect(newBackSigner).processQueue();
+  //   });
   // });
   
   // it('should test', async () => {
